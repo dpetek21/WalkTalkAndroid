@@ -1,43 +1,42 @@
-# Inicijalne upute za prijavu projekta iz Razvoja aplikacija za mobilne i pametne uređaje
 
-Poštovane kolegice i kolege, 
-
-čestitamo vam jer ste uspješno prijavili svoj projektni tim na kolegiju Razvoj aplikacija za mobilne i pametne uređaje, te je za vas automatski kreiran repozitorij koji ćete koristiti za verzioniranje vašega koda i za jednostavno dokumentiranje istoga.
-
-Ovaj dokument (README.md) predstavlja **osobnu iskaznicu vašeg projekta**. Vaš prvi zadatak je **prijaviti vlastiti projektni prijedlog** na način da ćete prijavu vašeg projekta, sukladno uputama danim u ovom tekstu, napisati upravo u ovaj dokument, umjesto ovoga teksta.
-
-Za upute o sintaksi koju možete koristiti u ovom dokumentu i kod pisanje vaše projektne dokumentacije pogledajte [ovaj link](https://guides.github.com/features/mastering-markdown/).
-Sav programski kod potrebno je verzionirati u glavnoj **master** grani i **obvezno** smjestiti u mapu Software. Sve artefakte (npr. slike) koje ćete koristiti u vašoj dokumentaciju obvezno verzionirati u posebnoj grani koja je već kreirana i koja se naziva **master-docs** i smjestiti u mapu Documentation.
-
-Nakon vaše prijave bit će vam dodijeljen mentor s kojim ćete tijekom semestra raditi na ovom projektu. Mentor će vam slati povratne informacije kroz sekciju Discussions također dostupnu na GitHubu vašeg projekta. A sada, vrijeme je da prijavite vaš projekt. Za prijavu vašeg projektnog prijedloga molimo vas koristite **predložak** koji je naveden u nastavku, a započnite tako da kliknete na *olovku* u desnom gornjem kutu ovoga dokumenta :) 
-
-# Naziv projekta
-(u redak iznad navedite kratki proizvoljni naziv projekta prikladan akademskoj zajednici, a ovaj tekst kao i uvodni tekst iznad obrišite)
+# Walk Talk: Hike with your favorite people
 
 ## Projektni tim
-(svi članovi tima moraju biti iz iste seminarske grupe)
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime | Seminarska grupa
 ------------  | ------------------- | ----- | --------------------- | ----------------
 Domagoj Petek | dpetek21@student.foi.hr | 1191242810 | dpetek21 | G02
 Marin Puškadija | mpuskadij20@student.foi.hr | 0016149444 | mpuskadij | G02
 Gabriel Vesel | gvesel20@student.foi.hr | 0016147135 | gvesel20 | G02
+
 ## Opis domene
-Umjesto ovih uputa opišite domenu ili problem koji pokrivate vašim projektom. Domena može biti proizvoljna, ali obratite pozornost da sukladno ishodima učenja, domena omogući primjenu zahtijevanih koncepata kako je to navedeno u sljedećem poglavlju. Priložite odgovarajuće skice gdje je to prikladno.
+
+Domena aplikacije obuhvaća planinarenje u smislu organiziranja grupnih događaja i komunikaciju između ljudi koji su zainteresirani za planinarenje u grupama.
 
 ## Specifikacija projekta
-Umjesto ovih uputa opišite zahtjeve za funkcionalnošću mobilne aplikacije ili aplikacije za pametne uređaje. Pobrojite osnovne funkcionalnosti i za svaku naznačite ime odgovornog člana tima. Opišite osnovnu buduću arhitekturu programskog proizvoda. Obratite pozornost da mobilne aplikacije često zahtijevaju pozadinske servise. Također uzmite u obzir da bi svaki član tima trebao biti odgovoran za otprilike 3 funkcionalnosti, te da bi opterećenje članova tima trebalo biti ujednačeno. Priložite odgovarajuće dijagrame i skice gdje je to prikladno. Funkcionalnosti sustava bobrojite u tablici ispod koristeći predložak koji slijedi:
 
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
-F01 | Login | Za pristup dnevniku potrebnba je autentikacija korisnika pomoću login funkcionalnosti. Korisnik se logira s podacima koji su mu dodijeljeni prilikom ... | Zlatko Stapić
-F02 | Pregled dnevnika | .... | ...
+F01 | Login i registracija korisnika | Za prvi pristup aplikaciji, potrebna je registracija korisnika pomoću e-maila, korisničkog imena i lozinke. Za pristup aplikaciji potrena je autentikacija korisnika pomoću login funkcionalnosti. Korisnik se logira s pomoću korisničkog imena i lozinke koju je odabrao prilikom registracije.  | Domagoj Petek
+F02 | Upravljanje profilom | Korisnik može promijeniti display ime, dodati opis svojeg profila, promijeniti sliku profila, dodati dodatne pojedinosti o osobnom životu. Korisnik svojem prijatelju može dati preporuku.| Domagoj Petek
+F03 | Upravljanje prijateljima | Korisnik može dodati pojedinačnog prijatelja, pregledati listu prijatelja i informacije o pojedinom prijatelju te izbrisati postojeće prijatelje. | Marin Puškadija
+F04 | Praćenje statistike o korisniku | Aplikacija prati dostignuća korisnika u pozadini (broj koraka, prijeđen broj kilometara, itd.) putem pedmetra na dnevnoj, mjesečnoj i godišnjoj razini | Gabriel Vesel
+F05 | Dodjeljivanje dostignuća ovisno o statistici te kompetitivna ljestvica | Aplikacija dodjeljuje dostignuća korisniku putem obavijesti temeljem statistike u obliku medalja koje mogu biti prikazane na profilu (1km prijeđen, 5 prijatelja dodano, dobivene 3 preporuke, itd.) Nadalje, statistika služi za rangiranje na kompetitvnoj ljestvici među prijateljima. Ljestvica radi na dnevnoj, mjesečnoj i godišnjoj razini. | Gabriel Vesel
+F06 | Kreiranje i upravljanje rutama | Aplikacija omogućuje svim korisnicima da stvaraju rute: početna i završna točka planinarenja, težina rute, naziv rute. Moguća je naknadna izmjena i brisanje rute | Domagoj Petek
+F07 | Upravljanje događajima | Aplikacija omogućuje svim korisnicima da kreiraju događaj: pridruživanje rute (obavezno), vidljivost događaja (svima ili prijateljima samo), ime događaja, vrijeme i datum događaja, očekivana brzina hoda. Moguća je naknadna izmjena i brisanje događaja, pozivanje prijatelja. Vlasnik može pozvati prijatelje na svoj događaj, a oni mogu prihvatiti pozivnicu ili odbiti. Vlasnik mora odobriti ili odbiti svakog korisnika koji njemu pošalje zahtjev za pridruživanje na događaj.  | Marin Puškadija
+F08 | Privatni i grupni chat | Grupni chat je kreiran kad je događaj kreiran i sadrži sve korisnike koji su dodani na događaj. Privatni chat se može započeti sa bilo kojim drugim korisnikom. | Gabriel Vesel
+F09 | Obavijesti | Aplikacija javlja obavijesti za: chat kad dođe nove poruka, događaj kad se promijeni ili izbriše, ostvareno postignuće, novi zahtjev za prijateljstvo, status prijave na događaj (odbijeno ili odobreno). | Marin Puškadija 
 
 ## Tehnologije i oprema
-Umjesto ovih uputa jasno popišite sve tehnologije, alate i opremu koju ćete koristiti pri implementaciji vašeg rješenja. Vaše rješenje može biti implementirano u bilo kojoj tehnologiji za razvoj mobilnih aplikacija ili aplikacija za pametne uređaje osim u hibridnim web tehnologijama kao što su React Native ili HTML+CSS+JS. Tehnologije koje ćete koristiti bi trebale biti javno dostupne, a ako ih ne budemo obrađivali na vježbama u vašoj dokumentaciji ćete morati navesti način preuzimanja, instaliranja i korištenja onih tehnologija koje su neopbodne kako bi se vaš programski proizvod preveo i pokrenuo. Pazite da svi alati koje ćete koristiti moraju imati odgovarajuću licencu. Što se tiče zahtjeva nastavnika, obvezno je koristiti git i GitHub za verzioniranje programskog koda, GitHub Wiki za pisanje jednostavne dokumentacije sukladno uputama mentora, a projektne zadatke je potrebno planirati i pratiti u alatu GitHub projects.
+
+Android Studio - Kotlin
+
+Androi mobitel
+
+OpenStreetMap
 
 ## Baza podataka i web server
-Nastavnici vam mogu pripremiti MySQL bazu podataka i web server na kojem možete postaviti jednostavne php web servise. Ako želite da vam pripremimo ove sustave obavezno to navedite umjesto ovog teksta s napomenom "Trebamo bazu podataka i pristup serveru za PHP skripte". Alternativno, možete koristiti bilo koji online dostupan sustav kao i studentske licence na pojedinim platformama kao što su Heroku ili Azure.
+Trebamo bazu podataka i pristup serveru za PHP skripte.
 
 ## .gitignore
 Uzmite u obzir da je u mapi Software .gitignore konfiguriran za nekoliko tehnologija, ali samo ako će projekti biti smješteni direktno u mapu Software ali ne i u neku pod mapu. Nakon odabira konačne tehnologije i projekta obavezno dopunite/premjestite gitignore kako bi vaš projekt zadovoljavao kriterije koji su opisani u ReadMe.md dokumentu dostupnom u mapi Software.
