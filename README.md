@@ -19,7 +19,7 @@ Nakon vaše prijave bit će vam dodijeljen mentor s kojim ćete tijekom semestra
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime | Seminarska grupa
 ------------  | ------------------- | ----- | --------------------- | ----------------
-Ime i prezime | mojaadresa@foi.hr | 000000000 | githubuser | G01
+Domagoj Petek | dpetek21@student.foi.hr | 1191242810 | dpetek21b | G02
 Ime i prezime | ... | ... | ... | ...
 
 ## Opis domene
