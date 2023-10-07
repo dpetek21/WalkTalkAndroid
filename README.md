@@ -20,7 +20,7 @@ Nakon vaše prijave bit će vam dodijeljen mentor s kojim ćete tijekom semestra
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime | Seminarska grupa
 ------------  | ------------------- | ----- | --------------------- | ----------------
 Domagoj Petek | dpetek21@student.foi.hr | 1191242810 | dpetek21 | G02
-Marin Puškadija | mpuskadij20@studentfoi.hr | 0016149444 | mpuskadij | G02
+Marin Puškadija | mpuskadij20@student.foi.hr | 0016149444 | mpuskadij | G02
 
 ## Opis domene
 Umjesto ovih uputa opišite domenu ili problem koji pokrivate vašim projektom. Domena može biti proizvoljna, ali obratite pozornost da sukladno ishodima učenja, domena omogući primjenu zahtijevanih koncepata kako je to navedeno u sljedećem poglavlju. Priložite odgovarajuće skice gdje je to prikladno.
