@@ -13,7 +13,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/vpFriends"
+        app:layout_constraintBottom_toTopOf="@+id/vp2Friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +35,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vpFriends"
+        android:id="@+id/vp2Friends"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
