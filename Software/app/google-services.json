@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "889918786775",
+    "firebase_url": "https://rampu---walk-talk-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "rampu---walk-talk",
+    "storage_bucket": "rampu---walk-talk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889918786775:android:f75ac516a384e4b131f492",
+        "android_client_info": {
+          "package_name": "hr.foi.rampu.walktalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFsUKWQAHBQql9n556AdP9p4liZoJaKJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
