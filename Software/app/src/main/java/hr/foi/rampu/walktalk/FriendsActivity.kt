@@ -1,12 +1,13 @@
 package hr.foi.rampu.walktalk
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
+
 
 class FriendsActivity : AppCompatActivity() {
 
@@ -36,5 +37,7 @@ class FriendsActivity : AppCompatActivity() {
                 }
             }
         }.attach()
+
+
     }
 }
