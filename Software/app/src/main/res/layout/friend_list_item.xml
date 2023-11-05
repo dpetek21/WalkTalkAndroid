@@ -16,8 +16,8 @@
             android:id="@+id/imgv_friend_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@tools:sample/avatars" />
+            android:layout_weight="1"/>
+            <!--android:src="@tools:sample/avatars" -->
 
         <LinearLayout
             android:id="@+id/ll_vertical"
