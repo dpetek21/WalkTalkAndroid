@@ -30,6 +30,9 @@ class FriendsActivity : AppCompatActivity() {
                 1 -> {
                     tab.text = getString(R.string.pending_friend_requests)
                     tab.icon = AppCompatResources.getDrawable(baseContext,R.drawable.ic_friend_request_pending)
+                    val badge = tab.orCreateBadge
+                    badge.number = 1
+                    //TODO("Badge number mora biti ažuriran sa brojem pending zahtjeva, a ne hardkodiran")
                 }
             }
         }.attach()
