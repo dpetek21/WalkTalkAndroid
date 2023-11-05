@@ -10,7 +10,8 @@ import hr.foi.rampu.walktalk.fragments.PendingFriendsFragment
 
 class FriendsPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager,lifecycle) {
 
-    val fragments = listOf<Fragment>(CurrentFriendsFragment(),PendingFriendsFragment())
+    val fragments = listOf<Fragment>(CurrentFriendsFragment(), PendingFriendsFragment())
+
     override fun getItemCount(): Int {
         return 2
     }
