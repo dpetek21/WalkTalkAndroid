@@ -3,10 +3,10 @@ package hr.foi.rampu.walktalk
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.graphics.drawable.toDrawable
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
 
 class FriendsActivity : AppCompatActivity() {
 
@@ -18,6 +18,8 @@ class FriendsActivity : AppCompatActivity() {
 
         tabLayout = findViewById(R.id.current_incoming_friendsTab)
         viewPager = findViewById(R.id.vp2Friends)
+
+        viewPager.adapter = FriendsPagerAdapter(supportFragmentManager,lifecycle)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
