@@ -38,6 +38,10 @@ class FriendsActivity : AppCompatActivity() {
             }
         }.attach()
 
+        /*
+        TODO("Ako bude vremena (nije kritično za provjeru), osposobiti listenera za promjenu tabova jer zasad se boja ikona ne mijenja kada se dogodi promjena
+            odabira tab-a pa se stvara loš dizajn jer tekst potamni, a ikone ostanu iste boje.")
 
+         */
     }
 }

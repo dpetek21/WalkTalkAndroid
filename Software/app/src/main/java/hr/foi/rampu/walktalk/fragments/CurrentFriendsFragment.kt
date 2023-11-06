@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.helpers.MockFriends
 
 class CurrentFriendsFragment : Fragment() {
+
+    private val mockFriends = MockFriends.getFriends()
 
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
