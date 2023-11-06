@@ -8,4 +8,5 @@ class PrivateChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
     }
+
 }

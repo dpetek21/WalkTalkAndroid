@@ -6,4 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".PrivateChatActivity">
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPrivateChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/edt_private_chat_massage"
+        android:layout_width="357dp"
+        android:layout_height="48dp"
+        android:background="@drawable/message_box_background"
+        android:ems="10"
+        android:hint="Poruka"
+        android:inputType="text"
+        android:paddingLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+    <ImageButton
+        android:id="@+id/imageButton_send"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:contentDescription="Pošalji poruku"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toEndOf="@+id/edt_private_chat_massage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/ic_baseline_send_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
