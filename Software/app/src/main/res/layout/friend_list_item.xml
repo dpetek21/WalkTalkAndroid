@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_friend"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:elevation="10dp">
+    android:layout_height="120dp"
+    android:elevation="10dp"
+    android:layout_marginBottom="3dp">
 
     <LinearLayout
         android:id="@+id/ll_friend_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgv_friend_profile_picture"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-            <!--android:src="@tools:sample/avatars" -->
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_user" />
 
         <LinearLayout
             android:id="@+id/ll_vertical"
@@ -30,14 +31,20 @@
                 android:id="@+id/txtv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="" />
 
             <Button
                 android:id="@+id/btn_chat"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:text="@string/chat" />
+                android:layout_height="50dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginTop="45dp"
+                android:textAllCaps="true"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/brown"
+                android:text="@string/chat"
+                app:cornerRadius="0dp" />
 
         </LinearLayout>
 
