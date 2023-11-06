@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.adapters.FriendsAdapter
 import hr.foi.rampu.walktalk.helpers.MockFriends
 
 class CurrentFriendsFragment : Fragment() {
@@ -24,5 +26,7 @@ class CurrentFriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.rv_current_friends)
+        recyclerView.adapter = FriendsAdapter(mockFriends)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
     }
 }
