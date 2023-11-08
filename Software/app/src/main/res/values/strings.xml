@@ -4,4 +4,6 @@
     <string name="friends">Friends</string>
     <string name="pending_friend_requests">Pending requests</string>
     <string name="chat">Chat</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 </resources>
