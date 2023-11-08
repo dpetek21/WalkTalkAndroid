@@ -1,54 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#102820"
+    android:backgroundTint="#102820"
     tools:context=".LoginActivity">
-
-  <TextView
-      android:id="@+id/Email"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="18dp"
-      android:text="Email"
-      app:layout_constraintBottom_toTopOf="@+id/EmailTextBox"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
 
   <EditText
       android:id="@+id/EmailTextBox"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="281dp"
+      android:layout_height="66dp"
       android:layout_marginBottom="26dp"
+      android:background="@color/textboxBackground"
       android:ems="10"
+      android:hint="E-mail/Tel. broj"
       android:inputType="textEmailAddress"
+      android:textColorHint="@color/m3_hint_foreground"
       app:layout_constraintBottom_toTopOf="@+id/PasswordTextBox"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-  <TextView
-      android:id="@+id/Password"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="29dp"
-      android:layout_marginBottom="27dp"
-      android:text="Password"
-      app:layout_constraintBottom_toTopOf="@+id/PasswordTextBox"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.501"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/EmailTextBox" />
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.755" />
 
   <EditText
       android:id="@+id/PasswordTextBox"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="281dp"
+      android:layout_height="66dp"
+      android:background="@color/textboxBackground"
       android:ems="10"
+      android:hint="Password"
       android:inputType="textPassword"
+      android:textColor="#4D2D18"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +47,22 @@
       android:text="Login"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/PasswordTextBox" />
+      app:layout_constraintTop_toBottomOf="@+id/PasswordTextBox"
+      app:layout_constraintVertical_bias="0.024" />
+
+  <Button
+      android:id="@+id/LoginRegisterButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="45dp"
+      android:layout_marginBottom="156dp"
+      android:text="Register"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/PasswordTextBox"
+      app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
