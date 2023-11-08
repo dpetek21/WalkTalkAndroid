@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
+import hr.foi.rampu.walktalk.helpers.MockFriends
 
 
 class FriendsActivity : AppCompatActivity() {
@@ -17,8 +18,10 @@ class FriendsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
 
+
         tabLayout = findViewById(R.id.current_incoming_friendsTab)
         viewPager = findViewById(R.id.vp2Friends)
+
 
         viewPager.adapter = FriendsPagerAdapter(supportFragmentManager,lifecycle)
 
@@ -32,7 +35,7 @@ class FriendsActivity : AppCompatActivity() {
                     tab.text = getString(R.string.pending_friend_requests)
                     tab.icon = AppCompatResources.getDrawable(baseContext,R.drawable.ic_friend_request_pending)
                     val badge = tab.orCreateBadge
-                    badge.number = 1
+                    badge.number = MockFriends.getFriends().size
                     //TODO("Badge number mora biti ažuriran sa brojem pending zahtjeva, a ne hardkodiran")
                 }
             }
