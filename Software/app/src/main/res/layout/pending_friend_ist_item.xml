@@ -42,7 +42,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_reject"
+                    android:id="@+id/btn_decline"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
