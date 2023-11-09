@@ -24,8 +24,8 @@
 
     <EditText
         android:id="@+id/edt_private_chat_massage"
-        android:layout_width="357dp"
-        android:layout_height="48dp"
+        android:layout_width="302dp"
+        android:layout_height="51dp"
         android:background="@drawable/message_box_background"
         android:ems="10"
         android:hint="Poruka"
