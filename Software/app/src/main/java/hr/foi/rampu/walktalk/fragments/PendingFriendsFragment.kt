@@ -14,7 +14,7 @@ import hr.foi.rampu.walktalk.helpers.MockFriends
 
 class PendingFriendsFragment : Fragment() {
 
-    private val mockFriends = MockFriends.getFriends()
+    private var mockFriends = MockFriends.getPendingFriends()
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
