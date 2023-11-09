@@ -3,17 +3,22 @@ package hr.foi.rampu.walktalk.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.entities.Friend
 
-class PendingFriendsAdapter(val friendsList : List<Friend>) : RecyclerView.Adapter<PendingFriendsAdapter.PendingFriendsViewHolder>() {
+class PendingFriendsAdapter(val friendsList : MutableList<Friend>) : RecyclerView.Adapter<PendingFriendsAdapter.PendingFriendsViewHolder>() {
     inner class PendingFriendsViewHolder(view: View) : RecyclerView.ViewHolder(view)
     {
-        private val username : TextView
+         val username : TextView
+         val btnAccept : Button
+         val btnDecline : Button
         init {
             username = view.findViewById(R.id.txtv_username_pending_friend)
+            btnAccept = view.findViewById(R.id.btn_accept)
+            btnDecline = view.findViewById(R.id.btn_decline)
         }
 
         fun bind(friend: Friend)
@@ -35,5 +40,13 @@ class PendingFriendsAdapter(val friendsList : List<Friend>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: PendingFriendsViewHolder, position: Int) {
         holder.bind(friendsList[position])
+        holder.btnAccept.setOnClickListener {
+
+        }
+
+        holder.btnDecline.setOnClickListener {
+            friendsList.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 }
