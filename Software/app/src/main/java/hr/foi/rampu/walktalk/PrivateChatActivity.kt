@@ -7,8 +7,10 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import hr.foi.rampu.walktalk.klase_za_chat.Message
 
@@ -39,12 +41,14 @@ class PrivateChatActivity : AppCompatActivity() {
     private fun sendMessage(){
         val text = chatText.text
         if(text.toString() != ""){
-            val message = Message(text.toString(), "1", "2")
-            val messageRef = databaseReference.child("messages").push().setValue(message)
+            val message = Message(text.toString(), "1", "5")
+
+            val checkForNode = FirebaseDatabase.getInstance("https://rampu---walk-talk-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("/messages/Sender: ${message.sender}, Receiver: ${message.receiver}")
+            checkForNode.push().setValue(message)
             text.clear()
         }
     }
-
 
 
 }
