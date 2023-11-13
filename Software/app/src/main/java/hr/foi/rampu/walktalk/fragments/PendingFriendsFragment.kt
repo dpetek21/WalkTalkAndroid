@@ -5,16 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.adapters.PendingFriendsAdapter
-import hr.foi.rampu.walktalk.helpers.MockFriends
+import hr.foi.rampu.walktalk.database.DatabaseFriend
+import kotlinx.coroutines.launch
 
 
 class PendingFriendsFragment : Fragment() {
 
-    private var mockFriends = MockFriends.getPendingFriends()
+    private val loggedUser = "admin"
+
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,8 +28,17 @@ class PendingFriendsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = view.findViewById(R.id.rv_pending_friends)
-        recyclerView.adapter = PendingFriendsAdapter(mockFriends)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        lifecycleScope.launch {
+            recyclerView = view.findViewById(R.id.rv_pending_friends)
+            getFriendRequests()
+            recyclerView.layoutManager = LinearLayoutManager(view.context)
+        }
+
     }
+
+    private suspend fun getFriendRequests() {
+        val friends = DatabaseFriend.getPendingFriendRequests(loggedUser)
+        recyclerView.adapter = PendingFriendsAdapter(friends)
+    }
+
 }
