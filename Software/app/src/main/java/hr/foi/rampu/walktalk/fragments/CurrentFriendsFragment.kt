@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class CurrentFriendsFragment : Fragment() {
 
-    private val loggedUser = "admin"
 
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
@@ -37,7 +36,7 @@ class CurrentFriendsFragment : Fragment() {
     }
 
     private suspend fun getFriends() {
-        val friends = DatabaseFriend.getFriendsOfUser(loggedUser)
+        val friends = DatabaseFriend.getFriendsOfUser()
         recyclerView.adapter = FriendsAdapter(friends)
     }
 }

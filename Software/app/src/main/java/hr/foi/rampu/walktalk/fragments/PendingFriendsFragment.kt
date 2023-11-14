@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class PendingFriendsFragment : Fragment() {
 
-    private val loggedUser = "admin"
 
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
@@ -37,7 +36,7 @@ class PendingFriendsFragment : Fragment() {
     }
 
     private suspend fun getFriendRequests() {
-        val friends = DatabaseFriend.getPendingFriendRequests(loggedUser)
+        val friends = DatabaseFriend.getPendingFriendRequests()
         recyclerView.adapter = PendingFriendsAdapter(friends)
     }
 
