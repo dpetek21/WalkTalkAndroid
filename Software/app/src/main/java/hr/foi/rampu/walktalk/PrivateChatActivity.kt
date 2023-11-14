@@ -60,7 +60,12 @@ class PrivateChatActivity : AppCompatActivity() {
             val conversationExists1 = conversationQuery(message.sender, message.receiver)
             val conversationExist2 = conversationQuery(message.receiver, message.sender)
 
-
+            lifecycleScope.launch {
+                if(!saveMessage(conversationExists1, message)){
+                    if(!saveMessage(conversationExist2, message))
+                        saveNewMessage(users, message)
+                }
+            }
         }
     }
 
