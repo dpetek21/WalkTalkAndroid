@@ -4,14 +4,15 @@ import android.util.Log
 
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import hr.foi.rampu.walktalk.entities.Friend
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 object DatabaseFriend {
-
-    suspend fun getFriendsOfUser(username: String): MutableList<Friend> = coroutineScope {
+    var username: String = "admin"
+    suspend fun getFriendsOfUser(): MutableList<Friend> = coroutineScope {
         val database = Firebase.firestore
         val friends : MutableList<Friend> = mutableListOf()
         val userCollection = database.collection("users")
@@ -26,7 +27,7 @@ object DatabaseFriend {
                         Log.d("INFO", it.path)
                         val databaseUsername = it.path.split("/")[1]
                         Log.d("INFO", databaseUsername)
-                        friends.add(Friend(username))
+                        friends.add(Friend(databaseUsername))
                     }
 
                     Log.d("INFO", "$friends")
@@ -43,4 +44,50 @@ object DatabaseFriend {
             .await()
         friends
     }
+
+    suspend fun getPendingFriendRequests(): MutableList<Friend> = coroutineScope {
+        val database = Firebase.firestore
+        val pendingFriendRequests : MutableList<Friend> = mutableListOf()
+        val userCollection = database.collection("users")
+
+        val loggedUserDocument = userCollection.document(username)
+
+        loggedUserDocument.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val pendingFriendsDocuments = document.get("pending_friend_requests") as? List<DocumentReference>
+                    pendingFriendsDocuments?.forEach {
+                        Log.d("INFO", it.path)
+                        val databaseUsername = it.path.split("/")[1]
+                        Log.d("INFO", databaseUsername)
+                        pendingFriendRequests.add(Friend(databaseUsername))
+                    }
+
+                    Log.d("INFO", "$pendingFriendRequests")
+                } else {
+                    Log.d("INFO", "No such document")
+                }
+
+
+            }
+
+            .addOnFailureListener { exception ->
+                Log.d("INFO", "get failed with ", exception)
+            }
+            .await()
+        pendingFriendRequests
+    }
+
+     fun removeFriend(friendToRemove : Friend) {
+         val friendUsername = friendToRemove.username
+         val database = Firebase.firestore
+         val userCollection = database.collection("users")
+         val loggedUserDocument = userCollection.document(username)
+         loggedUserDocument.update(
+             "pending_friend_requests",
+             FieldValue.arrayRemove( "/users/$friendUsername")
+         )
+     }
+
+
 }
