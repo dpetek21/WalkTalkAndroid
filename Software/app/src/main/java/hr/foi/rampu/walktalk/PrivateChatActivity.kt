@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
@@ -13,8 +14,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import hr.foi.rampu.walktalk.klase_za_chat.Message
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 class PrivateChatActivity : AppCompatActivity() {
@@ -26,7 +31,9 @@ class PrivateChatActivity : AppCompatActivity() {
     private lateinit var receiver: String
     private lateinit var database: FirebaseFirestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
 
@@ -34,31 +41,62 @@ class PrivateChatActivity : AppCompatActivity() {
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
         database = FirebaseFirestore.getInstance()
 
-        sendButton.setOnClickListener{
+        sendButton.setOnClickListener {
             sendMessage()
             chatText.text.clear()
         }
 
     }
 
-    private fun sendMessage(){
+    private fun sendMessage() {
         val text = chatText.text
-        if(text.toString() != ""){
+        if (text.toString() != "") {
 
-            val message = Message(text.toString(), "1", "2")
+            val message = Message(text.toString(), "16", "1")
             val users = hashMapOf(
-                "User1" to message.sender,
-                "User2" to message.receiver
+                "Users" to listOf(message.sender, message.receiver)
             )
-            val messageChannel = database.collection("messages").document(UUID.randomUUID().toString())
-            messageChannel.set(users).addOnSuccessListener {
-                messageChannel.collection("private_messages")
-                    .document(UUID.randomUUID().toString())
-                    .set(message)
-            }
+
+            val conversationExists1 = conversationQuery(message.sender, message.receiver)
+            val conversationExist2 = conversationQuery(message.receiver, message.sender)
+
 
         }
     }
 
+    private fun conversationQuery(user1: String?, user2: String?): Query {
 
+        return database.collection("messages")
+            .whereEqualTo("Users", listOf(user1, user2))
+    }
+
+    private suspend fun saveMessage(conversation: Query, message: Message): Boolean {
+        var provjera: Boolean = false
+        val users = hashMapOf(
+            "Users" to listOf(message.sender, message.receiver)
+        )
+        conversation.get()
+            .addOnSuccessListener { result ->
+                if (!result.isEmpty) {
+                    provjera = true
+                    val conversationDocument = result.documents[0].reference
+                    conversationDocument.collection("private_messages")
+                        .document(UUID.randomUUID().toString())
+                        .set(message)
+                    Log.i("SpremiPoruku", "SaveMessage unutar funkcije je uspio")
+                }
+            }.await()
+
+        return provjera;
+    }
+
+    private fun saveNewMessage(users: HashMap<String, List<String?>>, message: Message) {
+        val messageChannel =
+            database.collection("messages").document(UUID.randomUUID().toString())
+        messageChannel.set(users).addOnSuccessListener {
+            messageChannel.collection("private_messages")
+                .document(UUID.randomUUID().toString())
+                .set(message)
+        }
+    }
 }
