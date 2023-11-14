@@ -40,13 +40,14 @@ class PendingFriendsAdapter(val friendsList : MutableList<Friend>) : RecyclerVie
 
     override fun onBindViewHolder(holder: PendingFriendsViewHolder, position: Int) {
         holder.bind(friendsList[position])
-        holder.btnAccept.setOnClickListener {
-
-        }
 
         holder.btnDecline.setOnClickListener {
-            friendsList.removeAt(position)
-            notifyItemRemoved(position)
+            friendsList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
+            //DatabaseFriend.removeFriend(friendsList[position])
         }
+
+
     }
+
 }
