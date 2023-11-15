@@ -3,11 +3,13 @@ package hr.foi.rampu.walktalk
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
-import hr.foi.rampu.walktalk.helpers.MockFriends
+import hr.foi.rampu.walktalk.database.DatabaseFriend
+import kotlinx.coroutines.launch
 
 
 class FriendsActivity : AppCompatActivity() {
@@ -35,7 +37,9 @@ class FriendsActivity : AppCompatActivity() {
                     tab.text = getString(R.string.pending_friend_requests)
                     tab.icon = AppCompatResources.getDrawable(baseContext,R.drawable.ic_friend_request_pending)
                     val badge = tab.orCreateBadge
-                    badge.number = MockFriends.getFriends().size
+                    lifecycleScope.launch {
+                        badge.number = DatabaseFriend.getPendingFriendRequests().size
+                    }
                     //TODO("Badge number mora biti ažuriran sa brojem pending zahtjeva, a ne hardkodiran")
                 }
             }
