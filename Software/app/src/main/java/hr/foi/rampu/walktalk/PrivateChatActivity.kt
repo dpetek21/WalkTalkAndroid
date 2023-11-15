@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -52,7 +53,7 @@ class PrivateChatActivity : AppCompatActivity() {
 
 
         database = FirebaseFirestore.getInstance()
-        lifecycleScope.launch { fetchMessagesIntoAList() }
+        fetchMessagesIntoAList()
         messageAdapter = MessageAdapter(this, messageList, sender)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -61,7 +62,7 @@ class PrivateChatActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             sendMessage()
-            messageList.add(Message(chatText.text.toString(), sender, receiver))
+            messageList.add(Message(chatText.text.toString(), sender, receiver, Timestamp.now()))
             messageAdapter.notifyDataSetChanged()
             chatText.text.clear()
         }
@@ -73,7 +74,7 @@ class PrivateChatActivity : AppCompatActivity() {
         val text = chatText.text
         if (text.toString() != "") {
 
-            val message = Message(text.toString(), sender, receiver)
+            val message = Message(text.toString(), sender, receiver, Timestamp.now())
             val users = hashMapOf(
                 "Users" to listOf(message.sender, message.receiver)
             )
@@ -126,24 +127,27 @@ class PrivateChatActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun fetchMessagesIntoAList(){
+    private fun fetchMessagesIntoAList(){
         messageList.clear()
         val converastion1 = conversationQuery(sender, receiver)
         converastion1.get().addOnSuccessListener { result->
             if(!result.isEmpty){
                 result.documents[0].reference.collection("private_messages")
+                    .orderBy("timestamp")
                     .get().addOnSuccessListener { documents->
                         for(document in documents){
                             val text = document["message"].toString()
                             val senderData = document["sender"].toString()
                             val receiverData = document["receiver"].toString()
-                            messageList.add(Message(text, senderData, receiverData))
+                            messageList.add(Message(text, senderData, receiverData, Timestamp.now()))
                         }
                         messageAdapter.notifyDataSetChanged()
                         chatRecyclerView.scrollToPosition(messageList.size - 1)
                     }
             }
-        }.await()
+        }
     }
+
+
 
 }
