@@ -82,11 +82,18 @@ object DatabaseFriend {
          val friendUsername = friendToRemove.username
          val database = Firebase.firestore
          val userCollection = database.collection("users")
-         val loggedUserDocument = userCollection.document(username)
-         loggedUserDocument.update(
-             "pending_friend_requests",
-             FieldValue.arrayRemove( "/users/$friendUsername")
-         )
+         val documentOfLoggedInUser = userCollection.document(username)
+         val friendDocumentReference = userCollection.document(friendUsername)
+
+         documentOfLoggedInUser.update(
+               "pending_friend_requests",
+             FieldValue.arrayRemove(friendDocumentReference)
+         ).addOnSuccessListener {
+             Log.i("SUCCESSDELETEFRIENDFROMFIRESTORE", "Friend ${friendUsername} deleted successfully from Firestore!")
+         }
+             .addOnFailureListener {
+                 Log.e("FAILDELETEFRIENDFROMFIRESTORE", it.toString())
+             }
      }
 
 
