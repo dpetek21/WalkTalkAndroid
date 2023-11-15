@@ -44,16 +44,19 @@ class PrivateChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_private_chat)
 
 
-        sender = "Marko"
-        receiver = "Franko"
+        sender = "Antonio"
+        receiver = "Marko"
         messageList = ArrayList()
         chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
 
+        supportActionBar?.title = receiver
+
 
         database = FirebaseFirestore.getInstance()
-        fetchMessagesIntoAList()
+        fetchMessagesIntoAList(sender, receiver)
+        fetchMessagesIntoAList(receiver, sender)
         messageAdapter = MessageAdapter(this, messageList, sender)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -127,9 +130,9 @@ class PrivateChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchMessagesIntoAList(){
+    private fun fetchMessagesIntoAList(user1: String, user2:String){
         messageList.clear()
-        val converastion1 = conversationQuery(sender, receiver)
+        val converastion1 = conversationQuery(user1, user2)
         converastion1.get().addOnSuccessListener { result->
             if(!result.isEmpty){
                 result.documents[0].reference.collection("private_messages")
