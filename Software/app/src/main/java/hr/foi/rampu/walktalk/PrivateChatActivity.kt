@@ -17,6 +17,7 @@ import com.google.firebase.database.database
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import hr.foi.rampu.walktalk.adapteri_za_chat.MessageAdapter
 import hr.foi.rampu.walktalk.klase_za_chat.Message
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -27,6 +28,8 @@ class PrivateChatActivity : AppCompatActivity() {
     private lateinit var chatText: EditText
     private lateinit var sendButton: ImageButton
     private lateinit var chatRecyclerView: RecyclerView
+    private lateinit var messageList: ArrayList<Message>
+    private lateinit var messageAdapter: MessageAdapter
     private lateinit var sender: String
     private lateinit var receiver: String
     private lateinit var database: FirebaseFirestore
@@ -37,8 +40,13 @@ class PrivateChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
 
+        sender = "Franko"
+        receiver = "Marko"
+        messageList = ArrayList()
+        chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
+        messageAdapter = MessageAdapter(this, messageList, sender)
         database = FirebaseFirestore.getInstance()
 
         sendButton.setOnClickListener {
@@ -52,7 +60,7 @@ class PrivateChatActivity : AppCompatActivity() {
         val text = chatText.text
         if (text.toString() != "") {
 
-            val message = Message(text.toString(), "16", "1")
+            val message = Message(text.toString(), sender, receiver)
             val users = hashMapOf(
                 "Users" to listOf(message.sender, message.receiver)
             )
