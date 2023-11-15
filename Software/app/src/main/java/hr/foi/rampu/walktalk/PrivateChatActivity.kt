@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +38,8 @@ class PrivateChatActivity : AppCompatActivity() {
     private lateinit var sender: String
     private lateinit var receiver: String
     private lateinit var database: FirebaseFirestore
+    private lateinit var toolbarBackIcon: ImageView
+    private lateinit var toolbarTitle: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +47,14 @@ class PrivateChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
 
+        toolbarBackIcon = findViewById(R.id.imageView_toolbar_private_chat)
+        toolbarTitle = findViewById(R.id.txt_toolbar_private_chat)
 
         sender = "Antonio"
         receiver = "Marko"
+
+        toolbarTitle.text = receiver
+
         messageList = ArrayList()
         chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
