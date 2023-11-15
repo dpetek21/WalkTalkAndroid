@@ -11,7 +11,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 object DatabaseFriend {
-    private var username: String = "admin"
+    var username: String = "admin"
     suspend fun getFriendsOfUser(): MutableList<Friend> = coroutineScope {
         val database = Firebase.firestore
         val friends : MutableList<Friend> = mutableListOf()
