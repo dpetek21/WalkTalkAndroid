@@ -11,7 +11,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 object DatabaseFriend {
-    var username: String = "admin"
+    private var username: String = "admin"
     suspend fun getFriendsOfUser(): MutableList<Friend> = coroutineScope {
         val database = Firebase.firestore
         val friends : MutableList<Friend> = mutableListOf()
@@ -89,12 +89,41 @@ object DatabaseFriend {
                "pending_friend_requests",
              FieldValue.arrayRemove(friendDocumentReference)
          ).addOnSuccessListener {
-             Log.i("SUCCESSDELETEFRIENDFROMFIRESTORE", "Friend ${friendUsername} deleted successfully from Firestore!")
+             Log.i("SUCCESSDELETEFRIENDFROMFIRESTORE", "Friend $friendUsername deleted successfully from Firestore!")
          }
              .addOnFailureListener {
                  Log.e("FAILDELETEFRIENDFROMFIRESTORE", it.toString())
              }
      }
+
+    fun addNewFriend(friendToAdd : Friend)
+    {
+        val friendUsername = friendToAdd.username
+        val database = Firebase.firestore
+        val userCollection = database.collection("users")
+        val documentOfLoggedInUser = userCollection.document(username)
+        val friendDocumentReference = userCollection.document(friendUsername)
+
+        documentOfLoggedInUser.update(
+            "friends",
+            FieldValue.arrayUnion(friendDocumentReference)
+        ).addOnSuccessListener {
+            Log.i("SUCCESSADDFRIENDTOFIRESTORE", "Friend $friendUsername add successfully to Firestore!")
+        }
+            .addOnFailureListener {
+                Log.e("FAILADDFRIENDTOFIRESTORE", it.toString())
+            }
+
+        friendDocumentReference.update(
+            "friends",
+            FieldValue.arrayUnion(documentOfLoggedInUser)
+        ).addOnSuccessListener {
+            Log.i("SUCCESSADDFRIENDTOFIRESTORE", "Friend $username add successfully to Firestore!")
+        }
+            .addOnFailureListener {
+                Log.e("FAILADDFRIENDTOFIRESTORE", it.toString())
+            }
+    }
 
 
 }
