@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
@@ -17,6 +18,7 @@ import com.google.firebase.database.database
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.dataObjects
 import hr.foi.rampu.walktalk.adapteri_za_chat.MessageAdapter
 import hr.foi.rampu.walktalk.klase_za_chat.Message
 import kotlinx.coroutines.launch
@@ -40,17 +42,24 @@ class PrivateChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
 
-        sender = "Franko"
-        receiver = "Marko"
+        sender = "Marko"
+        receiver = "Franko"
         messageList = ArrayList()
         chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
         messageAdapter = MessageAdapter(this, messageList, sender)
+
+
         database = FirebaseFirestore.getInstance()
+        fetchMessagesIntoAList()
+
+        chatRecyclerView.layoutManager = LinearLayoutManager(this)
+        chatRecyclerView.adapter = messageAdapter
 
         sendButton.setOnClickListener {
             sendMessage()
+            fetchMessagesIntoAList()
             chatText.text.clear()
         }
 
@@ -112,4 +121,24 @@ class PrivateChatActivity : AppCompatActivity() {
                 .set(message)
         }
     }
+
+    private fun fetchMessagesIntoAList(){
+        messageList.clear()
+        val converastion1 = conversationQuery(sender, receiver)
+        converastion1.get().addOnSuccessListener { result->
+            if(!result.isEmpty){
+                result.documents[0].reference.collection("private_messages")
+                    .get().addOnSuccessListener { documents->
+                        for(document in documents){
+                            val text = document["message"].toString()
+                            val senderData = document["sender"].toString()
+                            val receiverData = document["receiver"].toString()
+                            messageList.add(Message(text, senderData, receiverData))
+                            messageAdapter.notifyDataSetChanged()
+                        }
+                    }
+            }
+        }
+    }
+
 }

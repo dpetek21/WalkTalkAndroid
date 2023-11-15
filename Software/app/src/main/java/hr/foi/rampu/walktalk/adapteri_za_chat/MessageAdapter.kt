@@ -40,7 +40,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>, 
 
         val currentMessage = messageList[position]
 
-        if(holder.javaClass == SentMessageViewHolder::class.java){
+        /*if(holder.javaClass == SentMessageViewHolder::class.java){
             //for sent view holder
             val viewHolder = holder as SentMessageViewHolder
             holder.sentMessage.text = currentMessage.message
@@ -48,6 +48,14 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>, 
         }else{
             //for receive view holder
             val viewHolder = holder as ReceiveMessageViewHolder
+            holder.receivedMessage.text = currentMessage.message
+        }*/
+
+        if (holder is SentMessageViewHolder) {
+            // For sent view holder
+            holder.sentMessage.text = currentMessage.message
+        } else if (holder is ReceiveMessageViewHolder) {
+            // For receive view holder
             holder.receivedMessage.text = currentMessage.message
         }
 
