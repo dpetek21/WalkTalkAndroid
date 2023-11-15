@@ -42,26 +42,30 @@ class PrivateChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_chat)
 
+
         sender = "Marko"
         receiver = "Franko"
         messageList = ArrayList()
         chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
-        messageAdapter = MessageAdapter(this, messageList, sender)
 
 
         database = FirebaseFirestore.getInstance()
-        fetchMessagesIntoAList()
+        lifecycleScope.launch { fetchMessagesIntoAList() }
+        messageAdapter = MessageAdapter(this, messageList, sender)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
+
         sendButton.setOnClickListener {
             sendMessage()
-            fetchMessagesIntoAList()
+            messageList.add(Message(chatText.text.toString(), sender, receiver))
+            messageAdapter.notifyDataSetChanged()
             chatText.text.clear()
         }
+
 
     }
 
@@ -122,7 +126,7 @@ class PrivateChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchMessagesIntoAList(){
+    private suspend fun fetchMessagesIntoAList(){
         messageList.clear()
         val converastion1 = conversationQuery(sender, receiver)
         converastion1.get().addOnSuccessListener { result->
@@ -134,11 +138,12 @@ class PrivateChatActivity : AppCompatActivity() {
                             val senderData = document["sender"].toString()
                             val receiverData = document["receiver"].toString()
                             messageList.add(Message(text, senderData, receiverData))
-                            messageAdapter.notifyDataSetChanged()
                         }
+                        messageAdapter.notifyDataSetChanged()
+                        chatRecyclerView.scrollToPosition(messageList.size - 1)
                     }
             }
-        }
+        }.await()
     }
 
 }
