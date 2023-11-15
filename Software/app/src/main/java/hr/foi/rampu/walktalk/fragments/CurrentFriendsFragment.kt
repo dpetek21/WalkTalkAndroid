@@ -34,6 +34,13 @@ class CurrentFriendsFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(view.context)
         }
     }
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch {
+            getFriends()
+        }
+    }
 
     private suspend fun getFriends() {
         val friends = DatabaseFriend.getFriendsOfUser()
