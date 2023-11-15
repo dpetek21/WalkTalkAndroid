@@ -7,14 +7,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.DatabaseFriend
 import hr.foi.rampu.walktalk.entities.Friend
 
 class PendingFriendsAdapter(val friendsList : MutableList<Friend>) : RecyclerView.Adapter<PendingFriendsAdapter.PendingFriendsViewHolder>() {
+
     inner class PendingFriendsViewHolder(view: View) : RecyclerView.ViewHolder(view)
     {
          val username : TextView
          val btnAccept : Button
          val btnDecline : Button
+
         init {
             username = view.findViewById(R.id.txtv_username_pending_friend)
             btnAccept = view.findViewById(R.id.btn_accept)
@@ -41,10 +44,17 @@ class PendingFriendsAdapter(val friendsList : MutableList<Friend>) : RecyclerVie
     override fun onBindViewHolder(holder: PendingFriendsViewHolder, position: Int) {
         holder.bind(friendsList[position])
 
-        holder.btnDecline.setOnClickListener {
+        holder.btnAccept.setOnClickListener {
+            DatabaseFriend.addNewFriend(friendsList[holder.adapterPosition])
+            DatabaseFriend.removeFriend(friendsList[holder.adapterPosition])
             friendsList.removeAt(holder.adapterPosition)
             notifyItemRemoved(holder.adapterPosition)
-            //DatabaseFriend.removeFriend(friendsList[position])
+        }
+
+        holder.btnDecline.setOnClickListener {
+            DatabaseFriend.removeFriend(friendsList[holder.adapterPosition])
+            friendsList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
         }
 
 
