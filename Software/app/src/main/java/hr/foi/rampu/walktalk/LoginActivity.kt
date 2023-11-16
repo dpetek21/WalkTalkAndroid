@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         }
         val login : Button = findViewById(R.id.loginButton)
         login.setOnClickListener{
-            sendLogin();
+            sendLogin()
         }
 
     }
@@ -37,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
         tryLogin(username, password)
     }
     private fun tryLogin(username: String, password: String) {
-
-        if(LoginRegisterHandler.checkLogin(username,password)){
+        val handler = LoginRegisterHandler()
+        if(handler.checkLogin(username,password)){
             val message = "Login successful!"
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             //prelazak na sljedecu aktivnost

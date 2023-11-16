@@ -51,7 +51,8 @@ class RegisterActivity : AppCompatActivity() {
             "email" to email,
             "password" to password
         )
-        LoginRegisterHandler.addUser(username,values)
+        val handler = LoginRegisterHandler()
+        handler.addUser(username,values)
         val message = "Registration successful:\nusername: $username\nName and Surname: $nameSurname\nEmail: $email\nPassword: $password"
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }

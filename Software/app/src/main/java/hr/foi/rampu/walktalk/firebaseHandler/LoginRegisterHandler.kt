@@ -2,7 +2,7 @@ package hr.foi.rampu.walktalk.firebaseHandler
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-object LoginRegisterHandler {
+class LoginRegisterHandler {
     val db = FirebaseFirestore.getInstance()
     val users= db.collection("users")
     fun addUser(userId: String, userData: Map<String, Any>) {
@@ -32,6 +32,27 @@ object LoginRegisterHandler {
             }
     }
     fun checkLogin(userId: String, password: String): Boolean{
-        return true;
+        var isgood=0
+        //var usermap: Map<String,Any>
+        users
+            .whereEqualTo("email", userId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+
+                     val user = querySnapshot.documents[0]
+                     val usermap = user.data as Map<String,Any>
+                    if(usermap[password]==password){
+                        isgood++
+                    }
+                } else {
+                }
+            }
+            .addOnFailureListener { e ->
+            }
+        if(isgood==1) {
+            return true
+        }
+        return false
     }
 }
