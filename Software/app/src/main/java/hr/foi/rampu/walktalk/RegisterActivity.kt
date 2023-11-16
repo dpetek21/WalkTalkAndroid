@@ -1,5 +1,6 @@
 package hr.foi.rampu.walktalk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -44,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registrationHandler(username: String, nameSurname: String, email: String, password: String) {
-        var nameSurnameSplitted =nameSurname.split(" ")
+        val nameSurnameSplitted =nameSurname.split(" ")
         val values: Map<String, Any> = mapOf(
             "name" to nameSurnameSplitted[0],
             "surname" to nameSurnameSplitted[1],
@@ -55,6 +56,8 @@ class RegisterActivity : AppCompatActivity() {
         handler.addUser(username,values)
         val message = "Registration successful:\nusername: $username\nName and Surname: $nameSurname\nEmail: $email\nPassword: $password"
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
 }
