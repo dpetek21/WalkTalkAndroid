@@ -70,6 +70,10 @@ class PrivateChatActivity : AppCompatActivity() {
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
+        toolbarBackIcon.setOnClickListener{
+            this.finish()
+        }
+
 
         sendButton.setOnClickListener {
             sendMessage()
