@@ -52,10 +52,17 @@ class RegisterActivity : AppCompatActivity() {
             "password" to password
         )
         val handler = LoginRegisterHandler()
-        handler.addUser(username,values)
-        val message = "Registration successful:\nusername: $username\nName and Surname: $nameSurname\nEmail: $email\nPassword: $password"
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        handler.getUser(username){user ->
+            if(user!=null){
+                val message = "Registration unsuccessful, username taken:\nusername: $username\nName and Surname: $nameSurname\nEmail: $email\nPassword: $password"
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }else {
+                handler.addUser(username,values)
+                val message = "Registration successful:\nusername: $username\nName and Surname: $nameSurname\nEmail: $email\nPassword: $password"
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
