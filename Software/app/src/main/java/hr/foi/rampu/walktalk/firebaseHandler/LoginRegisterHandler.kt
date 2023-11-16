@@ -31,7 +31,7 @@ class LoginRegisterHandler {
                 callback(null)
             }
     }
-    fun checkLogin(userId: String, password: String): Boolean{
+    fun checkLogin(userId: String, password: String, callback: (Boolean) -> Unit){
         var isgood=0
         //var usermap: Map<String,Any>
         users
@@ -49,17 +49,18 @@ class LoginRegisterHandler {
                     if(storedPassword==password){
                         isgood++
                         Log.d("LoginRegisterHandler", "Password pase")
+                        callback(true)
+                    }else{
+                        callback(false)
                     }
                 } else {
                     Log.d("LoginRegisterHandler", "Nema user s tim mailom")
+                    callback(false)
                 }
             }
             .addOnFailureListener { e ->
                 Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
+                callback(false)
             }
-        if(isgood==1) {
-            return true
-        }
-        return false
     }
 }

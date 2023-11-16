@@ -38,13 +38,15 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun tryLogin(username: String, password: String) {
         val handler = LoginRegisterHandler()
-        if(handler.checkLogin(username,password)){
-            val message = "Login successful!"
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            //prelazak na sljedecu aktivnost
-        }else{
-            val message = "Login unsuccessful: check your inputs"
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        handler.checkLogin(username,password){ isSucess ->
+            if(isSucess){
+                val message = "Login successful!"
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                //prelazak na sljedecu aktivnost
+            }else{
+                val message = "Login unsuccessful: check your inputs"
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
