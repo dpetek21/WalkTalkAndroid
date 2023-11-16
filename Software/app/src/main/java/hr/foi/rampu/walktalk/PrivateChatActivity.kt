@@ -47,8 +47,8 @@ class PrivateChatActivity : AppCompatActivity() {
         toolbarBackIcon = findViewById(R.id.imageView_toolbar_private_chat)
         toolbarTitle = findViewById(R.id.txt_toolbar_private_chat)
 
-        sender = "Antonio"
-        receiver = "Marko"
+        sender = "Marko"
+        receiver = "Milanu"
 
         toolbarTitle.text = receiver
 
@@ -80,7 +80,13 @@ class PrivateChatActivity : AppCompatActivity() {
         chatRecyclerView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
 
             if (bottom < oldBottom) {
-                chatRecyclerView.smoothScrollToPosition(chatRecyclerView.adapter?.itemCount?.minus(1) ?: 0)
+                if(chatRecyclerView.adapter?.itemCount != 0) {
+                    chatRecyclerView.smoothScrollToPosition(
+                        chatRecyclerView.adapter?.itemCount?.minus(
+                            1
+                        ) ?: 0
+                    )
+                }
             }
         }
 
