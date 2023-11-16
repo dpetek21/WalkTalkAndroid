@@ -1,32 +1,29 @@
 package hr.foi.rampu.walktalk
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.ActionBar.LayoutParams
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.marginBottom
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
-import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.dataObjects
 import hr.foi.rampu.walktalk.adapteri_za_chat.MessageAdapter
 import hr.foi.rampu.walktalk.klase_za_chat.Message
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
+
 
 class PrivateChatActivity : AppCompatActivity() {
 
@@ -56,6 +53,7 @@ class PrivateChatActivity : AppCompatActivity() {
         toolbarTitle.text = receiver
 
         messageList = ArrayList()
+        messageList.clear()
         chatRecyclerView = findViewById(R.id.recyclerViewPrivateChat)
         chatText = findViewById<EditText>(R.id.edt_private_chat_massage)
         sendButton = findViewById<ImageButton>(R.id.imageButton_send)
@@ -79,6 +77,12 @@ class PrivateChatActivity : AppCompatActivity() {
             chatText.text.clear()
         }
 
+        chatRecyclerView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+
+            if (bottom < oldBottom) {
+                chatRecyclerView.smoothScrollToPosition(chatRecyclerView.adapter?.itemCount?.minus(1) ?: 0)
+            }
+        }
 
     }
 
@@ -159,7 +163,5 @@ class PrivateChatActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
 }
