@@ -1,4 +1,5 @@
 package hr.foi.rampu.walktalk.firebaseHandler
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -27,7 +28,6 @@ class LoginRegisterHandler {
                 }
             }
             .addOnFailureListener { e ->
-                println("Error getting document: $e")
                 callback(null)
             }
     }
@@ -42,13 +42,20 @@ class LoginRegisterHandler {
 
                      val user = querySnapshot.documents[0]
                      val usermap = user.data as Map<String,Any>
-                    if(usermap[password]==password){
+                    val storedPassword = usermap["password"] as? String ?: ""
+                    Log.d("LoginRegisterHandler", "Pronadjen user s tim E-mailom")
+                    Log.d("LoginRegisterHandler", usermap.toString())
+                    Log.d("LoginRegisterHandler", password)
+                    if(storedPassword==password){
                         isgood++
+                        Log.d("LoginRegisterHandler", "Password pase")
                     }
                 } else {
+                    Log.d("LoginRegisterHandler", "Nema user s tim mailom")
                 }
             }
             .addOnFailureListener { e ->
+                Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
             }
         if(isgood==1) {
             return true
