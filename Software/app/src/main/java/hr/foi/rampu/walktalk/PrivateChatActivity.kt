@@ -19,6 +19,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import hr.foi.rampu.walktalk.adapteri_za_chat.MessageAdapter
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.klase_za_chat.Message
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -47,8 +48,8 @@ class PrivateChatActivity : AppCompatActivity() {
         toolbarBackIcon = findViewById(R.id.imageView_toolbar_private_chat)
         toolbarTitle = findViewById(R.id.txt_toolbar_private_chat)
 
-        sender = "Marko"
-        receiver = "Milanu"
+        sender = UserDataContainer.username
+        receiver = intent.getStringExtra("receiver_username").toString()
 
         toolbarTitle.text = receiver
 
