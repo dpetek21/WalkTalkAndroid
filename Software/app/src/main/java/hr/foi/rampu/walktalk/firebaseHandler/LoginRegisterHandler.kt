@@ -2,7 +2,6 @@ package hr.foi.rampu.walktalk.firebaseHandler
 //import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 
-
 class LoginRegisterHandler {
     val db = FirebaseFirestore.getInstance()
     val users= db.collection("users")

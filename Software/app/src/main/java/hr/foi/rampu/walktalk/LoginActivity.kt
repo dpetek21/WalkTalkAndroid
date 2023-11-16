@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import hr.foi.rampu.walktalk.firebaseHandler.LoginRegisterHandler
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
@@ -42,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
             if(isSucess){
                 val message = "Login successful!"
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                UserDataContainer.username = username
                 //prelazak na sljedecu aktivnost
             }else{
                 val message = "Login unsuccessful: check your inputs"
