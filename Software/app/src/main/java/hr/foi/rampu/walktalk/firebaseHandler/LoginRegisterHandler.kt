@@ -1,5 +1,5 @@
 package hr.foi.rampu.walktalk.firebaseHandler
-import android.util.Log
+//import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -10,10 +10,10 @@ class LoginRegisterHandler {
         users.document(userId)
             .set(userData)
             .addOnSuccessListener { documentReference ->
-                println("Document added with ID: $documentReference.id")
+                //println("Document added with ID: $documentReference.id")
             }
             .addOnFailureListener { e ->
-                println("Error adding document: $e")
+                //println("Error adding document: $e")
             }
     }
     fun getUser(userId: String, callback: (Map<String, Any>?) -> Unit) {
@@ -43,23 +43,23 @@ class LoginRegisterHandler {
                      val user = querySnapshot.documents[0]
                      val usermap = user.data as Map<String,Any>
                     val storedPassword = usermap["password"] as? String ?: ""
-                    Log.d("LoginRegisterHandler", "Pronadjen user s tim E-mailom")
-                    Log.d("LoginRegisterHandler", usermap.toString())
-                    Log.d("LoginRegisterHandler", password)
+                    //Log.d("LoginRegisterHandler", "Pronadjen user s tim E-mailom")
+                    //Log.d("LoginRegisterHandler", usermap.toString())
+                    //Log.d("LoginRegisterHandler", password)
                     if(storedPassword==password){
                         isgood++
-                        Log.d("LoginRegisterHandler", "Password pase")
+                        //Log.d("LoginRegisterHandler", "Password pase")
                         callback(true)
                     }else{
                         callback(false)
                     }
                 } else {
-                    Log.d("LoginRegisterHandler", "Nema user s tim mailom")
+                    //Log.d("LoginRegisterHandler", "Nema user s tim mailom")
                     callback(false)
                 }
             }
             .addOnFailureListener { e ->
-                Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
+                //Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
                 callback(false)
             }
     }
@@ -73,23 +73,23 @@ class LoginRegisterHandler {
                 if (query.exists()) {
                     val usermap = query.data as Map<String,Any>
                     val storedPassword = usermap["password"] as? String ?: ""
-                    Log.d("LoginRegisterHandler", "Pronadjen user s tim IDom")
-                    Log.d("LoginRegisterHandler", usermap.toString())
-                    Log.d("LoginRegisterHandler", password)
+                    //Log.d("LoginRegisterHandler", "Pronadjen user s tim IDom")
+                    //Log.d("LoginRegisterHandler", usermap.toString())
+                    //Log.d("LoginRegisterHandler", password)
                     if(storedPassword==password){
                         isgood++
-                        Log.d("LoginRegisterHandler", "Password pase")
+                        //Log.d("LoginRegisterHandler", "Password pase")
                         callback(true)
                     }else{
                         callback(false)
                     }
                 } else {
-                    Log.d("LoginRegisterHandler", "Nema user s tim IDom")
+                    //Log.d("LoginRegisterHandler", "Nema user s tim IDom")
                     callback(false)
                 }
             }
             .addOnFailureListener { e ->
-                Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
+                //Log.d("LoginRegisterHandler", "Error dobivanja dokumenta")
                 callback(false)
             }
     }
