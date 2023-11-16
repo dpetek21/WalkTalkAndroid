@@ -15,7 +15,7 @@
       android:layout_marginBottom="26dp"
       android:background="@color/textboxBackground"
       android:ems="10"
-      android:hint="E-mail/Tel. broj"
+      android:hint="Username"
       android:inputType="textEmailAddress"
       android:textColorHint="@color/m3_hint_foreground"
       app:layout_constraintBottom_toTopOf="@+id/PasswordTextBox"

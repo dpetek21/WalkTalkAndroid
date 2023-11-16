@@ -43,7 +43,6 @@ class RegisterActivity : AppCompatActivity() {
         }
         registrationHandler(username, nameSurname, email, password)
     }
-
     private fun registrationHandler(username: String, nameSurname: String, email: String, password: String) {
         val nameSurnameSplitted =nameSurname.split(" ")
         val values: Map<String, Any> = mapOf(
@@ -59,5 +58,4 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
-
 }
