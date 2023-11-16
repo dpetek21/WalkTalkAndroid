@@ -16,9 +16,6 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
-            android:exported="false" />
-        <activity
             android:name=".FriendsActivity"
             android:exported="false" />
         <activity

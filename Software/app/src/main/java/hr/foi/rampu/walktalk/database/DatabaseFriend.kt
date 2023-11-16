@@ -7,11 +7,12 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import hr.foi.rampu.walktalk.entities.Friend
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 object DatabaseFriend {
-    var username: String = "admin"
+    var username: String = UserDataContainer.username
     suspend fun getFriendsOfUser(): MutableList<Friend> = coroutineScope {
         val database = Firebase.firestore
         val friends : MutableList<Friend> = mutableListOf()
