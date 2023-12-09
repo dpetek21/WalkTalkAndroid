@@ -6,4 +6,8 @@
     <string name="chat">Chat</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="my_routes">My routes</string>
+    <string name="my_events">My events</string>
+    <string name="attending_events">Attending events</string>
+    <string name="notifications">Notifications</string>
 </resources>
