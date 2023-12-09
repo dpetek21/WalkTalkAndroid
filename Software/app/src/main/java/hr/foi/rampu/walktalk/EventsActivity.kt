@@ -1,8 +1,6 @@
 package hr.foi.rampu.walktalk
 
-import android.app.Activity
 import android.content.Intent
-import android.media.metrics.Event
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
