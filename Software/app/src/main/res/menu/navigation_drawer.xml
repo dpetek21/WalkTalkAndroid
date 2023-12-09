@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item
+       android:id = "@+id/nav_routes"
+       android:title="@string/my_routes"
+       android:checkable="true"/>
+   <item
+       android:id = "@+id/nav_events"
+       android:title="@string/my_events"
+       android:checkable="true"/>
+   <item
+       android:id = "@+id/nav_friends"
+       android:title="@string/friends"
+       android:checkable="true"/>
+   <item
+       android:id = "@+id/nav_attending_events"
+       android:title="@string/attending_events"
+       android:checkable="true"/>
+   <item
+       android:id = "@+id/nav_notifications"
+       android:title="@string/notifications"
+       android:checkable="true"/>
+
+</menu>
