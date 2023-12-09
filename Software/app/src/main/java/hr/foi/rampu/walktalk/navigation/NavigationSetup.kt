@@ -18,6 +18,7 @@ object NavigationSetup {
     fun SetupNavigationDrawer(activity : AppCompatActivity) {
         navDrawerLayout = activity.findViewById(R.id.nav_drawer_layout)
         navView = activity.findViewById(R.id.nav_view)
+        val currentActivity = activity.localClassName
 
         navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
@@ -36,10 +37,15 @@ object NavigationSetup {
                 activity.getString(R.string.notifications) -> activityToLoad =
                     NotificationsActivity::class.java
             }
-            val intent = Intent(activity, activityToLoad)
-            activity.startActivity(intent)
             navDrawerLayout.close()
-            true
+            if (currentActivity == activityToLoad?.simpleName) {
+                true
+            }
+            else {
+                val intent = Intent(activity, activityToLoad)
+                activity.startActivity(intent)
+                true
+            }
         }
 
     }
