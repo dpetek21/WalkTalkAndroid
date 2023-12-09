@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
 import hr.foi.rampu.walktalk.database.DatabaseFriend
+import hr.foi.rampu.walktalk.navigation.NavigationSetup
 import kotlinx.coroutines.launch
 
 
@@ -44,6 +45,8 @@ class FriendsActivity : AppCompatActivity() {
                 }
             }
         }.attach()
+
+        NavigationSetup.SetupNavigationDrawer(this)
 
         /*
         TODO("Ako bude vremena (nije kritično za provjeru), osposobiti listenera za promjenu tabova jer zasad se boja ikona ne mijenja kada se dogodi promjena
