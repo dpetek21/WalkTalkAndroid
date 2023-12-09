@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                 val message = "Login successful!"
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 UserDataContainer.username = username
-                val intent = Intent(this, FriendsActivity::class.java)
+                val intent = Intent(this, EventsActivity::class.java)
                 startActivity(intent)
             }else{
                 val message = "Login unsuccessful: check your inputs"
