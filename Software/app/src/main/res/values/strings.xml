@@ -10,5 +10,6 @@
     <string name="my_events">My events</string>
     <string name="attending_events">Attending events</string>
     <string name="notifications">Notifications</string>
+    <string name="sandwich_description">Icon for sandwich menu (3 horizontal lines)</string>
     <string name="my_profile_picture">My profile picture</string>
 </resources>
