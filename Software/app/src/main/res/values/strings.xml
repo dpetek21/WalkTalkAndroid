@@ -12,4 +12,6 @@
     <string name="notifications">Notifications</string>
     <string name="sandwich_description">Icon for sandwich menu (3 horizontal lines)</string>
     <string name="my_profile_picture">My profile picture</string>
+    <string name="explore">Explore</string>
+    <string name="going">Going</string>
 </resources>
