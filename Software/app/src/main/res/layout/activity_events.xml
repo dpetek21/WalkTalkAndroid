@@ -6,44 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/nav_drawer_layout">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EventsActivity">
 
-    <include
-        android:id="@+id/include_toolbar_events"
-        layout="@layout/toolbar_events" />
-
-    <com.google.android.material.tabs.TabLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMaxWidth="0dp"
-        app:tabBackground="@color/dark_green"
-        app:tabIndicatorColor="@color/white"
-        app:tabIndicatorFullWidth="true"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar_events">
+        android:layout_height="match_parent"
+        tools:context=".EventsActivity">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/include_toolbar_events"
+            layout="@layout/toolbar_events"
+            app:layout_constraintStart_toStartOf="@+id/viewPager2"
+            app:layout_constraintTop_toTopOf="@+id/viewPager2" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_explore_going"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Monday" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar_events"
+            app:tabBackground="@color/dark_green"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="true"
+            app:tabMaxWidth="0dp"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/gray">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuesday" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
-    </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tl_explore_going"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
