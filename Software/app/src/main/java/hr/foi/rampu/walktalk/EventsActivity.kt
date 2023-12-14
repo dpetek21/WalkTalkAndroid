@@ -57,5 +57,6 @@ class EventsActivity : AppCompatActivity() {
 
         val dialogHelper = NewEventDialogHelper(newTaskDialogView)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
+        dialogHelper.activateDateListener(supportFragmentManager)
     }
 }
