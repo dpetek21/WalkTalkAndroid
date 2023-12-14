@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import hr.foi.rampu.walktalk.R
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -21,5 +23,22 @@ class NewEventDialogHelper(private val view: View) {
             paces)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerPace.adapter = spinnerAdapter
+    }
+
+    fun activateDateListener(supportFragmentManager: FragmentManager) {
+        dateSelection.setOnFocusChangeListener{view, hasFocus ->
+            if (hasFocus) {
+                val picker = MaterialDatePicker.Builder
+                    .datePicker()
+                    .setTitleText("Select date of the event:")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build()
+                picker.show(supportFragmentManager, "EVENT_DATE")
+                picker.addOnPositiveButtonClickListener {
+                    dateSelection.setText(sdfDate.format(it).toString())
+                }
+                view.clearFocus()
+            }
+        }
     }
 }
