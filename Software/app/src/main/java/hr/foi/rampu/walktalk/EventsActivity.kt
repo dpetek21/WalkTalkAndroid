@@ -9,6 +9,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.EventsPagerAdapter
+import hr.foi.rampu.walktalk.helpers.NewEventDialogHelper
+import hr.foi.rampu.walktalk.helpers.Pace
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
 
 class EventsActivity : AppCompatActivity() {
@@ -52,5 +54,8 @@ class EventsActivity : AppCompatActivity() {
             .setPositiveButton("Create",null)
             .setNegativeButton("Cancel",null)
             .show()
+
+        val dialogHelper = NewEventDialogHelper(newTaskDialogView)
+        dialogHelper.populateSpinnerPace(Pace.getAllPaces())
     }
 }
