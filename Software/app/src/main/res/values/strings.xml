@@ -21,4 +21,5 @@
     <string name="event_date">Event date:</string>
     <string name="date_hint">Select date when the event will take place</string>
     <string name="event_name_hint">Enter the event name</string>
+    <string name="create_new_event">Create new event</string>
 </resources>
