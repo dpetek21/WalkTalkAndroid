@@ -11,7 +11,8 @@ import hr.foi.rampu.walktalk.entities.Friend
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
-import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object DatabaseFriend {
     var username: String = UserDataContainer.username
@@ -129,12 +130,13 @@ object DatabaseFriend {
     }
 
     fun addNewEvent(newEvent: Event) {
+        val sdf = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
         val event = hashMapOf(
             "name" to newEvent.name,
             "numberOfKilometers" to newEvent.numberOfKilometers,
             "numberOfPeople" to newEvent.numberOfPeople,
             "pace" to newEvent.pace,
-            "date" to newEvent.date.toString(),
+            "date" to sdf.format(newEvent.date),
             "route" to newEvent.route,
             "organizer" to username,
             "isPublic" to newEvent.isPublic
@@ -142,7 +144,7 @@ object DatabaseFriend {
 
 
         val database = Firebase.firestore
-        database.collection("events").document(UUID.randomUUID().toString()).set(event).addOnSuccessListener {
+        database.collection("events").add(event).addOnSuccessListener {
             Log.i("EVENT_ADD_SUCCESS", "Event added successfully into firestore")
         }
             .addOnFailureListener {
