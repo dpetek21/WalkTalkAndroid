@@ -6,10 +6,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
+import hr.foi.rampu.walktalk.entities.Event
 import hr.foi.rampu.walktalk.entities.Friend
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 object DatabaseFriend {
     var username: String = UserDataContainer.username
@@ -124,6 +126,29 @@ object DatabaseFriend {
             .addOnFailureListener {
                 Log.e("FAILADDFRIENDTOFIRESTORE", it.toString())
             }
+    }
+
+    fun addNewEvent(newEvent: Event) {
+        val event = hashMapOf(
+            "name" to newEvent.name,
+            "numberOfKilometers" to newEvent.numberOfKilometers,
+            "numberOfPeople" to newEvent.numberOfPeople,
+            "pace" to newEvent.pace,
+            "date" to newEvent.date.toString(),
+            "route" to newEvent.route,
+            "organizer" to username,
+            "isPublic" to newEvent.isPublic
+        )
+
+
+        val database = Firebase.firestore
+        database.collection("events").document(UUID.randomUUID().toString()).set(event).addOnSuccessListener {
+            Log.i("EVENT_ADD_SUCCESS", "Event added successfully into firestore")
+        }
+            .addOnFailureListener {
+                Log.i("EVENT_ADD_ERROR", it.toString())
+            }
+
     }
 
 
