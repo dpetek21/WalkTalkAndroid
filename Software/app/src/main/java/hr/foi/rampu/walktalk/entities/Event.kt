@@ -9,7 +9,6 @@ class Event(
     val numberOfPeople : Int,
     val pace: String,
     val date: Date,
-    val route: List<GeoPoint>,
-    val organizer: String,
+    val route: List<GeoPoint>?,
     val isPublic : Boolean
 )
