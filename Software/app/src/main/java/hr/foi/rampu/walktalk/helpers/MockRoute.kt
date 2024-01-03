@@ -9,6 +9,6 @@ object MockRoute {
         val route2 = Route("Second route - harder", GeoPoint(34.0522, -118.2437), GeoPoint(34.0722, -118.2637), 2, "dpetek21")
         val route3 = Route("Third route - hardest", GeoPoint(40.7128, -74.0060), GeoPoint(40.7228, -74.0160), 3, "dpetek21")
 
-        return listOf(route1, route2, route3)
+        return listOf(route2, route1, route3)
     }
 }

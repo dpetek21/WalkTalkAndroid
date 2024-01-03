@@ -11,7 +11,7 @@ class RoutesAdapter(private val items: List<Route>, private val onItemClick: (Ro
     RecyclerView.Adapter<RoutesAdapter.RouteViewHolder>() {
 
     inner class RouteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val routeTextView: TextView = itemView.findViewById(R.id.rv_routes)
+        //private val routeTextView: TextView = itemView.findViewById(R.id.rv_routes)
         private val routeName: TextView
         private val routeOwner: TextView
         init {
