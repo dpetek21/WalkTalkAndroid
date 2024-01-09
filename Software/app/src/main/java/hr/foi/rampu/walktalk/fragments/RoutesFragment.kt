@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.RouteDetailsActivity
 import hr.foi.rampu.walktalk.RoutesActivity
 import hr.foi.rampu.walktalk.adapters.RoutesAdapter
 import hr.foi.rampu.walktalk.helpers.MockRoute
@@ -25,7 +26,7 @@ class RoutesFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.rv_routes)
         val routesAdapter = RoutesAdapter(mockTasks) { clickedRoute ->
-            val intent = Intent(requireContext(), RoutesActivity::class.java)
+            val intent = Intent(requireContext(), RouteDetailsActivity::class.java)
             intent.putExtra("Route", clickedRoute.name)
             intent.putExtra("routeOwner", clickedRoute.owner)
             requireContext().startActivity(intent)
