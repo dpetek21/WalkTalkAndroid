@@ -130,17 +130,17 @@ object DatabaseFriend {
     }
 
     fun addNewEvent(newEvent: Event) {
-        val sdf = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
-        val event = hashMapOf(
-            "name" to newEvent.name,
-            "numberOfKilometers" to newEvent.numberOfKilometers,
-            "numberOfPeople" to newEvent.numberOfPeople,
-            "pace" to newEvent.pace,
-            "date" to sdf.format(newEvent.date),
-            "route" to newEvent.route,
-            "organizer" to username,
-            "isPublic" to newEvent.isPublic
-        )
+            val sdf = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
+            val event = hashMapOf(
+                "name" to newEvent.name,
+                "numberOfKilometers" to newEvent.numberOfKilometers,
+                "numberOfPeople" to newEvent.numberOfPeople,
+                "pace" to newEvent.pace,
+                "date" to sdf.format(newEvent.date),
+                "route" to newEvent.route,
+                "organizer" to username,
+                "isPublic" to newEvent.isPublic
+            )
 
 
         val database = Firebase.firestore
