@@ -34,7 +34,7 @@ class NewEventDialogHelper(private val view: View) {
         val pace = spinnerPace.selectedItem as String
 
 
-        return Event(eventName,0.0,0, pace, sdfDate.parse(dateSelection.getText().toString())!!,null,true)
+        return Event(eventName,0.0,0, pace, sdfDate.parse(dateSelection.getText().toString())!!, DatabaseFriend.username,null,true)
     }
 
     fun activateDateListener(supportFragmentManager: FragmentManager) {
