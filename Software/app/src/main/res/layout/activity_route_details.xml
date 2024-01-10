@@ -11,6 +11,63 @@
         android:layout_height="match_parent"
         tools:context=".RoutesActivity">
 
+        <EditText
+            android:id="@+id/nameTextBox"
+            android:layout_width="178dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="36dp"
+            android:background="@color/beige"
+            android:ems="10"
+            android:hint="Name of Route"
+            android:inputType="text"
+            android:textColorHint="@color/m3_hint_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.733"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="270dp"
+            android:layout_height="314dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.114" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextBox">
+
+            <RadioButton
+                android:id="@+id/rbRating1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="1"
+                android:text="Difficulty rating 1" />
+
+            <RadioButton
+                android:id="@+id/rbRating2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="2"
+                android:text="Difficulty rating 2" />
+
+            <RadioButton
+                android:id="@+id/rbRating3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="3"
+                android:text="Difficulty rating 3" />
+
+        </RadioGroup>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

@@ -27,7 +27,7 @@ class MapFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mapView = view.findViewById(R.id.mapView)
-        mapView.setTileSource(TileSourceFactory.MAPNIK)
+        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
 
         mapView.setBuiltInZoomControls(true)
         mapView.setMultiTouchControls(true)
