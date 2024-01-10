@@ -16,6 +16,7 @@ class GroupChatActivity : AppCompatActivity() {
     private lateinit var groupChatText: EditText
     private lateinit var sendButton: ImageButton
     private lateinit var groupChatRecyclerView: RecyclerView
+    private lateinit var receiver: String
     private lateinit var messageList: ArrayList<Message>
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var groupChatDAO: GroupChatDAO
@@ -24,12 +25,14 @@ class GroupChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)
 
-        groupChatDAO = GroupChatDAO()
-
+        receiver = "Test"
+        groupChatDAO = GroupChatDAO(receiver)
         groupChatText = findViewById(R.id.edt_group_chat_massage)
         sendButton = findViewById(R.id.groupChatImageButton_send)
         groupChatRecyclerView = findViewById(R.id.recyclerViewGroupChat)
+
+        sendButton.setOnClickListener {
+
+        }
     }
-
-
 }
