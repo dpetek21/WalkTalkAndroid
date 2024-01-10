@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cv_event"
     android:layout_width="match_parent"
+    android:backgroundTint="@color/beige"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -12,10 +13,11 @@
 
         <TextView
             android:id="@+id/txtv_event_name_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:layout_height="50dp"
+            android:text="TextView"
+            android:textSize="30dp" />
 
         <LinearLayout
             android:id="@+id/llv_event_attributes"
@@ -27,7 +29,7 @@
             <LinearLayout
                 android:id="@+id/llh_kilometers_people"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -35,25 +37,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/ic_signpost" />
 
                 <TextView
                     android:id="@+id/txtv_kilometres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:text="TextView" />
 
                 <ImageView
                     android:id="@+id/imgv_people"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/ic_multiple_users" />
 
                 <TextView
                     android:id="@+id/txtv_people"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView" />
@@ -62,19 +66,20 @@
             <LinearLayout
                 android:id="@+id/llh_pace_date"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imgv_pace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/ic_speedometer" />
 
                 <TextView
                     android:id="@+id/txtv_pace"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView" />
@@ -84,11 +89,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/txtv_date"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView" />
