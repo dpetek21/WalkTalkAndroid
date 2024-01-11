@@ -36,4 +36,14 @@ class MapFragment: Fragment() {
 
         mapView.overlays.add(markerOverlay)
     }
+    fun addMarker(geoPoint: GeoPoint, title: String) {
+        val overlayItem = OverlayItem(title, "", geoPoint)
+        if(title=="Start Point"){
+            overlayItem.setMarker(resources.getDrawable(R.drawable.start_marker_icon))
+        }else if(title=="End Point"){
+            overlayItem.setMarker(resources.getDrawable(R.drawable.end_marker_icon))
+        }
+        markerOverlay.addItem(overlayItem)
+        mapView.invalidate()
+    }
 }

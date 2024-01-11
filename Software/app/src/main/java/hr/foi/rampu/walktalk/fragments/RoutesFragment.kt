@@ -27,8 +27,13 @@ class RoutesFragment : Fragment(){
         recyclerView = view.findViewById(R.id.rv_routes)
         val routesAdapter = RoutesAdapter(mockTasks) { clickedRoute ->
             val intent = Intent(requireContext(), RouteDetailsActivity::class.java)
-            intent.putExtra("Route", clickedRoute.name)
+            intent.putExtra("routeName", clickedRoute.name)
             intent.putExtra("routeOwner", clickedRoute.owner)
+            intent.putExtra("routeRating", clickedRoute.rating)
+            intent.putExtra("routeStartLatitude", clickedRoute.start.latitude)
+            intent.putExtra("routeStartLongitude", clickedRoute.start.longitude)
+            intent.putExtra("routeEndLatitude", clickedRoute.end.latitude)
+            intent.putExtra("routeEndLongitude", clickedRoute.end.longitude)
             requireContext().startActivity(intent)
         }
         recyclerView.adapter = routesAdapter

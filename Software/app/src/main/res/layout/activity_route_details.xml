@@ -28,13 +28,14 @@
 
         <FrameLayout
             android:id="@+id/fragmentContainer"
-            android:layout_width="270dp"
-            android:layout_height="314dp"
+            android:layout_width="303dp"
+            android:layout_height="258dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.547"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.114" />
+            app:layout_constraintVertical_bias="0.075" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -43,7 +44,8 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextBox">
+            app:layout_constraintTop_toBottomOf="@+id/nameTextBox"
+            app:layout_constraintHorizontal_bias="0.733">
 
             <RadioButton
                 android:id="@+id/rbRating1"
@@ -67,6 +69,17 @@
                 android:text="Difficulty rating 3" />
 
         </RadioGroup>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.693"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
