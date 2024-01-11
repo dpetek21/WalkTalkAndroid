@@ -25,17 +25,23 @@ class ExploreEventsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_explore_events, container, false)
     }
 
+    private suspend fun getEvents() {
+        val exploreEventsList : List<Event> = DatabaseFriend.getPublicEvents()
+        recyclerView = requireView().findViewById(R.id.rv_explore_events)
+        recyclerView.adapter = ExploreEventsAdapter(exploreEventsList)
+        recyclerView.layoutManager = LinearLayoutManager(requireView().context)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launch {
-            val exploreEventsList : List<Event> = DatabaseFriend.getPublicEvents()
-            recyclerView = view.findViewById(R.id.rv_explore_events)
-            recyclerView.adapter = ExploreEventsAdapter(exploreEventsList)
-            recyclerView.layoutManager = LinearLayoutManager(view.context)
+            getEvents()
         }
     }
 
     override fun onResume() {
         super.onResume()
-
+        lifecycleScope.launch {
+            getEvents()
+        }
     }
 }

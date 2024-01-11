@@ -53,6 +53,7 @@ class EventsActivity : AppCompatActivity() {
             .setTitle(getString(R.string.create_new_event))
             .setPositiveButton("Create",null)
             .setNegativeButton("Cancel",null)
+            .create()
             .show()
 
         val dialogHelper = NewEventDialogHelper(newTaskDialogView)
