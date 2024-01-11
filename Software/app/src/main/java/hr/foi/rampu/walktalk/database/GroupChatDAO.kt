@@ -12,11 +12,13 @@ class GroupChatDAO(private val receiver: String) {
     private val sender = UserDataContainer.username
 
     suspend fun saveMessage(messageText: String) {
-        Log.i("saveMessage", messagesExists().toString())
         if(messagesExists()){
-            Log.i("saveMessage", "Messages between users exist")
+            val chatDocument = referenceToChat()
+            if(chatDocument != null){
+
+            }
         }else{
-            Log.i("saveMessage", "Messages between users doesnt exist")
+            Log.i("saveMessage", "Messages between users doesn't exist")
         }
     }
 
@@ -63,5 +65,27 @@ class GroupChatDAO(private val receiver: String) {
                 Log.e("Firestore", "Error creating Chats collection: $exception")
             }
     }
+
+    private suspend fun referenceToChat(): DocumentReference? {
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(sender)
+        val chats = userDocument.collection("chats")
+        val receiverDocument = chats.document(receiver)
+
+        return try {
+            val receiverDocSnapshot = receiverDocument.get().await()
+            if (receiverDocSnapshot.exists() && receiverDocSnapshot.contains("referenceToChat")) {
+                val referencedDocumentRef = receiverDocSnapshot.getDocumentReference("referenceToChat")
+                referencedDocumentRef
+            } else {
+                Log.i("referenceToChat", "It doesn't contain referenceToChat")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error fetching Receiver document: $e")
+            null
+        }
+    }
+
 
 }
