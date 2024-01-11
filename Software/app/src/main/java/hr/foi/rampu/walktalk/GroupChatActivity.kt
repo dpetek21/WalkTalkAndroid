@@ -35,8 +35,13 @@ class GroupChatActivity : AppCompatActivity() {
 
         sendButton.setOnClickListener {
             lifecycleScope.launch {
-                groupChatDAO.saveMessage("Dobar dan")
+                if(groupChatText.text.isNotEmpty()){
+                    groupChatDAO.saveMessage(groupChatText.text.toString())
+                }
             }
         }
+
     }
+
+
 }
