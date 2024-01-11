@@ -3,7 +3,7 @@
     android:id="@+id/cv_event"
     android:layout_width="match_parent"
     android:backgroundTint="@color/beige"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/llh_event"
