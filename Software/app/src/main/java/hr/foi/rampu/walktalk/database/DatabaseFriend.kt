@@ -6,6 +6,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import hr.foi.rampu.walktalk.entities.Event
 import hr.foi.rampu.walktalk.entities.Friend
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
@@ -136,7 +137,7 @@ object DatabaseFriend {
                 "numberOfKilometers" to newEvent.numberOfKilometers,
                 "numberOfPeople" to newEvent.numberOfPeople,
                 "pace" to newEvent.pace,
-                "date" to sdf.format(newEvent.date),
+                "date" to newEvent.date,
                 "route" to newEvent.route,
                 "organizer" to username,
                 "isPublic" to newEvent.isPublic
@@ -151,6 +152,21 @@ object DatabaseFriend {
                 Log.i("EVENT_ADD_ERROR", it.toString())
             }
 
+    }
+
+    suspend fun getPublicEvents(): List<Event> = coroutineScope {
+        val eventList = mutableListOf<Event>()
+        val database = Firebase.firestore
+        database
+            .collection("events")
+            .whereEqualTo("isPublic", true)
+            .get()
+            .addOnSuccessListener { events ->
+                events.forEach { event ->
+                    eventList.add(event.toObject<Event>())
+                }
+            }.await()
+        eventList.toList()
     }
 
 
