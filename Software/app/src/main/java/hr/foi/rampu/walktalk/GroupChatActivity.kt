@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import hr.foi.rampu.walktalk.adapteri_za_chat.MessageAdapter
 import hr.foi.rampu.walktalk.database.GroupChatDAO
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.klase_za_chat.Message
+import kotlinx.coroutines.launch
 
 class GroupChatActivity : AppCompatActivity() {
 
@@ -32,7 +34,9 @@ class GroupChatActivity : AppCompatActivity() {
         groupChatRecyclerView = findViewById(R.id.recyclerViewGroupChat)
 
         sendButton.setOnClickListener {
-
+            lifecycleScope.launch {
+                groupChatDAO.saveMessage("Dobar dan")
+            }
         }
     }
 }

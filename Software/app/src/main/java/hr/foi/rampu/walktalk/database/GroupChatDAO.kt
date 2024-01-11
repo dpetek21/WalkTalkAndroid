@@ -5,16 +5,22 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
+import kotlinx.coroutines.tasks.await
 
 class GroupChatDAO(private val receiver: String) {
     private val database = FirebaseFirestore.getInstance()
     private val sender = UserDataContainer.username
 
-    fun saveMessage(messageText: String) {
-
+    suspend fun saveMessage(messageText: String) {
+        Log.i("saveMessage", messagesExists().toString())
+        if(messagesExists()){
+            Log.i("saveMessage", "Messages between users exist")
+        }else{
+            Log.i("saveMessage", "Messages between users doesnt exist")
+        }
     }
 
-    private fun messagesExists() {
+    private suspend fun messagesExists(): Boolean {
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(sender)
 
@@ -23,17 +29,12 @@ class GroupChatDAO(private val receiver: String) {
         val chats = userDocument.collection("chats")
         val receiverDocument = chats.document(receiver)
 
-        receiverDocument.get().addOnCompleteListener { receiverDocTask ->
-            if (receiverDocTask.isSuccessful) {
-                val receiverDocSnapshot = receiverDocTask.result
-                if (receiverDocSnapshot != null && receiverDocSnapshot.exists()) {
-                    Log.i("Firestore", "Receiver document exists in Chats collection")
-                } else {
-                    Log.i("Firestore", "Receiver document does not exist in Chats collection")
-                }
-            } else {
-                Log.e("Firestore", "Error fetching Receiver document: ${receiverDocTask.exception}")
-            }
+        return try {
+            val receiverDocSnapshot = receiverDocument.get().await()
+            receiverDocSnapshot.exists()
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error fetching Receiver document: $e")
+            false
         }
     }
 
@@ -62,7 +63,5 @@ class GroupChatDAO(private val receiver: String) {
                 Log.e("Firestore", "Error creating Chats collection: $exception")
             }
     }
-
-
 
 }
