@@ -11,7 +11,7 @@ class EventsPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
     val fragments = listOf<Fragment>(ExploreEventsFragment(), GoingEventsFragment())
 
     override fun getItemCount(): Int {
-        return 2
+        return fragments.size
     }
 
     override fun createFragment(position: Int): Fragment {
