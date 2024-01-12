@@ -22,4 +22,7 @@
     <string name="date_hint">Select date when the event will take place</string>
     <string name="event_name_hint">Enter the event name</string>
     <string name="create_new_event">Create new event</string>
+    <string name="number_of_people_going">%1$s people going</string>
+    <string name="number_of_kilometers">%1$s km</string>
+    <string name="pace">%1$s pace</string>
 </resources>

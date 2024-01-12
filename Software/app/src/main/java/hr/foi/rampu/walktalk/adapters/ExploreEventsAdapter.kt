@@ -60,9 +60,9 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
             val activity = it.context as AppCompatActivity
             val intent = Intent(activity,EventDetailsActivity::class.java)
             intent.putExtra("event_name",eventList[position].name)
-            intent.putExtra("event_date",eventList[position].date)
-            intent.putExtra("event_kilometers",eventList[position].numberOfKilometers)
-            intent.putExtra("event_people",eventList[position].numberOfPeople)
+            intent.putExtra("event_date",eventList[position].date.toString())
+            intent.putExtra("event_kilometers",eventList[position].numberOfKilometers.toString())
+            intent.putExtra("event_people",eventList[position].numberOfPeople.toString())
             intent.putExtra("event_organizer",eventList[position].organizer)
             intent.putExtra("event_pace",eventList[position].pace)
             intent.putExtra("event_public",eventList[position].isPublic)
