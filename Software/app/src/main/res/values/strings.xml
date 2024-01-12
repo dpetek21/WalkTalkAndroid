@@ -25,4 +25,8 @@
     <string name="number_of_people_going">%1$s people going</string>
     <string name="number_of_kilometers">%1$s km</string>
     <string name="pace">%1$s pace</string>
+    <string name="cross_road_icon">Cross-road icon</string>
+    <string name="multiple_people_in_group">Multiple people in group</string>
+    <string name="speedometer">Speedometer</string>
+    <string name="calendar_icon">Calendar icon</string>
 </resources>
