@@ -1,7 +1,9 @@
 package hr.foi.rampu.walktalk
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.RadioGroup
 import hr.foi.rampu.walktalk.fragments.MapFragment
@@ -26,6 +28,10 @@ class RouteDetailsActivity : AppCompatActivity() {
         val startLongitude = intent.getDoubleExtra("routeStartLongitude", 0.0)
         val endLatitude = intent.getDoubleExtra("routeEndLatitude", 0.0)
         val endLongitude = intent.getDoubleExtra("routeEndLongitude", 0.0)
+        Log.v(TAG, "StartLattitude je: "+startLatitude);
+        Log.v(TAG, "StartLongitude je: "+startLongitude);
+        Log.v(TAG, "endLatitude je: "+endLatitude);
+        Log.v(TAG, "endLongitude je: "+endLongitude);
         startPoint = GeoPoint(startLatitude, startLongitude)
         endPoint = GeoPoint(endLatitude, endLongitude)
 
