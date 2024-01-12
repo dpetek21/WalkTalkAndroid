@@ -2,8 +2,10 @@ package hr.foi.rampu.walktalk
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import hr.foi.rampu.walktalk.database.DatabaseFriend
 
 class EventDetailsActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
@@ -12,6 +14,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var numberOfKilometers: TextView
     private lateinit var eventDate: TextView
     private lateinit var pace: TextView
+    private lateinit var actionButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,14 @@ class EventDetailsActivity : AppCompatActivity() {
         eventDate.text = intent.getStringExtra("event_date").toString()
         pace.text = getString(R.string.pace,intent.getStringExtra("event_pace"))
 
-
+        actionButton = findViewById(R.id.btn_event_detail_action_button)
+        val organizer = intent.getStringExtra("event_organizer")
+        if (DatabaseFriend.username == organizer) {
+            actionButton.text = getString(R.string.start_event)
+        }
+        else {
+            actionButton.text = getString(R.string.send_invitation)
+        }
         backButton.setOnClickListener{
             this.finish()
         }
