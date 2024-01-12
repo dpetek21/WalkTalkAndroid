@@ -21,10 +21,18 @@ class GroupChatDAO(private val receiver: String) {
                 saveMessageInCollection(chatDocument, messageText)
             }
         } else {
-            Log.i("saveMessage", "Messages between users don't exist")
+            createChat(messageText)
         }
     }
 
+    /**
+     * Sprema poruku u private messages kolekciju unutar specifičnog chat-a. Generira UUID, Message
+     * objekt i doda ga u kolekciju. Baza: messages(kolekcija) -> UUID(dokument, chat dvaju korisnika) ->
+     * private_messages(kolekcija) -> UUID(dokument, poruka) -> message, sender, receiver (atributi)
+     *
+     * @param chatDocument referenca na dokument gdje će se poruke spremati u private messages kolekciju.
+     * @param messageText kontekst poruke.
+     */
     private suspend fun saveMessageInCollection(chatDocument: DocumentReference, messageText: String) {
         val messageId = UUID.randomUUID().toString()
         val message = Message(messageText, sender, receiver, Timestamp.now())
@@ -38,6 +46,15 @@ class GroupChatDAO(private val receiver: String) {
         }
     }
 
+    /**
+     * Provjerava postoje li poruke između prijavljenog korisnika i osobe ili grupe
+     * kojoj se šalju poruke. Verificira postoji li chats kolekcija, onda provjerava posoji li
+     * dokument primatelja unutar kolekcije chats prijavljenog korisnika u Firestore bazi.
+     * Baza: users(kolekcija) -> username prijavljenog korisnika(dokument) -> chats(kolekcija) ->
+     * username primatelja ili ime grupe(dokument)
+     *
+     * @return True ako poruke postoji, false ako ne postoji.
+     */
     private suspend fun messagesExists(): Boolean {
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(sender)
@@ -56,6 +73,11 @@ class GroupChatDAO(private val receiver: String) {
         }
     }
 
+    /**
+     * Provjerava postoji li chat kolekcija kod prijavljenog korisnika u Firestore bazi.
+     * Ako ne postoji kreira je.
+     * Baza: users(kolekcija) -> username(dokument) -> chats(kolekcija)
+     */
     private fun chatsCollectionExists(){
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(sender)
@@ -72,6 +94,12 @@ class GroupChatDAO(private val receiver: String) {
         }
     }
 
+    /**
+     * Kreira chats kolekciju kod korisnika u Firestore bazi.
+     * Baza: users(kolekcija) -> username(dokument) -> chats(kolekcija)
+     *
+     * @param userDocument Dokument korisnika u kolekciji users.
+     */
     private fun createChatsCollection(userDocument: DocumentReference) {
         userDocument.collection("chats").document("placeholder").set(mapOf("dummy" to "data"))
             .addOnSuccessListener {
@@ -82,6 +110,13 @@ class GroupChatDAO(private val receiver: String) {
             }
     }
 
+    /**
+     * Vraća referencu na dokument chat između pošiljatelja i primatelja, referencu uzima iz chats kolekcije
+     * prijavljenog korisnika ako se unutra nalazi dokument primatelja i unutar dokumenta referenca.
+     * Baza: messages(kolekcija) -> UUID(dokument, chat dvaju korisnika).
+     *
+     * @return vraća referencu na chat dokument ako postoji, inaće vraća null.
+     */
     private suspend fun referenceToChat(): DocumentReference? {
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(sender)
@@ -101,6 +136,22 @@ class GroupChatDAO(private val receiver: String) {
             Log.e("Firestore", "Error fetching Receiver document: $e")
             null
         }
+    }
+
+    private suspend fun createChat(messageText: String){
+        val messagesCollection = database.collection("messages")
+        val chatId = UUID.randomUUID().toString()
+        val usersMap = mapOf(
+            "sender" to sender,
+            "receiver" to receiver
+        )
+        val newChatDocument = messagesCollection.document(chatId)
+        newChatDocument.set(usersMap).addOnSuccessListener {
+            Log.i("createChat", "Chat created successfully")
+        }.addOnFailureListener { exception ->
+            Log.e("createChat", "Error creating chat: $exception")
+        }
+        saveMessageInCollection(newChatDocument, messageText)
     }
 
 
