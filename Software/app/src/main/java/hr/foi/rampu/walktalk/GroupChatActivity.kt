@@ -27,7 +27,7 @@ class GroupChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)
 
-        receiver = "Test2"
+        receiver = "TestChat"
         groupChatDAO = GroupChatDAO(receiver)
         groupChatText = findViewById(R.id.edt_group_chat_massage)
         sendButton = findViewById(R.id.groupChatImageButton_send)

@@ -138,12 +138,20 @@ class GroupChatDAO(private val receiver: String) {
         }
     }
 
+    /**
+     * Stvara novi chat između pošiljatelja i primatelja u Firestore bazi podataka.
+     * Kreira dokument u kolekciji messages s UUID kao ID-om i mapom korisnika.
+     * Sprema poruku u stvoreni chat i dodaje referencu na taj chat u kolekcije chats
+     * pošiljatelja i primatelja.
+     *
+     * @param messageText Kontekst poruke koja se sprema u novi chat.
+     */
     private suspend fun createChat(messageText: String){
         val messagesCollection = database.collection("messages")
         val chatId = UUID.randomUUID().toString()
         val usersMap = mapOf(
-            "sender" to sender,
-            "receiver" to receiver
+            "user1" to sender,
+            "user2" to receiver
         )
         val newChatDocument = messagesCollection.document(chatId)
         newChatDocument.set(usersMap).addOnSuccessListener {
@@ -152,6 +160,52 @@ class GroupChatDAO(private val receiver: String) {
             Log.e("createChat", "Error creating chat: $exception")
         }
         saveMessageInCollection(newChatDocument, messageText)
+        addReceiverInSendersChatsCollection(newChatDocument)
+        addSenderInReceiverChatsCollection(newChatDocument)
+    }
+
+    /**
+     * Dodaje primatelja u chats kolekciju pošiljatelja u Firestore-u, u dokument primatelja stavlja
+     * referencu na message dokument između pošiljatelja i primatelja.
+     *
+     * @param messageDocument Message dokument između pošiljatelja i primatelja.
+     */
+    private fun addReceiverInSendersChatsCollection(messageDocument: DocumentReference){
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(sender)
+        val chatsCollection = userDocument.collection("chats")
+        val receiverDocument = chatsCollection.document(receiver)
+        val batch = database.batch()
+        batch.set(receiverDocument, mapOf("referenceToChat" to messageDocument))
+        batch.commit()
+            .addOnSuccessListener {
+                Log.i("addReceiver", "Receiver added to sender's chats collection successfully")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("addReceiver", "Error adding receiver to sender's chats collection: $exception")
+            }
+    }
+
+    /**
+     * Dodaje pošiljatelja u chats kolekciju primatelja u Firestore-u, u dokument pošiljatelja stavlja
+     * referencu na message dokument između pošiljatelja i primatelja.
+     *
+     * @param messageDocument Message dokument između pošiljatelja i primatelja.
+     */
+    private fun addSenderInReceiverChatsCollection(messageDocument: DocumentReference){
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(receiver)
+        val chatsCollection = userDocument.collection("chats")
+        val receiverDocument = chatsCollection.document(sender)
+        val batch = database.batch()
+        batch.set(receiverDocument, mapOf("referenceToChat" to messageDocument))
+        batch.commit()
+            .addOnSuccessListener {
+                Log.i("addReceiver", "Receiver added to sender's chats collection successfully")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("addReceiver", "Error adding receiver to sender's chats collection: $exception")
+            }
     }
 
 
