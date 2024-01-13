@@ -75,6 +75,20 @@ class RouteDetailsActivity : AppCompatActivity() {
         save.setOnClickListener{
             saveRoute()
         }
+        val delete : Button = findViewById(R.id.btnDelete)
+        delete.setOnClickListener{
+            val handler = RouteHandler()
+            var routeidlocal : String=""
+            if(routeID!=null)
+                routeidlocal= routeID as String
+            if(routeidlocal!=""){
+                handler.deleteRoute(routeidlocal)
+                Toast.makeText(this, "Route deleted!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, RoutesActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 
     private fun saveRoute() {
