@@ -27,6 +27,7 @@ class RouteDetailsActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, MapFragment())
             .commit()
         NavigationSetup.SetupNavigationDrawer(this)
+        val routeID = intent.getStringExtra("routeID")
         val routeName = intent.getStringExtra("routeName")
         val routeOwner = intent.getStringExtra("routeOwner")
         val routeRating = intent.getIntExtra("routeRating", 1)
