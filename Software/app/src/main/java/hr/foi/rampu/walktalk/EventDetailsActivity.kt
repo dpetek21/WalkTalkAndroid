@@ -57,10 +57,18 @@ class EventDetailsActivity : AppCompatActivity() {
             actionButton.text = getString(R.string.send_invitation)
                 actionButton.setOnClickListener {
                     lifecycleScope.launch {
-                        DatabaseEvent.sendInvite()
+                        val inviteSent = DatabaseEvent.sendInvite()
+                        if (inviteSent) {
+                            actionButton.text = getString(R.string.invite_sent)
+                            actionButton.setBackgroundColor(getColor(R.color.beige))
+                            actionButton.setTextColor(getColor(R.color.black))
+                            actionButton.isClickable = false
+                        }
+                        else {
+                            actionButton.text = getString(R.string.retry)
+                        }
                     }
                 }
-
         }
         backButton.setOnClickListener{
             this.finish()

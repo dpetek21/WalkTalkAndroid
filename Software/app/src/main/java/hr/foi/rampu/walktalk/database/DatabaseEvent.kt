@@ -2,6 +2,7 @@ package hr.foi.rampu.walktalk.database
 
 import android.util.Log
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import hr.foi.rampu.walktalk.entities.Event
@@ -69,7 +70,7 @@ object DatabaseEvent {
                     id = it.documents[0].id
                 }
                 .await()
-            database.collection("events").document(id!!).update("invites", DatabaseFriend.username).await()
+            database.collection("events").document(id!!).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
              true
         }
 
