@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.adapters.RoutesAdapter
+import hr.foi.rampu.walktalk.fragments.MapFragment
 import hr.foi.rampu.walktalk.fragments.RoutesFragment
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
 
@@ -16,10 +17,17 @@ class RoutesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_routes)
+        setFragment()
+
+        NavigationSetup.SetupNavigationDrawer(this)
+    }
+    override fun onResume() {
+        super.onResume()
+        setFragment()
+    }
+    private fun setFragment(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, RoutesFragment())
             .commit()
-
-        NavigationSetup.SetupNavigationDrawer(this)
     }
 }

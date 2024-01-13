@@ -8,18 +8,21 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.ViewModelProvider
+import hr.foi.rampu.walktalk.entities.Route
+import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.fragments.MapFragment
-import hr.foi.rampu.walktalk.fragments.RoutesFragment
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
 import org.osmdroid.util.GeoPoint
 
 class RouteDetailsActivity : AppCompatActivity() {
     private lateinit var startPoint: GeoPoint
     private lateinit var endPoint: GeoPoint
+    private var routeID:String?=null
+    private var routeOwner:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_route_details)
@@ -27,9 +30,9 @@ class RouteDetailsActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, MapFragment())
             .commit()
         NavigationSetup.SetupNavigationDrawer(this)
-        val routeID = intent.getStringExtra("routeID")
+        routeID = intent.getStringExtra("routeID")
         val routeName = intent.getStringExtra("routeName")
-        val routeOwner = intent.getStringExtra("routeOwner")
+        routeOwner = intent.getStringExtra("routeOwner")
         val routeRating = intent.getIntExtra("routeRating", 1)
         val startLatitude = intent.getDoubleExtra("routeStartLatitude", 0.0)
         val startLongitude = intent.getDoubleExtra("routeStartLongitude", 0.0)
@@ -55,7 +58,7 @@ class RouteDetailsActivity : AppCompatActivity() {
 
         val setStart : Button = findViewById(R.id.btnSetStart)
         setStart.setOnClickListener{
-            val intent = Intent(this, LocationSelector::class.java)
+            val intent = Intent(this, LocationSelectorActivity::class.java)
             intent.putExtra("markerLatitude", startPoint.latitude)
             intent.putExtra("markerLongitude", startPoint.longitude)
             startActivityForResult(intent, 1)
@@ -63,21 +66,54 @@ class RouteDetailsActivity : AppCompatActivity() {
         }
         val setEnd : Button = findViewById(R.id.btnSetEnd)
         setEnd.setOnClickListener{
-            val intent = Intent(this, LocationSelector::class.java)
+            val intent = Intent(this, LocationSelectorActivity::class.java)
             intent.putExtra("markerLatitude", endPoint.latitude)
             intent.putExtra("markerLongitude", endPoint.longitude)
             startActivityForResult(intent, 2)
         }
         val save : Button = findViewById(R.id.btnSave)
         save.setOnClickListener{
-
+            saveRoute()
         }
     }
+
+    private fun saveRoute() {
+        val nameTextBox = findViewById<EditText>(R.id.nameTextBox)
+        val name=nameTextBox.text.toString()
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        val selectedButtonId = radioGroup.checkedRadioButtonId
+        val rating : Int
+        if (selectedButtonId != -1) {
+            val selectedRadioButton: RadioButton = findViewById(selectedButtonId)
+            rating = selectedRadioButton.tag.toString().toInt()
+            if(name!=""){
+                if(!isNullPoint(startPoint)){
+                    if(!isNullPoint(endPoint)){
+                        val route = Route(routeID,name,startPoint,endPoint,rating,UserDataContainer.username)
+                        val handler = RouteHandler()
+                        handler.updateRoute(route)
+                        Toast.makeText(this, "Route saved!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, RoutesActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        Toast.makeText(this, "Please set the ending point", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this, "Please set the starting point", Toast.LENGTH_SHORT).show()
+                }
+
+            }else{
+                Toast.makeText(this, "The route name textbox must not be empty!", Toast.LENGTH_SHORT).show()
+            }
+
+        } else {
+            Toast.makeText(this, "Please select a route difficulty rating!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        /*val mapFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as MapFragment
-        mapFragment.addMarker(startPoint, "Start Point")
-        mapFragment.addMarker(endPoint, "End Point")*/
         setMarkers()
     }
     fun setMarkers(){

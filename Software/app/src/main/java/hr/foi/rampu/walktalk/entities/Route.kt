@@ -8,9 +8,11 @@ data class Route(
     val rating:Int,
     val owner:String
 ){
+    constructor() : this(null, "", GeoPoint(0.0, 0.0), GeoPoint(0.0, 0.0), -1, "")
     constructor(id:String?,name: String, startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double, rating: Int,owner:String)
             : this(id,name, GeoPoint(startLatitude, startLongitude), GeoPoint(endLatitude, endLongitude), rating, owner)
     constructor(name: String, startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double, rating: Int,owner:String)
             : this(null,name, GeoPoint(startLatitude, startLongitude), GeoPoint(endLatitude, endLongitude), rating, owner)
+
 
 }

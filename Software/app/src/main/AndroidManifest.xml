@@ -17,7 +17,7 @@
         android:theme="@style/Theme.WalkTalk"
         tools:targetApi="31">
         <activity
-            android:name=".LocationSelector"
+            android:name=".LocationSelectorActivity"
             android:exported="false" />
         <activity
             android:name=".RouteDetailsActivity"

@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import hr.foi.rampu.walktalk.fragments.MapFragment
-import hr.foi.rampu.walktalk.fragments.RoutesFragment
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
 import org.osmdroid.util.GeoPoint
 
-class LocationSelector : AppCompatActivity() {
+class LocationSelectorActivity : AppCompatActivity() {
     private lateinit var startPoint: GeoPoint
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
