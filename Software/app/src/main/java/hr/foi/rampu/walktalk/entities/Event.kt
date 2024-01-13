@@ -11,6 +11,7 @@ data class Event(
     val date:Date? = null,
     val organizer: String = "",
     val route: List<GeoPoint>? = null,
-    val isPublic : Boolean = true
+    val isPublic : Boolean = true,
+    val invites : ArrayList<String>? = null
 ) {
 }

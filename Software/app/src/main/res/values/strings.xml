@@ -36,4 +36,5 @@
     <string name="group_chat">Group chat</string>
     <string name="invite_sent">Invite sent</string>
     <string name="retry">Retry</string>
+    <string name="waiting_for_approval">Waiting for approval…</string>
 </resources>

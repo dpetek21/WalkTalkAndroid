@@ -53,7 +53,8 @@ class EventDetailsActivity : AppCompatActivity() {
         if (DatabaseFriend.username == event.organizer) {
             actionButton.text = getString(R.string.start_event)
         }
-        else {
+
+        else if (!DatabaseEvent.checkIfUserSentInvite()) {
             actionButton.text = getString(R.string.send_invitation)
                 actionButton.setOnClickListener {
                     lifecycleScope.launch {
@@ -69,6 +70,13 @@ class EventDetailsActivity : AppCompatActivity() {
                         }
                     }
                 }
+        }
+        else {
+            actionButton.text = getString(R.string.waiting_for_approval)
+            actionButton.setBackgroundColor(getColor(R.color.beige))
+            actionButton.setTextColor(getColor(R.color.black))
+            actionButton.alpha = 0.8F
+            actionButton.isClickable = false
         }
         backButton.setOnClickListener{
             this.finish()

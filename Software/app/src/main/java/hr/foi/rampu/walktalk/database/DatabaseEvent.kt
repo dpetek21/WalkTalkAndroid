@@ -71,6 +71,7 @@ object DatabaseEvent {
                 }
                 .await()
             database.collection("events").document(id!!).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
+            event!!.invites!!.add(DatabaseFriend.username)
              true
         }
 
@@ -79,5 +80,14 @@ object DatabaseEvent {
              false
         }
 
+    }
+
+    fun checkIfUserSentInvite () : Boolean  {
+        return try {
+            event!!.invites!!.contains(DatabaseFriend.username)
+        } catch(error: Exception) {
+            Log.e("EVENT_ERROR",error.message.toString())
+            false
+        }
     }
 }
