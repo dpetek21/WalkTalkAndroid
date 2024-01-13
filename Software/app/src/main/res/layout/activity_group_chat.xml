@@ -12,6 +12,7 @@
         tools:layout_editor_absoluteX="157dp"
         tools:layout_editor_absoluteY="413dp" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewGroupChat"
         android:layout_width="match_parent"
@@ -24,7 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <EditText
         android:id="@+id/edt_group_chat_massage"
@@ -39,8 +39,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.963" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewGroupChat"
+        app:layout_constraintVertical_bias="0.795" />
 
     <ImageButton
         android:id="@+id/groupChatImageButton_send"
@@ -51,10 +51,10 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toEndOf="@+id/edt_group_chat_massage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
+        app:layout_constraintVertical_bias="0.942"
         app:srcCompat="@drawable/ic_baseline_send_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

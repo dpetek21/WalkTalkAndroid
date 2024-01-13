@@ -46,6 +46,22 @@ class GroupChatActivity : AppCompatActivity() {
             groupChatAdapter = GroupChatAdapter(this@GroupChatActivity, messageList, sender)
             groupChatRecyclerView.layoutManager = LinearLayoutManager(this@GroupChatActivity)
             groupChatRecyclerView.adapter = groupChatAdapter
+
+            if(groupChatRecyclerView.adapter?.itemCount != 0) {
+                groupChatRecyclerView.smoothScrollToPosition(groupChatAdapter.itemCount - 1)
+            }
+
+            groupChatRecyclerView.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+                if (bottom < oldBottom) {
+                    if(groupChatRecyclerView.adapter?.itemCount != 0) {
+                        groupChatRecyclerView.smoothScrollToPosition(
+                            groupChatRecyclerView.adapter?.itemCount?.minus(
+                                1
+                            ) ?: 0
+                        )
+                    }
+                }
+            }
         }
 
 
@@ -56,6 +72,7 @@ class GroupChatActivity : AppCompatActivity() {
                     messageList.add(Message(groupChatText.text.toString(), sender, receiver, Timestamp.now()))
                     groupChatAdapter.notifyDataSetChanged()
                     groupChatText.text.clear()
+                    groupChatRecyclerView.smoothScrollToPosition(groupChatAdapter.itemCount - 1)
                 }
             }
         }
