@@ -7,6 +7,7 @@ import android.widget.Spinner
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.database.DatabaseFriend
 import hr.foi.rampu.walktalk.entities.Event
 import java.text.SimpleDateFormat
@@ -50,7 +51,7 @@ class NewEventDialogHelper(private val view: View) {
                 picker.addOnPositiveButtonClickListener {
                     dateSelection.setText(sdfDate.format(it).toString())
                     val newEvent = buildEvent()
-                    DatabaseFriend.addNewEvent(newEvent)
+                    DatabaseEvent.addNewEvent(newEvent)
                 }
                 view.clearFocus()
             }

@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.EventDetailsActivity
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.entities.Event
 
 class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<ExploreEventsAdapter.ExploreEventsHolder>() {
@@ -59,6 +60,8 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
         holder.itemView.setOnClickListener {
             val activity = it.context as AppCompatActivity
             val intent = Intent(activity,EventDetailsActivity::class.java)
+            DatabaseEvent.event = eventList[position]
+            /*
             intent.putExtra("event_name",eventList[position].name)
             intent.putExtra("event_date",eventList[position].date.toString())
             intent.putExtra("event_kilometers",eventList[position].numberOfKilometers.toString())
@@ -66,6 +69,8 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
             intent.putExtra("event_organizer",eventList[position].organizer)
             intent.putExtra("event_pace",eventList[position].pace)
             intent.putExtra("event_public",eventList[position].isPublic)
+
+             */
             activity.startActivity(intent)
         }
     }

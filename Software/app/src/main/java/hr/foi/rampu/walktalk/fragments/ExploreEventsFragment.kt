@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.adapters.ExploreEventsAdapter
-import hr.foi.rampu.walktalk.database.DatabaseFriend
+import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.entities.Event
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class ExploreEventsFragment : Fragment() {
     }
 
     private suspend fun getEvents() {
-        val exploreEventsList : List<Event> = DatabaseFriend.getPublicEvents()
+        val exploreEventsList : List<Event> = DatabaseEvent.getPublicEvents()
         recyclerView = requireView().findViewById(R.id.rv_explore_events)
         recyclerView.adapter = ExploreEventsAdapter(exploreEventsList)
         recyclerView.layoutManager = LinearLayoutManager(requireView().context)
