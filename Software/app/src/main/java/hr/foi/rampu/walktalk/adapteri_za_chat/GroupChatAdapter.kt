@@ -44,6 +44,7 @@ class GroupChatAdapter(val context: Context, val messageList: ArrayList<Message>
             }
             VIEW_TYPE_RECEIVED_MESSAGE -> {
                 val receivedMessageViewHolder = holder as ReceivedMessageViewHolder
+                receivedMessageViewHolder.senderUsername.text = message.sender
                 receivedMessageViewHolder.receivedMessage.text = message.message
             }
         }
@@ -64,6 +65,7 @@ class GroupChatAdapter(val context: Context, val messageList: ArrayList<Message>
 
     class ReceivedMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val receivedMessage = itemView.findViewById<TextView>(R.id.txt_receive_massage)
+        val senderUsername = itemView.findViewById<TextView>(R.id.txt_sender_username)
     }
 
 }
