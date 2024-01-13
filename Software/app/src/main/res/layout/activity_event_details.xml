@@ -50,16 +50,15 @@
                 android:id="@+id/img_cancel_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@tools:sample/avatars"
                 android:contentDescription="@string/exit_door_icon"
-                tools:visibility="gone" />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_event_detail_action_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/white"
-                android:text=""
+                android:text="Placeholder"
                 android:visibility="visible" />
 
             <ImageView
@@ -67,8 +66,7 @@
                 android:layout_width="wrap_content"
                 android:contentDescription="@string/group_chat"
                 android:layout_height="wrap_content"
-                android:src="@tools:sample/avatars"
-                tools:visibility="gone" />
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
