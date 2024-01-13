@@ -41,7 +41,6 @@ class GroupChatActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 if(groupChatText.text.isNotEmpty()){
                     groupChatDAO.saveMessage(groupChatText.text.toString())
-                    messageList = groupChatDAO.fetchMessagesIntoAList()
                 }
             }
         }
