@@ -14,6 +14,27 @@ import java.util.Locale
 object DatabaseEvent {
     var event : Event? = null
 
+    private suspend fun getEventDocument() : String = coroutineScope {
+        var id : String? = null
+        val database = Firebase.firestore
+        database
+            .collection("events")
+            .whereEqualTo("name", event!!.name)
+            .whereEqualTo("organizer", event!!.organizer)
+            .get()
+            .addOnSuccessListener {
+                if (it.isEmpty) {
+                    throw Exception("Event not found in Firestore")
+                }
+                if (it.size() > 1) {
+                    throw Exception("Found multiple events in Firestore")
+                }
+                id = it.documents[0].id
+            }
+            .await()
+        id!!
+    }
+
     suspend fun getPublicEvents(): List<Event> = coroutineScope {
         val eventList = mutableListOf<Event>()
         val database = Firebase.firestore
@@ -54,23 +75,9 @@ object DatabaseEvent {
     }
     suspend fun sendInvite() : Boolean = coroutineScope {
         val database = Firebase.firestore
-        var id : String? = null
         try {
-            database
-                .collection("events")
-                .whereEqualTo("name", event!!.name)
-                .get()
-                .addOnSuccessListener {
-                    if (it.isEmpty) {
-                        throw Exception("Event not found in Firestore")
-                    }
-                    if (it.size() > 1) {
-                        throw Exception("Found multiple events in Firestore")
-                    }
-                    id = it.documents[0].id
-                }
-                .await()
-            database.collection("events").document(id!!).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
+            val id = getEventDocument()
+            database.collection("events").document(id).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
             event!!.invites!!.add(DatabaseFriend.username)
              true
         }
@@ -82,11 +89,26 @@ object DatabaseEvent {
 
     }
 
+    suspend fun cancelEvent(): Boolean = coroutineScope {
+        try {
+            val id = getEventDocument()
+            val database = Firebase.firestore
+            database.collection("events").document(id).delete().await()
+            event = null
+            true
+        }
+        catch (error : Exception)
+        {
+            Log.e("EVENT_DELETION_ERROR",error.message.toString())
+            false
+        }
+    }
+
     fun checkIfUserSentInvite () : Boolean  {
         return try {
             event!!.invites!!.contains(DatabaseFriend.username)
         } catch(error: Exception) {
-            Log.e("EVENT_ERROR",error.message.toString())
+            Log.e("EVENT_CHECKING_ERROR",error.message.toString())
             false
         }
     }

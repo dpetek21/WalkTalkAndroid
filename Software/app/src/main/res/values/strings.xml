@@ -32,9 +32,10 @@
     <string name="people_coming">People coming</string>
     <string name="send_invitation">Send invitation</string>
     <string name="start_event">Start event</string>
-    <string name="exit_door_icon">Exit door icon</string>
+    <string name="trash_icon">Trash icon</string>
     <string name="group_chat">Group chat</string>
     <string name="invite_sent">Invite sent</string>
     <string name="retry">Retry</string>
     <string name="waiting_for_approval">Waiting for approval…</string>
+    <string name="update_event">Update event</string>
 </resources>
