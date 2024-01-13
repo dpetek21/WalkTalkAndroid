@@ -25,6 +25,30 @@ class GroupChatDAO(private val receiver: String) {
         }
     }
 
+    suspend fun fetchMessagesIntoAList(): ArrayList<Message> {
+        val messageList = ArrayList<Message>()
+
+        if (messagesExists()) {
+            val chatDocument = referenceToChat()
+            if (chatDocument != null) {
+                val privateMessages = chatDocument.collection("private_messages")
+                try {
+                    val documents = privateMessages.orderBy("timestamp").get().await()
+                    for (document in documents) {
+                        val text = document.getString("message") ?: ""
+                        val senderData = document.getString("sender") ?: ""
+                        val receiverData = document.getString("receiver") ?: ""
+                        messageList.add(Message(text, senderData, receiverData, Timestamp.now()))
+                    }
+                } catch (e: Exception) {
+                    Log.e("fetchMessagesIntoAList", "Error fetching messages: $e")
+                }
+            }
+        }
+        return messageList
+    }
+
+
     /**
      * Sprema poruku u private messages kolekciju unutar specifičnog chat-a. Generira UUID, Message
      * objekt i doda ga u kolekciju. Baza: messages(kolekcija) -> UUID(dokument, chat dvaju korisnika) ->

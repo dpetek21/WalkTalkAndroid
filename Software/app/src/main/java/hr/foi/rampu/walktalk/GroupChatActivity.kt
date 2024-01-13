@@ -2,6 +2,7 @@ package hr.foi.rampu.walktalk
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.lifecycle.lifecycleScope
@@ -32,11 +33,15 @@ class GroupChatActivity : AppCompatActivity() {
         groupChatText = findViewById(R.id.edt_group_chat_massage)
         sendButton = findViewById(R.id.groupChatImageButton_send)
         groupChatRecyclerView = findViewById(R.id.recyclerViewGroupChat)
+        messageList = ArrayList<Message>()
+        messageList.clear()
+
 
         sendButton.setOnClickListener {
             lifecycleScope.launch {
                 if(groupChatText.text.isNotEmpty()){
                     groupChatDAO.saveMessage(groupChatText.text.toString())
+                    messageList = groupChatDAO.fetchMessagesIntoAList()
                 }
             }
         }
