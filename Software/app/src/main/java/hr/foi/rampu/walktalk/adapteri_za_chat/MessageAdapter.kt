@@ -72,6 +72,9 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>, 
 
     class ReceiveMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val receivedMessage = itemView.findViewById<TextView>(R.id.txt_receive_massage)
+        val senderUsername = itemView.findViewById<TextView>(R.id.txt_sender_username).apply {
+            visibility = View.INVISIBLE
+        }
     }
 
 }
