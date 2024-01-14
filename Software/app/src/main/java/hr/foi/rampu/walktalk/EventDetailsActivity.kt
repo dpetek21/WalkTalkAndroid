@@ -46,25 +46,11 @@ class EventDetailsActivity : AppCompatActivity() {
         eventDate = findViewById(R.id.txtv_event_detail_date)
         pace = findViewById(R.id.txtv_event_detail_pace)
         cancelEventButton = findViewById(R.id.imgBtn_cancel_event)
-
-
-        /*
-        eventName.text = intent.getStringExtra("event_name")
-        numberOfPeople.text =
-            getString(R.string.number_of_people_going, intent.getStringExtra("event_people").toString())
-        numberOfKilometers.text = getString(R.string.number_of_kilometers,intent.getStringExtra("event_kilometers"))
-        eventDate.text = intent.getStringExtra("event_date").toString()
-        pace.text = getString(R.string.pace,intent.getStringExtra("event_pace"))
-         */
         backButton.setOnClickListener{
             this.finish()
         }
         val event = DatabaseEvent.event!!
-        eventName.text = event.name
-        numberOfPeople.text = getString(R.string.number_of_people_going,event.numberOfPeople.toString())
-        numberOfKilometers.text = getString(R.string.number_of_kilometers,event.numberOfKilometers.toString())
-        eventDate.text = event.date.toString()
-        pace.text = getString(R.string.pace,event.pace)
+        populateEventData()
 
 
         actionButton = findViewById(R.id.btn_event_detail_action_button)
@@ -110,6 +96,17 @@ class EventDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun populateEventData() {
+        val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
+        val event = DatabaseEvent.event!!
+        eventName.text = event.name
+        numberOfPeople.text = getString(R.string.number_of_people_going,event.numberOfPeople.toString())
+        numberOfKilometers.text = getString(R.string.number_of_kilometers,event.numberOfKilometers.toString())
+        eventDate.text = sdfDate.format(event.date!!)
+        pace.text = getString(R.string.pace,event.pace)
+        return
+    }
+
     private fun showDialog() {
         val updateEventDialogView = LayoutInflater
             .from(baseContext)
@@ -135,10 +132,11 @@ class EventDetailsActivity : AppCompatActivity() {
                         true,
                         DatabaseEvent.event!!.invites
                     )
-                    dialog.dismiss()
                     lifecycleScope.launch {
                         DatabaseEvent.updateEvent(event)
                     }
+                    dialog.dismiss()
+                    populateEventData()
 
                 }
                 return@setPositiveButton
