@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import hr.foi.rampu.walktalk.AttentingEventsActivity
+import hr.foi.rampu.walktalk.ChatsListActivity
 import hr.foi.rampu.walktalk.EventsActivity
 import hr.foi.rampu.walktalk.FriendsActivity
 import hr.foi.rampu.walktalk.NotificationsActivity
@@ -30,12 +31,17 @@ object NavigationSetup {
                 activity.getString(R.string.my_events) -> activityToLoad =
                     EventsActivity::class.java
 
-                activity.getString(R.string.friends) -> activityToLoad = FriendsActivity::class.java
+                activity.getString(R.string.friends) -> activityToLoad =
+                    FriendsActivity::class.java
+
                 activity.getString(R.string.attending_events) -> activityToLoad =
                     AttentingEventsActivity::class.java
 
                 activity.getString(R.string.notifications) -> activityToLoad =
                     NotificationsActivity::class.java
+
+                activity.getString(R.string.messages) -> activityToLoad =
+                    ChatsListActivity::class.java
             }
             navDrawerLayout.close()
             if (currentActivity == activityToLoad?.simpleName) {

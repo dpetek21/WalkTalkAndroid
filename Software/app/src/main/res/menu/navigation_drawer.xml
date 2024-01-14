@@ -25,5 +25,10 @@
        android:title="@string/notifications"
        android:icon="@drawable/ic_notifications"
        android:checkable="true"/>
+   <item
+       android:id = "@+id/messages"
+       android:title="@string/messages"
+       android:icon="@drawable/ic_chat"
+       android:checkable="true"/>
 
 </menu>
