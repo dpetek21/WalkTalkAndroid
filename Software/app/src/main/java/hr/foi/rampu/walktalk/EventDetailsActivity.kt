@@ -2,20 +2,26 @@ package hr.foi.rampu.walktalk
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.VISIBLE
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.database.DatabaseFriend
-import hr.foi.rampu.walktalk.helpers.NewEventDialogHelper
+import hr.foi.rampu.walktalk.entities.Event
 import hr.foi.rampu.walktalk.helpers.Pace
+import hr.foi.rampu.walktalk.helpers.UpdateExistingEventDialogHelper
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EventDetailsActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
@@ -67,7 +73,7 @@ class EventDetailsActivity : AppCompatActivity() {
             cancelEventButton.visibility  = VISIBLE
 
             cardViewEventDetails.setOnClickListener {
-
+                    this.showDialog()
             }
 
             cancelEventButton.setOnClickListener {
@@ -105,20 +111,47 @@ class EventDetailsActivity : AppCompatActivity() {
     }
 
     private fun showDialog() {
-        val newTaskDialogView = LayoutInflater
+        val updateEventDialogView = LayoutInflater
             .from(baseContext)
             .inflate(R.layout.create_event_dialog, null)
-        AlertDialog.Builder(this)
-            .setView(newTaskDialogView)
+         AlertDialog.Builder(this)
+            .setView(updateEventDialogView)
             .setTitle(getString(R.string.update_event))
-            .setPositiveButton("Update",null)
+            .setPositiveButton("Update") {dialog,_ ->
+                val eventName : EditText = updateEventDialogView.findViewById(R.id.et_new_event_name)
+                if (eventName.text.isEmpty()) {
+                    Log.i("EVENT_NAME_EMPTY", "Event name is empty")
+                } else {
+                    val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
+                    val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
+                    val dateSelection = updateEventDialogView.findViewById<EditText>(R.id.et_event_date)
+                    val event = Event(eventName.text.toString(),
+                        0.0,
+                        0,
+                        spinnerPace.selectedItem as String,
+                        sdfDate.parse(dateSelection.text.toString()),
+                        DatabaseFriend.username,
+                        null,
+                        true,
+                        DatabaseEvent.event!!.invites
+                    )
+                    dialog.dismiss()
+                    lifecycleScope.launch {
+                        DatabaseEvent.updateEvent(event)
+                    }
+
+                }
+                return@setPositiveButton
+            }
             .setNegativeButton("Cancel",null)
             .create()
             .show()
 
-        val dialogHelper = NewEventDialogHelper(newTaskDialogView)
+        val dialogHelper = UpdateExistingEventDialogHelper(updateEventDialogView)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
         dialogHelper.activateDateListener(supportFragmentManager)
+
+
     }
 
 
