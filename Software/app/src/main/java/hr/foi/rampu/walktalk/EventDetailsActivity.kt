@@ -116,12 +116,12 @@ class EventDetailsActivity : AppCompatActivity() {
             .setTitle(getString(R.string.update_event))
             .setPositiveButton("Update") {dialog,_ ->
                 val eventName : EditText = updateEventDialogView.findViewById(R.id.et_new_event_name)
-                if (eventName.text.isEmpty()) {
-                    Log.i("EVENT_NAME_EMPTY", "Event name is empty")
+                val dateSelection = updateEventDialogView.findViewById<EditText>(R.id.et_event_date)
+                if (eventName.text.isEmpty() || dateSelection.text.isEmpty()) {
+                    Log.i("EVENT_NAME_EMPTY", "Event name  or date is empty")
                 } else {
                     val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
                     val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
-                    val dateSelection = updateEventDialogView.findViewById<EditText>(R.id.et_event_date)
                     val event = Event(eventName.text.toString(),
                         0.0,
                         0,

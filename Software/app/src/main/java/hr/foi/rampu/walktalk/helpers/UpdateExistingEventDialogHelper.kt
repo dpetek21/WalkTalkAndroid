@@ -44,21 +44,6 @@ class UpdateExistingEventDialogHelper(private val view: View) {
         etEventName.setText(DatabaseEvent.event!!.name)
         dateSelection.setText(sdfDate.format(DatabaseEvent.event!!.date!!))
     }
-/*
-    private fun updateEvent() : Event? {
-        return try {
-            val name = etEventName.text.toString()
-            val date = sdfDate.parse(dateSelection.text.toString())
-            val pace = spinnerPace.selectedItem as String
-
-            Event(name,0.0,0,pace,date,DatabaseEvent.event!!.organizer,null,true,DatabaseEvent.event!!.invites)
-        } catch (error : Exception) {
-            Log.e("UPDATE_EVENT_ERROR",error.message.toString())
-            null
-        }
-    }
-
- */
 
     fun activateDateListener(supportFragmentManager: FragmentManager) {
         dateSelection.setOnFocusChangeListener{view, hasFocus ->
