@@ -13,8 +13,8 @@
 
         <EditText
             android:id="@+id/nameTextBox"
-            android:layout_width="178dp"
-            android:layout_height="68dp"
+            android:layout_width="160dp"
+            android:layout_height="39dp"
             android:layout_marginTop="28dp"
             android:background="@color/beige"
             android:ems="10"
@@ -22,7 +22,7 @@
             android:inputType="text"
             android:textColorHint="@color/m3_hint_foreground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.171"
+            app:layout_constraintHorizontal_bias="0.243"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
 
@@ -52,38 +52,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="1"
-                android:text="Difficulty rating 1" />
+                android:text="Easy route" />
 
             <RadioButton
                 android:id="@+id/rbRating2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="2"
-                android:text="Difficulty rating 2" />
+                android:text="Average route" />
 
             <RadioButton
                 android:id="@+id/rbRating3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="3"
-                android:text="Difficulty rating 3" />
+                android:text="Hard route" />
 
         </RadioGroup>
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="223dp"
+            android:layout_marginTop="20dp"
             android:text="Save"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.77"
+            app:layout_constraintHorizontal_bias="0.813"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
+            app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
 
         <Button
             android:id="@+id/btnSetStart"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="Set Start"
@@ -94,23 +94,23 @@
 
         <Button
             android:id="@+id/btnSetEnd"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="20dp"
             android:text="Set End"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.796"
+            app:layout_constraintHorizontal_bias="0.813"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSetStart" />
 
         <Button
             android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:text="Delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.776"
+            app:layout_constraintHorizontal_bias="0.813"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnSetEnd" />
 
