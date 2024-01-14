@@ -8,8 +8,6 @@ import com.google.firebase.firestore.toObject
 import hr.foi.rampu.walktalk.entities.Event
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 object DatabaseEvent {
     var event : Event? = null
@@ -51,7 +49,6 @@ object DatabaseEvent {
     }
 
     fun addNewEvent(newEvent: Event) {
-        val sdf = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
         val event = hashMapOf(
             "name" to newEvent.name,
             "numberOfKilometers" to newEvent.numberOfKilometers,
@@ -89,6 +86,7 @@ object DatabaseEvent {
 
     }
 
+
     suspend fun cancelEvent(): Boolean = coroutineScope {
         try {
             val id = getEventDocument()
@@ -111,5 +109,29 @@ object DatabaseEvent {
             Log.e("EVENT_CHECKING_ERROR",error.message.toString())
             false
         }
+    }
+
+    suspend fun updateEvent(eventToUpdate: Event): Boolean  = coroutineScope{
+
+        try {
+            val id = getEventDocument()
+            val updatedEvent = mapOf(
+                "name" to eventToUpdate.name,
+                "numberOfKilometers" to eventToUpdate.numberOfKilometers,
+                "pace" to eventToUpdate.pace,
+                "date" to eventToUpdate.date,
+                "route" to eventToUpdate.route,
+                "isPublic" to eventToUpdate.isPublic
+            )
+            val database = Firebase.firestore
+            database.collection("events").document(id).update(updatedEvent).await()
+            event = eventToUpdate
+            true
+        }
+        catch (error : Exception) {
+            Log.e("FIRESTORE_UPDATE_EVENT_ERROR",error.message.toString())
+            false
+        }
+
     }
 }
