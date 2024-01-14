@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,10 +29,15 @@ class GroupChatActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<Message>
     private lateinit var groupChatAdapter: GroupChatAdapter
     private lateinit var groupChatDAO: GroupChatDAO
+    private lateinit var toolbarBackIcon: ImageView
+    private lateinit var toolbarTitle: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)
+
+        toolbarBackIcon = findViewById(R.id.imageView_toolbar_private_chat)
+        toolbarTitle = findViewById(R.id.txt_toolbar_private_chat)
 
         sender = UserDataContainer.username
         receiver = intent.getStringExtra("group_name").toString()
@@ -40,6 +47,11 @@ class GroupChatActivity : AppCompatActivity() {
         groupChatRecyclerView = findViewById(R.id.recyclerViewGroupChat)
         messageList = ArrayList<Message>()
         messageList.clear()
+
+        toolbarTitle.text = receiver
+        toolbarBackIcon.setOnClickListener{
+            this.finish()
+        }
 
         lifecycleScope.launch {
             messageList = groupChatDAO.fetchMessagesIntoAList()
