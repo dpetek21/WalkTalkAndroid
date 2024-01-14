@@ -7,7 +7,7 @@
     tools:context=".ChatsListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/privateChatsRecyclerView"
         android:layout_width="407dp"
         android:layout_height="303dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Privatni razgovori"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/privateChatsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,15 +35,15 @@
         android:layout_height="wrap_content"
         android:text="Grupe"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+        app:layout_constraintBottom_toTopOf="@+id/groupChatsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/privateChatsRecyclerView"
         app:layout_constraintVertical_bias="0.653" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/groupChatsRecyclerView"
         android:layout_width="409dp"
         android:layout_height="309dp"
         app:layout_constraintBottom_toBottomOf="parent"
