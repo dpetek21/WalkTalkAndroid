@@ -38,4 +38,5 @@
     <string name="retry">Retry</string>
     <string name="waiting_for_approval">Waiting for approval…</string>
     <string name="update_event">Update event</string>
+    <string name="event_name_must_not_be_empty">Event name must not be  empty!</string>
 </resources>
