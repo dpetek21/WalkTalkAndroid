@@ -1,14 +1,17 @@
 package hr.foi.rampu.walktalk.adapteri_za_chat
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import hr.foi.rampu.walktalk.GroupChatActivity
+import hr.foi.rampu.walktalk.PrivateChatActivity
 import hr.foi.rampu.walktalk.R
 
-class ChatsListAdapter(val context: Context, val chatsList: List<String>):
+class ChatsListAdapter(val context: Context, val chatsList: List<String>, val isGroupChat: Boolean):
     RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder>() {
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,7 +32,18 @@ class ChatsListAdapter(val context: Context, val chatsList: List<String>):
         val chatTitle = chatsList[position]
         holder.chatTitleTextView.text = chatTitle
 
-        holder.dividerView.visibility = if (position == chatsList.size - 1) View.GONE else View.VISIBLE
+        holder.itemView.setOnClickListener {
+            if(!isGroupChat){
+                val intent = Intent(context, PrivateChatActivity::class.java)
+                intent.putExtra("receiver_username", chatTitle)
+                context.startActivity(intent)
+            }else{
+                val intent = Intent(context, GroupChatActivity::class.java)
+                intent.putExtra("group_name", chatTitle)
+                context.startActivity(intent)
+            }
+
+        }
     }
 
 }

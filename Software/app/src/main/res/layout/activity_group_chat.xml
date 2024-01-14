@@ -51,10 +51,10 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toEndOf="@+id/edt_group_chat_massage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942"
+        app:layout_constraintVertical_bias="0.969"
         app:srcCompat="@drawable/ic_baseline_send_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

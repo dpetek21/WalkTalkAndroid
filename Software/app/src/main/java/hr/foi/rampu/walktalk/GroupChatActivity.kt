@@ -33,7 +33,7 @@ class GroupChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_group_chat)
 
         sender = UserDataContainer.username
-        receiver = "Test"
+        receiver = intent.getStringExtra("group_name").toString()
         groupChatDAO = GroupChatDAO(receiver)
         groupChatText = findViewById(R.id.edt_group_chat_massage)
         sendButton = findViewById(R.id.groupChatImageButton_send)

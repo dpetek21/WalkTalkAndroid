@@ -50,6 +50,7 @@ class PrivateChatActivity : AppCompatActivity() {
 
         sender = UserDataContainer.username
         receiver = intent.getStringExtra("receiver_username").toString()
+        Log.i("receiver, private chat", receiver)
 
         toolbarTitle.text = receiver
 

@@ -32,8 +32,8 @@ class ChatsListActivity : AppCompatActivity() {
             privateChatList = chatsListDAO.fetchPrivateChatsIntoAList()
             groupChatList = chatsListDAO.fetchGroupChatsIntoAList()
 
-            privateChatsListAdapter = ChatsListAdapter(this@ChatsListActivity, privateChatList)
-            groupChatsListAdapter = ChatsListAdapter(this@ChatsListActivity, groupChatList)
+            privateChatsListAdapter = ChatsListAdapter(this@ChatsListActivity, privateChatList, false)
+            groupChatsListAdapter = ChatsListAdapter(this@ChatsListActivity, groupChatList, true)
 
             privateChatsRecyclerView.layoutManager = LinearLayoutManager(this@ChatsListActivity)
             privateChatsRecyclerView.adapter = privateChatsListAdapter
