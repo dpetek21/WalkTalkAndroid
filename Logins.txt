@@ -1,0 +1,8 @@
+Korisničko ime: admin
+Lozinka: admin
+
+Korisničko ime: dpetek21
+Lozinka: 1234
+
+Korisničko ime: marin
+Lozinka: 1234
