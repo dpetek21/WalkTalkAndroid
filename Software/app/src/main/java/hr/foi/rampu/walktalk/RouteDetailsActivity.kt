@@ -3,7 +3,6 @@ package hr.foi.rampu.walktalk
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,6 +10,8 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+//import com.google.firebase.firestore.GeoPoint
 import hr.foi.rampu.walktalk.entities.Route
 import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
