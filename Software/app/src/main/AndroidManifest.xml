@@ -29,6 +29,9 @@
             android:name=".GroupChatActivity"
             android:exported="false" />
         <activity
+            android:name=".EventDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AttentingEventsActivity"
             android:exported="false" />
         <activity

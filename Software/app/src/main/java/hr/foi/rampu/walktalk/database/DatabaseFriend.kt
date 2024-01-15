@@ -6,10 +6,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
+
 import hr.foi.rampu.walktalk.entities.Friend
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
+
 
 object DatabaseFriend {
     var username: String = UserDataContainer.username
@@ -125,6 +127,8 @@ object DatabaseFriend {
                 Log.e("FAILADDFRIENDTOFIRESTORE", it.toString())
             }
     }
+
+
 
 
 }
