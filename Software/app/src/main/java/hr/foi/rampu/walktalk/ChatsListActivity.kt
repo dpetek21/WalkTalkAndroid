@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.adapteri_za_chat.ChatsListAdapter
 import hr.foi.rampu.walktalk.database.ChatsListDAO
+import hr.foi.rampu.walktalk.navigation.NavigationSetup
 import kotlinx.coroutines.launch
 
 
@@ -23,6 +24,8 @@ class ChatsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chats_list)
+
+        NavigationSetup.SetupNavigationDrawer(this)
 
         privateChatsRecyclerView = findViewById(R.id.privateChatsRecyclerView)
         groupsRecyclerView = findViewById(R.id.groupChatsRecyclerView)

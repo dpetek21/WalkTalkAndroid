@@ -15,6 +15,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import hr.foi.rampu.walktalk.database.PedometerDAO
+import hr.foi.rampu.walktalk.navigation.NavigationSetup
 
 private lateinit var sensorManager: SensorManager
 private lateinit var pedometerDAO: PedometerDAO
@@ -28,6 +29,8 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedometer)
+
+        NavigationSetup.SetupNavigationDrawer(this)
 
         pedometerDAO = PedometerDAO()
 
