@@ -9,6 +9,7 @@ import hr.foi.rampu.walktalk.ChatsListActivity
 import hr.foi.rampu.walktalk.EventsActivity
 import hr.foi.rampu.walktalk.FriendsActivity
 import hr.foi.rampu.walktalk.NotificationsActivity
+import hr.foi.rampu.walktalk.PedometerActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.RoutesActivity
 
@@ -42,6 +43,9 @@ object NavigationSetup {
 
                 activity.getString(R.string.messages) -> activityToLoad =
                     ChatsListActivity::class.java
+
+                activity.getString(R.string.pedometer) -> activityToLoad =
+                    PedometerActivity::class.java
             }
             navDrawerLayout.close()
             if (currentActivity == activityToLoad?.simpleName) {
