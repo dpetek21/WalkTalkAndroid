@@ -19,17 +19,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+
             <TextView
                 android:id="@+id/tv_route_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                 />
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/tv_route_owner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 />
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgv_mapicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
