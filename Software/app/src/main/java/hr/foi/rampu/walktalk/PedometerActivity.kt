@@ -14,8 +14,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import hr.foi.rampu.walktalk.database.PedometerDAO
 
 private lateinit var sensorManager: SensorManager
+private lateinit var pedometerDAO: PedometerDAO
 
 class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
@@ -27,9 +29,13 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedometer)
 
+        pedometerDAO = PedometerDAO()
+
         if (isPermissionGranted()) {
             requestPermission()
         }
+
+        resetSteps()
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -57,8 +63,9 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
         tv_stepsTaken.setOnLongClickListener {
 
-            previousTotalSteps = totalSteps
+            pedometerDAO.savePedometerData(tv_stepsTaken.text.toString().toInt())
 
+            previousTotalSteps = totalSteps
             tv_stepsTaken.text = 0.toString()
 
             true
@@ -73,6 +80,7 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
             tv_stepsTaken.text = ("$currentSteps")
         }
     }
+
 
     private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
