@@ -9,19 +9,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
+private lateinit var sensorManager: SensorManager
 
 class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
-    private var sensorManager: SensorManager? = null
     private var running = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
+    val ACTIVITY_RECOGNITION_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedometer)
 
+        if (isPermissionGranted()) {
+            requestPermission()
+        }
+
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
     }
 
     override fun onResume() {
@@ -60,6 +71,23 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
             totalSteps = event!!.values[0]
             val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
             tv_stepsTaken.text = ("$currentSteps")
+        }
+    }
+
+    private fun isPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACTIVITY_RECOGNITION
+        ) != PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+                ACTIVITY_RECOGNITION_REQUEST_CODE
+            )
         }
     }
 
