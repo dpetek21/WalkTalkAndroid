@@ -134,9 +134,9 @@ class EventDetailsActivity : AppCompatActivity() {
                     )
                     lifecycleScope.launch {
                         DatabaseEvent.updateEvent(event)
+                        populateEventData()
                     }
                     dialog.dismiss()
-                    populateEventData()
 
                 }
                 return@setPositiveButton
