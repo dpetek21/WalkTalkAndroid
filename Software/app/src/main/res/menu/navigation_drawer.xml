@@ -31,4 +31,10 @@
        android:icon="@drawable/ic_chat"
        android:checkable="true"/>
 
+   <item
+       android:id = "@+id/Pedometer"
+       android:title="@string/pedometer"
+       android:icon="@drawable/ic_attending_event"
+       android:checkable="true"/>
+
 </menu>

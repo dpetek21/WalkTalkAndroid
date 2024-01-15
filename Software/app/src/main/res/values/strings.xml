@@ -12,4 +12,5 @@
     <string name="notifications">Notifications</string>
     <string name="my_profile_picture">My profile picture</string>
     <string name="messages">Messages</string>
+    <string name="pedometer">Pedometer</string>
 </resources>
