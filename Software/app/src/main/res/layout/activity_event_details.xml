@@ -55,24 +55,30 @@
                 android:contentDescription="@string/trash_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_trash_delete"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:tint="@color/white" />
 
             <Button
                 android:id="@+id/btn_event_detail_action_button"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="60dp"
-                android:textColor="@color/white"
+                android:layout_weight="0"
                 android:text="Placeholder"
-                app:cornerRadius="0dp"
-                android:visibility="visible" />
+                android:textColor="@color/white"
+                android:visibility="visible"
+                app:cornerRadius="0dp" />
 
-            <ImageView
-                android:id="@+id/img_event_detail_chat"
-                android:layout_width="wrap_content"
-                android:contentDescription="@string/group_chat"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+            <ImageButton
+                android:id="@+id/imgBtn_see_requests"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/pending_event_requests"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_friend_request_pending"
+                android:visibility="invisible"
+                app:tint="@color/white" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -41,4 +41,5 @@
     <string name="waiting_for_approval">Waiting for approval…</string>
     <string name="update_event">Update event</string>
     <string name="event_name_must_not_be_empty">Event name must not be  empty!</string>
+    <string name="pending_event_requests">Pending event requests</string>
 </resources>
