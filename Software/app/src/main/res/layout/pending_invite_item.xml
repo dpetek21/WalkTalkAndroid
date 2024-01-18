@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_pending_invites"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:elevation="10dp"
+    android:layout_marginBottom="3dp">
+
+    <LinearLayout
+        android:id="@+id/ll_pending_invite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgv_pending_invite_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/profile_picture_of_user"
+            android:src="@drawable/ic_user" />
+
+        <LinearLayout
+            android:id="@+id/ll_pending_invite_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtv_username_pending_invite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <LinearLayout
+                android:id="@+id/ll_buttons_h"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end|bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_decline"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/decline"
+                    android:textAllCaps="true"
+                    app:cornerRadius="0dp"
+                    app:icon="@drawable/ic_check"
+                    app:iconGravity="textStart" />
+
+                <Button
+                    style="@style/Widget.Material3.Button"
+                    android:id="@+id/btn_accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/dark_green"
+                    android:textAllCaps="true"
+                    android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    android:text="@string/accept"
+                    app:cornerRadius="0dp"
+                    app:icon = "@drawable/ic_check"
+                    app:iconGravity = "textStart"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

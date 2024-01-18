@@ -42,4 +42,7 @@
     <string name="update_event">Update event</string>
     <string name="event_name_must_not_be_empty">Event name must not be  empty!</string>
     <string name="pending_event_requests">Pending event requests</string>
+    <string name="profile_picture_of_user">profile picture of user</string>
+    <string name="back_arrow">Back arrow</string>
+    <string name="pending_invites">Pending invites</string>
 </resources>
