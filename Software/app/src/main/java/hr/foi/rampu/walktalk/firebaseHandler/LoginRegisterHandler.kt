@@ -13,6 +13,14 @@ class LoginRegisterHandler {
             .addOnFailureListener { e ->
             }
     }
+    fun updateUser(userId: String, userData: Map<String, Any>) {
+        users.document(userId)
+            .update(userData)
+            .addOnSuccessListener { documentReference ->
+            }
+            .addOnFailureListener { e ->
+            }
+    }
     fun getUser(userId: String, callback: (Map<String, Any>?) -> Unit) {
         users.document(userId)
             .get()
