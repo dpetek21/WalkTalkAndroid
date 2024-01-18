@@ -10,12 +10,14 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import hr.foi.rampu.walktalk.database.PedometerDAO
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
+import hr.foi.rampu.walktalk.services.PedometerService
 
 private lateinit var sensorManager: SensorManager
 private lateinit var pedometerDAO: PedometerDAO
@@ -42,6 +44,11 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
+        val serviceIntent = Intent(applicationContext, PedometerService::class.java)
+        serviceIntent.action = PedometerService.Actions.START.toString()
+
+        startService(serviceIntent)
+
     }
 
     override fun onResume() {
@@ -54,6 +61,13 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
             Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
         } else {
             sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Intent(applicationContext, PedometerService::class.java).also{
+            it.action = PedometerService.Actions.STOP.toString()
         }
     }
 
