@@ -1,5 +1,6 @@
 package hr.foi.rampu.walktalk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var pace: TextView
     private lateinit var actionButton: Button
     private lateinit var cancelEventButton : ImageButton
+    private lateinit var seeInvitesButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class EventDetailsActivity : AppCompatActivity() {
         eventDate = findViewById(R.id.txtv_event_detail_date)
         pace = findViewById(R.id.txtv_event_detail_pace)
         cancelEventButton = findViewById(R.id.imgBtn_cancel_event)
+        seeInvitesButton = findViewById(R.id.imgBtn_see_invites)
         backButton.setOnClickListener{
             this.finish()
         }
@@ -57,6 +60,12 @@ class EventDetailsActivity : AppCompatActivity() {
         if (DatabaseFriend.username == event.organizer) {
             actionButton.text = getString(R.string.start_event)
             cancelEventButton.visibility  = VISIBLE
+            seeInvitesButton.visibility = VISIBLE
+
+            seeInvitesButton.setOnClickListener {
+                val intent = Intent(this,PendingInvitesActivity::class.java)
+                startActivity(intent)
+            }
 
             cardViewEventDetails.setOnClickListener {
                     this.showDialog()
