@@ -14,6 +14,7 @@ import hr.foi.rampu.walktalk.PedometerActivity
 import hr.foi.rampu.walktalk.ProfileActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.RoutesActivity
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 
 object NavigationSetup {
     private lateinit var navDrawerLayout : DrawerLayout
@@ -61,6 +62,9 @@ object NavigationSetup {
             }
         }
         var navProfilePic: ImageView = navView.getHeaderView(0).findViewById(R.id.nav_profile_picture)
+        if(UserDataContainer.profilePicUri!=null){
+            navProfilePic.setImageURI(UserDataContainer.profilePicUri)
+        }
         navProfilePic.setOnClickListener {
             val intent = Intent(activity, ProfileActivity::class.java)
             activity.startActivity(intent)

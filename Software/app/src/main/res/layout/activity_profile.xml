@@ -53,15 +53,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.856"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txbDisplay"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.107" />
 
         <EditText
             android:id="@+id/txbDetails"
             android:layout_width="160dp"
             android:layout_height="39dp"
             android:layout_marginTop="28dp"
-            android:layout_marginBottom="524dp"
             android:background="@color/beige"
             android:ems="10"
             android:hint="Details about you"
@@ -71,14 +70,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.856"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txbDescription" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.21" />
 
         <EditText
             android:id="@+id/txbDisplay"
             android:layout_width="160dp"
             android:layout_height="39dp"
             android:layout_marginTop="28dp"
-            android:layout_marginBottom="660dp"
             android:background="@color/beige"
             android:ems="10"
             android:hint="Display name"
@@ -88,7 +87,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.856"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.006" />
 
         <TextView
             android:id="@+id/textView4"

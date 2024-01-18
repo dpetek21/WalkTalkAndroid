@@ -1,11 +1,13 @@
 package hr.foi.rampu.walktalk
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import hr.foi.rampu.walktalk.firebaseHandler.LoginRegisterHandler
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 
@@ -44,9 +46,18 @@ class LoginActivity : AppCompatActivity() {
                 val message = "Login successful!"
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 UserDataContainer.username = username
-                val intent = Intent(this, EventsActivity::class.java)
-                startActivity(intent)
-                finish()
+                handler.getUser(UserDataContainer.username) { gottenUser ->
+                    if(gottenUser != null && gottenUser!!.containsKey("profilePicUrl")){
+                        val profilePicUrl = gottenUser["profilePicUrl"] as String
+                        if(profilePicUrl.isNotEmpty()){
+                            UserDataContainer.profilePicUri= Uri.parse(gottenUser["profilePicUrl"] as String)
+                            Log.d("Pfp", "Profile Pic URL: ${UserDataContainer.profilePicUri}")
+                        }
+                    }
+                    val intent = Intent(this, EventsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }else{
                 val message = "Login unsuccessful: check your inputs"
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
