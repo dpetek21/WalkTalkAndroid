@@ -39,5 +39,13 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: PendingInvitesViewHolder, position: Int) {
         holder.bind(invitesList[position])
+
+        holder.btnAccept.setOnClickListener {
+
+        }
+
+        holder.btnDecline.setOnClickListener {
+
+        }
     }
 }
