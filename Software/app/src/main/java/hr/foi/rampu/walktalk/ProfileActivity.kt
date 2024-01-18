@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import hr.foi.rampu.walktalk.firebaseHandler.LoginRegisterHandler
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
@@ -36,7 +37,9 @@ class ProfileActivity : AppCompatActivity() {
             }
             if (UserDataContainer.profilePicUri!=null) {
                 val imageView = findViewById<ImageView>(R.id.imgProfilePic)
-                imageView.setImageURI(UserDataContainer.profilePicUri)
+                Glide.with(this)
+                    .load(UserDataContainer.profilePicUri)
+                    .into(imageView)
             }
         }
         val save : Button = findViewById(R.id.btnSaveProfile)
@@ -83,7 +86,10 @@ class ProfileActivity : AppCompatActivity() {
             val selectedImageUri = data.data
             uri = selectedImageUri
             val imageView = findViewById<ImageView>(R.id.imgProfilePic)
-            imageView.setImageURI(selectedImageUri)
+            Glide.with(this)
+                .load(UserDataContainer.profilePicUri)
+                .circleCrop()
+                .into(imageView)
         }
     }
 }

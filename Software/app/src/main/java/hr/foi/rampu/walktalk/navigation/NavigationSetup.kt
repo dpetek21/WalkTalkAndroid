@@ -4,6 +4,7 @@ import android.content.Intent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import hr.foi.rampu.walktalk.AttentingEventsActivity
 import hr.foi.rampu.walktalk.ChatsListActivity
@@ -63,7 +64,10 @@ object NavigationSetup {
         }
         var navProfilePic: ImageView = navView.getHeaderView(0).findViewById(R.id.nav_profile_picture)
         if(UserDataContainer.profilePicUri!=null){
-            navProfilePic.setImageURI(UserDataContainer.profilePicUri)
+            Glide.with(activity)
+                .load(UserDataContainer.profilePicUri)
+                .circleCrop()
+                .into(navProfilePic)
         }
         navProfilePic.setOnClickListener {
             val intent = Intent(activity, ProfileActivity::class.java)
