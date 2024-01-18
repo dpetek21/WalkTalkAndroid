@@ -1,6 +1,7 @@
 package hr.foi.rampu.walktalk.navigation
 
 import android.content.Intent
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -10,6 +11,7 @@ import hr.foi.rampu.walktalk.EventsActivity
 import hr.foi.rampu.walktalk.FriendsActivity
 import hr.foi.rampu.walktalk.NotificationsActivity
 import hr.foi.rampu.walktalk.PedometerActivity
+import hr.foi.rampu.walktalk.ProfileActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.RoutesActivity
 
@@ -21,6 +23,7 @@ object NavigationSetup {
         navDrawerLayout = activity.findViewById(R.id.nav_drawer_layout)
         navView = activity.findViewById(R.id.nav_view)
         val currentActivity = activity.localClassName
+
 
         navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
@@ -56,6 +59,11 @@ object NavigationSetup {
                 activity.startActivity(intent)
                 true
             }
+        }
+        var navProfilePic: ImageView = navView.getHeaderView(0).findViewById(R.id.nav_profile_picture)
+        navProfilePic.setOnClickListener {
+            val intent = Intent(activity, ProfileActivity::class.java)
+            activity.startActivity(intent)
         }
 
     }
