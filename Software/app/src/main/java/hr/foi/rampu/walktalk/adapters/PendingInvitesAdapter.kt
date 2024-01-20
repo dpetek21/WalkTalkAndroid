@@ -47,15 +47,17 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.A
         holder.btnAccept.setOnClickListener {_ ->
             CoroutineScope(Dispatchers.Default).launch {
                 DatabaseEvent.acceptInvite(invitesList[holder.adapterPosition])
-                notifyItemRemoved(holder.adapterPosition)
             }
+            invitesList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
         }
 
         holder.btnDecline.setOnClickListener {_ ->
             CoroutineScope(Dispatchers.Default).launch {
                 DatabaseEvent.declineInvite(invitesList[holder.adapterPosition])
-                notifyItemRemoved(holder.adapterPosition)
             }
+            invitesList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
         }
 
     }
