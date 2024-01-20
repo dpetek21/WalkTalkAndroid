@@ -109,7 +109,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
         val event = DatabaseEvent.event!!
         eventName.text = event.name
-        numberOfPeople.text = getString(R.string.number_of_people_going,event.numberOfPeople.toString())
+        numberOfPeople.text = getString(R.string.number_of_people_going,event.acceptedInvites?.size ?: 0.toString() )
         numberOfKilometers.text = getString(R.string.number_of_kilometers,event.numberOfKilometers.toString())
         eventDate.text = sdfDate.format(event.date!!)
         pace.text = getString(R.string.pace,event.pace)
@@ -133,13 +133,13 @@ class EventDetailsActivity : AppCompatActivity() {
                     val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
                     val event = Event(eventName.text.toString(),
                         0.0,
-                        0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
                         DatabaseFriend.username,
                         null,
                         true,
-                        DatabaseEvent.event!!.invites
+                        DatabaseEvent.event!!.pendingInvites,
+                        DatabaseEvent.event!!.acceptedInvites
                     )
                     lifecycleScope.launch {
                         DatabaseEvent.updateEvent(event)

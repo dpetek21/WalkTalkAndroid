@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.DatabaseEvent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.Adapter<PendingInvitesAdapter.PendingInvitesViewHolder>() {
     inner class PendingInvitesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -39,6 +43,20 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: PendingInvitesViewHolder, position: Int) {
         holder.bind(invitesList[position])
+
+        holder.btnAccept.setOnClickListener {_ ->
+            CoroutineScope(Dispatchers.Default).launch {
+                DatabaseEvent.acceptInvite(invitesList[holder.adapterPosition])
+                notifyItemRemoved(holder.adapterPosition)
+            }
+        }
+
+        holder.btnDecline.setOnClickListener {_ ->
+            CoroutineScope(Dispatchers.Default).launch {
+                DatabaseEvent.declineInvite(invitesList[holder.adapterPosition])
+                notifyItemRemoved(holder.adapterPosition)
+            }
+        }
 
     }
 }

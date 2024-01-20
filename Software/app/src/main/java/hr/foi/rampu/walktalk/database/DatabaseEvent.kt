@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import hr.foi.rampu.walktalk.entities.Event
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
@@ -52,13 +53,13 @@ object DatabaseEvent {
         val event = hashMapOf(
             "name" to newEvent.name,
             "numberOfKilometers" to newEvent.numberOfKilometers,
-            "numberOfPeople" to newEvent.numberOfPeople,
             "pace" to newEvent.pace,
             "date" to newEvent.date,
             "route" to newEvent.route,
             "organizer" to DatabaseFriend.username,
             "isPublic" to newEvent.isPublic,
-            "invites" to newEvent.invites
+            "pendingInvites" to newEvent.pendingInvites,
+            "acceptedInvites" to newEvent.acceptedInvites
         )
 
 
@@ -75,8 +76,13 @@ object DatabaseEvent {
         val database = Firebase.firestore
         try {
             val id = getEventDocument()
-            database.collection("events").document(id).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
-            event!!.invites!!.add(DatabaseFriend.username)
+            database.collection("events").document(id).update("pendingInvites", FieldValue.arrayUnion(UserDataContainer.username)).await()
+            if (event!!.pendingInvites != null) {
+                event!!.pendingInvites?.add(UserDataContainer.username)
+            }
+            else {
+                event!!.pendingInvites = arrayListOf(UserDataContainer.username)
+            }
              true
         }
 
@@ -105,7 +111,7 @@ object DatabaseEvent {
 
     fun checkIfUserSentInvite () : Boolean  {
         return try {
-            event!!.invites!!.contains(DatabaseFriend.username)
+            event!!.pendingInvites?.contains(DatabaseFriend.username) ?: false
         } catch(error: Exception) {
             Log.e("EVENT_CHECKING_ERROR",error.message.toString())
             false
@@ -134,5 +140,50 @@ object DatabaseEvent {
             false
         }
 
+    }
+
+     suspend fun acceptInvite(usernameToAccept: String) = coroutineScope {
+        try {
+            val id = getEventDocument()
+            val database = Firebase.firestore
+
+            database.collection("events").document(id).update("pendingInvites",FieldValue.arrayRemove(usernameToAccept)).await()
+            database.collection("events").document(id).update("acceptedInvites",FieldValue.arrayUnion(usernameToAccept)).await()
+
+            event!!.pendingInvites!!.remove(usernameToAccept)
+
+            if (event!!.acceptedInvites != null) {
+                event!!.acceptedInvites!!.add(UserDataContainer.username)
+            }
+            else {
+                event!!.acceptedInvites = arrayListOf(UserDataContainer.username)
+            }
+
+             true
+        }
+
+        catch (error : Exception) {
+            Log.e("FIREBASE_ACCEPT_INVITE_ERROR",error.message.toString())
+             false
+        }
+
+    }
+
+    suspend fun declineInvite(usernameToDecline: String) = coroutineScope {
+        try {
+            val id = getEventDocument()
+            val database = Firebase.firestore
+
+            database.collection("events").document(id).update("pendingInvites",FieldValue.arrayRemove(usernameToDecline)).await()
+
+            event!!.pendingInvites!!.remove(usernameToDecline)
+
+            true
+        }
+
+        catch (error : Exception) {
+            Log.e("FIREBASE_DECLINE_INVITE_ERROR",error.message.toString())
+            false
+        }
     }
 }
