@@ -79,6 +79,13 @@ class EventDetailsActivity : AppCompatActivity() {
             }
         }
 
+        else if (DatabaseEvent.checkIfUserAccepted()) {
+            actionButton.text = getString(R.string.accepted)
+            actionButton.isClickable = false
+            actionButton.setBackgroundColor(getColor(R.color.green))
+            actionButton.setTextColor(getColor(R.color.white))
+        }
+
         else if (!DatabaseEvent.checkIfUserSentInvite()) {
             actionButton.text = getString(R.string.send_invitation)
             actionButton.setOnClickListener {
