@@ -153,10 +153,10 @@ object DatabaseEvent {
             event!!.pendingInvites!!.remove(usernameToAccept)
 
             if (event!!.acceptedInvites != null) {
-                event!!.acceptedInvites!!.add(UserDataContainer.username)
+                event!!.acceptedInvites!!.add(usernameToAccept)
             }
             else {
-                event!!.acceptedInvites = arrayListOf(UserDataContainer.username)
+                event!!.acceptedInvites = arrayListOf(usernameToAccept)
             }
 
              true
