@@ -15,9 +15,9 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.A
         val btnDecline : Button
 
         init {
-            username = view.findViewById(R.id.txtv_username_pending_friend)
-            btnAccept = view.findViewById(R.id.btn_accept)
-            btnDecline = view.findViewById(R.id.btn_decline)
+            username = view.findViewById(R.id.txtv_username_pending_invite)
+            btnAccept = view.findViewById(R.id.btn_accept_invite)
+            btnDecline = view.findViewById(R.id.btn_decline_invite)
         }
 
         fun bind(user: String)
