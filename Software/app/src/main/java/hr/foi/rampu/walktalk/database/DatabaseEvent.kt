@@ -57,7 +57,8 @@ object DatabaseEvent {
             "date" to newEvent.date,
             "route" to newEvent.route,
             "organizer" to DatabaseFriend.username,
-            "isPublic" to newEvent.isPublic
+            "isPublic" to newEvent.isPublic,
+            "invites" to newEvent.invites
         )
 
 
@@ -74,6 +75,7 @@ object DatabaseEvent {
         val database = Firebase.firestore
         try {
             val id = getEventDocument()
+            database.collection("events").document(id).set("invites")
             database.collection("events").document(id).update("invites", FieldValue.arrayUnion(DatabaseFriend.username)).await()
             event!!.invites!!.add(DatabaseFriend.username)
              true
