@@ -111,7 +111,7 @@ object DatabaseEvent {
 
     fun checkIfUserSentInvite () : Boolean  {
         return try {
-            event!!.pendingInvites?.contains(DatabaseFriend.username) ?: false
+            event!!.pendingInvites?.contains(UserDataContainer.username) ?: false
         } catch(error: Exception) {
             Log.e("EVENT_CHECKING_ERROR",error.message.toString())
             false
@@ -185,5 +185,15 @@ object DatabaseEvent {
             Log.e("FIREBASE_DECLINE_INVITE_ERROR",error.message.toString())
             false
         }
+    }
+
+    fun checkIfUserAccepted(): Boolean {
+        return try {
+            event!!.acceptedInvites?.contains(UserDataContainer.username) ?: false
+        } catch(error: Exception) {
+            Log.e("EVENT_CHECKING_ACCEPTED_INVITES_ERROR",error.message.toString())
+            false
+        }
+
     }
 }
