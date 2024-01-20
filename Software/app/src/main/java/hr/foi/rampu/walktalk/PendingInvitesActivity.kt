@@ -27,7 +27,7 @@ class PendingInvitesActivity : AppCompatActivity() {
             this.finish()
         }
 
-        if (DatabaseEvent.event!!.pendingInvites != null) {
+        if (DatabaseEvent.event!!.pendingInvites != null && DatabaseEvent.event!!.pendingInvites!!.size != 0) {
             recyclerView.visibility = VISIBLE
             noInvites.visibility = GONE
             recyclerView.adapter = PendingInvitesAdapter(DatabaseEvent.event!!.pendingInvites!!)
