@@ -14,5 +14,7 @@ data class Route(
     constructor(name: String, startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double, rating: Int,owner:String)
             : this(null,name, GeoPoint(startLatitude, startLongitude), GeoPoint(endLatitude, endLongitude), rating, owner)
 
-
+    override fun toString(): String {
+        return name
+    }
 }
