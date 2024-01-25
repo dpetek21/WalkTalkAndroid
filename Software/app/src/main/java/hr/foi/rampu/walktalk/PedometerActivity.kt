@@ -13,6 +13,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import hr.foi.rampu.walktalk.database.PedometerDAO
@@ -22,17 +23,23 @@ import hr.foi.rampu.walktalk.services.PedometerService
 private lateinit var sensorManager: SensorManager
 private lateinit var pedometerDAO: PedometerDAO
 
+private lateinit var btnStop: Button
+
 class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
     private var running = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
+    private var initialStepCount = 0
+    private var initialStepsRecorded = false
     val ACTIVITY_RECOGNITION_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pedometer)
 
         NavigationSetup.SetupNavigationDrawer(this)
+
+        btnStop = findViewById(R.id.btnStop)
 
         pedometerDAO = PedometerDAO()
 
@@ -49,6 +56,17 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
         startService(serviceIntent)
 
+        btnStop.setOnClickListener {
+            stopPedometerService()
+        }
+
+    }
+
+    private fun stopPedometerService() {
+        val serviceIntent = Intent(applicationContext, PedometerService::class.java)
+        serviceIntent.action = PedometerService.Actions.STOP.toString()
+        startService(serviceIntent)
+        Toast.makeText(this, "Pedometer service stopped", Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {
@@ -60,7 +78,7 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
         if (stepSensor == null) {
             Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
         } else {
-            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_GAME)
         }
     }
 
@@ -84,6 +102,7 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
 
             previousTotalSteps = totalSteps
             tv_stepsTaken.text = 0.toString()
+            initialStepsRecorded = false
 
             true
         }
@@ -92,8 +111,12 @@ class PedometerActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
         if (running) {
+            if(!initialStepsRecorded){
+                initialStepCount = event!!.values[0].toInt()
+                initialStepsRecorded = true
+            }
             totalSteps = event!!.values[0]
-            val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
+            val currentSteps = totalSteps.toInt() - initialStepCount.toInt()
             tv_stepsTaken.text = ("$currentSteps")
         }
     }
