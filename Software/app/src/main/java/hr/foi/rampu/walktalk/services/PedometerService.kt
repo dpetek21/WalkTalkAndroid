@@ -14,10 +14,12 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.PedometerDAO
 
 class PedometerService: Service(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
+    private lateinit var pedometerDAO: PedometerDAO
     private var totalSteps = 0
     private var initialStepCount = 0
     private var initialStepsRecorded = false
@@ -43,6 +45,8 @@ class PedometerService: Service(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
+        pedometerDAO = PedometerDAO()
+
         if (stepSensor == null) {
             stopSelf()
         } else {
@@ -54,6 +58,9 @@ class PedometerService: Service(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        pedometerDAO.savePedometerData(totalSteps)
+
         val serviceIntent = Intent(applicationContext, PedometerService::class.java)
         serviceIntent.action = PedometerService.Actions.STOP.toString()
         stopService(serviceIntent)
