@@ -15,6 +15,9 @@ import hr.foi.rampu.walktalk.adapters.EventsPagerAdapter
 import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.database.DatabaseFriend
 import hr.foi.rampu.walktalk.entities.Event
+import hr.foi.rampu.walktalk.entities.Route
+import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.helpers.NewEventDialogHelper
 import hr.foi.rampu.walktalk.helpers.Pace
 import hr.foi.rampu.walktalk.navigation.NavigationSetup
@@ -63,19 +66,20 @@ class EventsActivity : AppCompatActivity() {
                 val eventName : EditText = newTaskDialogView.findViewById(R.id.et_new_event_name)
                 val dateSelection = newTaskDialogView.findViewById<EditText>(R.id.et_event_date)
                 if (eventName.text.isEmpty() || dateSelection.text.isEmpty()) {
-                    Log.i("EVENT_NAME_EMPTY", "Event name is empty")
+                    Log.i("EVENT_NAME_EMPTY", "Event name is empty or date")
                 } else {
                     val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
                     val spinnerPace = newTaskDialogView.findViewById<Spinner>(R.id.spn_pace)
+                    val spinnerRoute = newTaskDialogView.findViewById<Spinner>(R.id.spn_route)
                     val event = Event(eventName.text.toString(),
                         0.0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
                         DatabaseFriend.username,
-                        null,
+                        spinnerRoute.selectedItem as Route,
                         true,
-                        null,
-                        null
+                        ArrayList(),
+                        ArrayList()
                         )
                     dialog.dismiss()
 
@@ -89,6 +93,8 @@ class EventsActivity : AppCompatActivity() {
 
 
         val dialogHelper = NewEventDialogHelper(newTaskDialogView)
+        val routeHandler = RouteHandler()
+        routeHandler.getRoutesOfOwner(UserDataContainer.username, dialogHelper::populateSpinnerRoute)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
         dialogHelper.activateDateListener(supportFragmentManager)
     }

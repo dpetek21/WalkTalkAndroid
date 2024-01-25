@@ -4,11 +4,14 @@ import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import hr.foi.rampu.walktalk.entities.Event
+import hr.foi.rampu.walktalk.entities.Route
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
+import org.osmdroid.util.GeoPoint
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object DatabaseEvent {
     var event : Event? = null
@@ -43,7 +46,36 @@ object DatabaseEvent {
             .get()
             .addOnSuccessListener { events ->
                 events.forEach { event ->
-                    eventList.add(event.toObject<Event>())
+                    val sdf = SimpleDateFormat("dd.mm.yyyy.", Locale.US)
+                    val name = event.getString("name") ?: ""
+                    val pace = event.getString("pace") ?: ""
+                    val dateFirestore = event.getDate("date")!!
+                    val parsedDate = sdf.format(dateFirestore)
+                    val pendingInvites = event.get("pendingInvites") as ArrayList<String>
+                    val acceptedInvites = event.get("acceptedInvites") as ArrayList<String>
+                    val organizer = event.getString("organizer") ?: ""
+                    val routeId = event.getString("route.id") ?: ""
+                    val routeName = event.getString("route.name") ?: ""
+                    val startLatitude = event.getDouble("route.start.latitude") ?: 0.0
+                    val startLongitude = event.getDouble("route.start.longitude") ?: 0.0
+                    val endLatitude = event.getDouble("route.end.latitude") ?: 0.0
+                    val endLongitude = event.getDouble("route.end.longitude") ?: 0.0
+                    val rating = event.getLong("route.rating")?.toInt() ?: -1
+                    val owner = event.getString("route.owner") ?: ""
+                    val routeAssignedToEvent = Route(routeId, routeName, GeoPoint(startLatitude, startLongitude), GeoPoint(endLatitude, endLongitude), rating, owner)
+
+                    val newEvent = Event(
+                        name,
+                        0.0,
+                        pace,
+                        sdf.parse(parsedDate),
+                        organizer,
+                        routeAssignedToEvent,
+                        true,
+                        pendingInvites,
+                        acceptedInvites
+                        )
+                    eventList.add(newEvent) //event.toObject<Event>())
                 }
             }.await()
         eventList.toList()
