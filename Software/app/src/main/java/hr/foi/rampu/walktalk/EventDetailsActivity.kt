@@ -16,8 +16,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import hr.foi.rampu.walktalk.database.DatabaseEvent
-import hr.foi.rampu.walktalk.database.DatabaseFriend
+import hr.foi.rampu.walktalk.database.DatabaseEvent.event
 import hr.foi.rampu.walktalk.entities.Event
+import hr.foi.rampu.walktalk.entities.Route
+import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
+import hr.foi.rampu.walktalk.fragments.MapFragment
 import hr.foi.rampu.walktalk.helpers.Pace
 import hr.foi.rampu.walktalk.helpers.UpdateExistingEventDialogHelper
 import kotlinx.coroutines.launch
@@ -40,6 +44,14 @@ class EventDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
 
+        val event = DatabaseEvent.event!!
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.event_detail_map_container,MapFragment())
+            .addToBackStack(null)
+            .commit()
+
         cardViewEventDetails = findViewById(R.id.cv_event_detail)
         backButton = findViewById(R.id.img_event_details_back_arrow)
         eventName = findViewById(R.id.txt_event_details)
@@ -49,15 +61,14 @@ class EventDetailsActivity : AppCompatActivity() {
         pace = findViewById(R.id.txtv_event_detail_pace)
         cancelEventButton = findViewById(R.id.imgBtn_cancel_event)
         seeInvitesButton = findViewById(R.id.imgBtn_see_invites)
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             this.finish()
         }
-        val event = DatabaseEvent.event!!
         populateEventData()
 
 
         actionButton = findViewById(R.id.btn_event_detail_action_button)
-        if (DatabaseFriend.username == event.organizer) {
+        if (UserDataContainer.username == event.organizer) {
             actionButton.text = getString(R.string.start_event)
             cancelEventButton.visibility  = VISIBLE
             seeInvitesButton.visibility = VISIBLE
@@ -138,12 +149,13 @@ class EventDetailsActivity : AppCompatActivity() {
                 } else {
                     val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
                     val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
+                    val spinnerRoute = updateEventDialogView.findViewById<Spinner>(R.id.spn_route)
                     val event = Event(eventName.text.toString(),
                         0.0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
-                        DatabaseFriend.username,
-                        null,
+                        UserDataContainer.username,
+                        spinnerRoute.selectedItem as Route,
                         true,
                         DatabaseEvent.event!!.pendingInvites,
                         DatabaseEvent.event!!.acceptedInvites
@@ -151,6 +163,7 @@ class EventDetailsActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         DatabaseEvent.updateEvent(event)
                         populateEventData()
+                        populateMap()
                     }
                     dialog.dismiss()
 
@@ -162,10 +175,29 @@ class EventDetailsActivity : AppCompatActivity() {
             .show()
 
         val dialogHelper = UpdateExistingEventDialogHelper(updateEventDialogView)
+        val routeHandler = RouteHandler()
+        routeHandler.getRoutesOfOwner(UserDataContainer.username, dialogHelper::populateSpinnerRoute)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
         dialogHelper.activateDateListener(supportFragmentManager)
 
-
+    }
+    private fun populateMap() {
+        val mapFragment =  supportFragmentManager.findFragmentById(R.id.event_detail_map_container) as MapFragment?
+        if (mapFragment != null) {
+            mapFragment.clearMarkers()
+            if (event!!.route != null) {
+                mapFragment.addMarker(event!!.route!!.start,"Start Point")
+                mapFragment.addMarker(event!!.route!!.end,"End Point")
+                mapFragment.zoomToPoints(event!!.route!!.start,event!!.route!!.end)
+            }
+            else {
+                mapFragment.zoomToWorldMap()
+            }
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        populateMap()
     }
 
 

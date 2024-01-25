@@ -1,5 +1,6 @@
 package hr.foi.rampu.walktalk.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,12 +8,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
-import hr.foi.rampu.walktalk.database.DatabaseEvent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.Adapter<PendingInvitesAdapter.PendingInvitesViewHolder>() {
+class PendingInvitesAdapter(val invitesList: ArrayList<String>,  val coroutineScope: CoroutineScope, private val acceptCallback : suspend (String) -> Unit, private val declineCallback : suspend (String) -> Unit) : RecyclerView.Adapter<PendingInvitesAdapter.PendingInvitesViewHolder>() {
     inner class PendingInvitesViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val username : TextView
         val btnAccept : Button
@@ -42,22 +41,26 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: PendingInvitesViewHolder, position: Int) {
-        holder.bind(invitesList[position])
-
-        holder.btnAccept.setOnClickListener {_ ->
-            CoroutineScope(Dispatchers.Default).launch {
-                DatabaseEvent.acceptInvite(invitesList[holder.adapterPosition])
+        try {
+            holder.bind(invitesList.getOrNull(holder.adapterPosition)!!)
+            holder.btnAccept.setOnClickListener {
+                coroutineScope.launch {
+                    acceptCallback(invitesList[holder.adapterPosition])
+                    notifyItemRemoved(holder.adapterPosition)
+                }
             }
-            invitesList.removeAt(holder.adapterPosition)
-            notifyItemRemoved(holder.adapterPosition)
+
+            holder.btnDecline.setOnClickListener {
+                coroutineScope.launch {
+                    if (holder.adapterPosition != RecyclerView.NO_POSITION) {
+                        declineCallback(invitesList[holder.adapterPosition])
+                        notifyItemRemoved(holder.adapterPosition)
+                    }
+                }
+            }
         }
-
-        holder.btnDecline.setOnClickListener {_ ->
-            CoroutineScope(Dispatchers.Default).launch {
-                DatabaseEvent.declineInvite(invitesList[holder.adapterPosition])
-            }
-            invitesList.removeAt(holder.adapterPosition)
-            notifyItemRemoved(holder.adapterPosition)
+        catch (error : Exception) {
+            Log.e("ADAPTER_ERR",error.message.toString())
         }
 
     }

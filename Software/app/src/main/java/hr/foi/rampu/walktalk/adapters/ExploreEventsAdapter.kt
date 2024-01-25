@@ -12,6 +12,8 @@ import hr.foi.rampu.walktalk.EventDetailsActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.entities.Event
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<ExploreEventsAdapter.ExploreEventsHolder>() {
 
@@ -33,6 +35,7 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
         }
 
         fun bind(event: Event) {
+            val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
             eventName.text = event.name
             val kilo = event.numberOfKilometers.toString() + " km"
             kilometers.text = kilo
@@ -50,7 +53,7 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
             }
             val pc = event.pace + " pace"
             pace.text = pc
-            date.text = event.date.toString()
+            date.text = sdfDate.format(event.date!!)
         }
 
     }
