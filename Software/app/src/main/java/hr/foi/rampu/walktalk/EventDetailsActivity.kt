@@ -16,8 +16,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import hr.foi.rampu.walktalk.database.DatabaseEvent
-import hr.foi.rampu.walktalk.database.DatabaseFriend
 import hr.foi.rampu.walktalk.entities.Event
+import hr.foi.rampu.walktalk.entities.Route
+import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.helpers.Pace
 import hr.foi.rampu.walktalk.helpers.UpdateExistingEventDialogHelper
 import kotlinx.coroutines.launch
@@ -57,7 +59,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
 
         actionButton = findViewById(R.id.btn_event_detail_action_button)
-        if (DatabaseFriend.username == event.organizer) {
+        if (UserDataContainer.username == event.organizer) {
             actionButton.text = getString(R.string.start_event)
             cancelEventButton.visibility  = VISIBLE
             seeInvitesButton.visibility = VISIBLE
@@ -138,12 +140,13 @@ class EventDetailsActivity : AppCompatActivity() {
                 } else {
                     val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
                     val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
+                    val spinnerRoute = updateEventDialogView.findViewById<Spinner>(R.id.spn_route)
                     val event = Event(eventName.text.toString(),
                         0.0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
-                        DatabaseFriend.username,
-                        null,
+                        UserDataContainer.username,
+                        spinnerRoute.selectedItem as Route,
                         true,
                         DatabaseEvent.event!!.pendingInvites,
                         DatabaseEvent.event!!.acceptedInvites
@@ -162,6 +165,8 @@ class EventDetailsActivity : AppCompatActivity() {
             .show()
 
         val dialogHelper = UpdateExistingEventDialogHelper(updateEventDialogView)
+        val routeHandler = RouteHandler()
+        routeHandler.getRoutesOfOwner(UserDataContainer.username, dialogHelper::populateSpinnerRoute)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
         dialogHelper.activateDateListener(supportFragmentManager)
 

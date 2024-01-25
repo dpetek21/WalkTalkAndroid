@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.database.DatabaseEvent
+import hr.foi.rampu.walktalk.entities.Route
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -36,7 +37,24 @@ class UpdateExistingEventDialogHelper(private val view: View) {
             Log.e("PACE_INDEX_ERROR", error.message.toString())
             return
         }
+    }
+    fun populateSpinnerRoute(routes: List<Route>) {
+        val spinnerAdapterRoute = ArrayAdapter(
+            view.context,
+            android.R.layout.simple_spinner_item,
+            routes
+        )
+        spinnerAdapterRoute.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerRoute.adapter = spinnerAdapterRoute
 
+        try {
+            val currentRouteIndex = routes.indexOf(DatabaseEvent.event!!.route)
+            spinnerRoute.setSelection(currentRouteIndex)
+        }
+        catch (error : Exception) {
+            Log.e("ROUTE_INDEX_ERROR", error.message.toString())
+            return
+        }
     }
 
 
