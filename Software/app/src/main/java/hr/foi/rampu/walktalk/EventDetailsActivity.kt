@@ -1,5 +1,6 @@
 package hr.foi.rampu.walktalk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,7 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var pace: TextView
     private lateinit var actionButton: Button
     private lateinit var cancelEventButton : ImageButton
+    private lateinit var seeInvitesButton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class EventDetailsActivity : AppCompatActivity() {
         eventDate = findViewById(R.id.txtv_event_detail_date)
         pace = findViewById(R.id.txtv_event_detail_pace)
         cancelEventButton = findViewById(R.id.imgBtn_cancel_event)
+        seeInvitesButton = findViewById(R.id.imgBtn_see_invites)
         backButton.setOnClickListener{
             this.finish()
         }
@@ -57,6 +60,12 @@ class EventDetailsActivity : AppCompatActivity() {
         if (DatabaseFriend.username == event.organizer) {
             actionButton.text = getString(R.string.start_event)
             cancelEventButton.visibility  = VISIBLE
+            seeInvitesButton.visibility = VISIBLE
+
+            seeInvitesButton.setOnClickListener {
+                val intent = Intent(this,PendingInvitesActivity::class.java)
+                startActivity(intent)
+            }
 
             cardViewEventDetails.setOnClickListener {
                     this.showDialog()
@@ -68,6 +77,13 @@ class EventDetailsActivity : AppCompatActivity() {
                 }
                 this.finish()
             }
+        }
+
+        else if (DatabaseEvent.checkIfUserAccepted()) {
+            actionButton.text = getString(R.string.accepted)
+            actionButton.isClickable = false
+            actionButton.setBackgroundColor(getColor(R.color.green))
+            actionButton.setTextColor(getColor(R.color.white))
         }
 
         else if (!DatabaseEvent.checkIfUserSentInvite()) {
@@ -100,7 +116,7 @@ class EventDetailsActivity : AppCompatActivity() {
         val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
         val event = DatabaseEvent.event!!
         eventName.text = event.name
-        numberOfPeople.text = getString(R.string.number_of_people_going,event.numberOfPeople.toString())
+        numberOfPeople.text = getString(R.string.number_of_people_going,event.acceptedInvites?.size ?: 0.toString() )
         numberOfKilometers.text = getString(R.string.number_of_kilometers,event.numberOfKilometers.toString())
         eventDate.text = sdfDate.format(event.date!!)
         pace.text = getString(R.string.pace,event.pace)
@@ -124,13 +140,13 @@ class EventDetailsActivity : AppCompatActivity() {
                     val spinnerPace = updateEventDialogView.findViewById<Spinner>(R.id.spn_pace)
                     val event = Event(eventName.text.toString(),
                         0.0,
-                        0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
                         DatabaseFriend.username,
                         null,
                         true,
-                        DatabaseEvent.event!!.invites
+                        DatabaseEvent.event!!.pendingInvites,
+                        DatabaseEvent.event!!.acceptedInvites
                     )
                     lifecycleScope.launch {
                         DatabaseEvent.updateEvent(event)

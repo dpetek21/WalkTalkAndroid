@@ -69,12 +69,12 @@ class EventsActivity : AppCompatActivity() {
                     val spinnerPace = newTaskDialogView.findViewById<Spinner>(R.id.spn_pace)
                     val event = Event(eventName.text.toString(),
                         0.0,
-                        0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
                         DatabaseFriend.username,
                         null,
                         true,
+                        null,
                         null
                         )
                     dialog.dismiss()

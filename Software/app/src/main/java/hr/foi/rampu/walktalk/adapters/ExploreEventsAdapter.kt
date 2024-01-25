@@ -36,7 +36,18 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
             eventName.text = event.name
             val kilo = event.numberOfKilometers.toString() + " km"
             kilometers.text = kilo
-            numberOfPeople.text = event.numberOfPeople.toString()
+            if (event.acceptedInvites != null) {
+                numberOfPeople.text = buildString {
+                    append(event.acceptedInvites!!.size.toString())
+                    append(" people coming")
+                }
+            }
+            else {
+                numberOfPeople.text = buildString {
+                    append(0.toString())
+                    append(" people coming")
+                }
+            }
             val pc = event.pace + " pace"
             pace.text = pc
             date.text = event.date.toString()
@@ -61,16 +72,6 @@ class ExploreEventsAdapter(val eventList: List<Event>) : RecyclerView.Adapter<Ex
             val activity = it.context as AppCompatActivity
             val intent = Intent(activity,EventDetailsActivity::class.java)
             DatabaseEvent.event = eventList[position]
-            /*
-            intent.putExtra("event_name",eventList[position].name)
-            intent.putExtra("event_date",eventList[position].date.toString())
-            intent.putExtra("event_kilometers",eventList[position].numberOfKilometers.toString())
-            intent.putExtra("event_people",eventList[position].numberOfPeople.toString())
-            intent.putExtra("event_organizer",eventList[position].organizer)
-            intent.putExtra("event_pace",eventList[position].pace)
-            intent.putExtra("event_public",eventList[position].isPublic)
-
-             */
             activity.startActivity(intent)
         }
     }

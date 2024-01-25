@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PendingInvitesActivity">
+
+    <include
+        android:id="@+id/include_toolbar_pending_invites"
+        layout="@layout/toolbar_pending_invites" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_pending_invites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtv_no_invites"
+        android:textSize="40sp"
+        android:alpha="0.5"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_invites_yet" />
+
+
+</LinearLayout>
