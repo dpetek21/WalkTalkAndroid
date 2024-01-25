@@ -44,4 +44,44 @@ class ChatsListDAO {
         }
         return chats
     }
+
+    fun addNewFriendChat(user: String){
+        addToLoggedInUserChats(user)
+        addToRequesterChats(user)
+    }
+
+    private fun addToLoggedInUserChats(user: String){
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(loggedInUser)
+        val chatsCollection = userDocument.collection("chats")
+        val userChatDocument = chatsCollection.document(user)
+        val data = hashMapOf(
+            "group" to false
+        )
+        userChatDocument
+            .set(data)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener { e ->
+                Log.e("Error", "Error adding document to 'chats' collection", e)
+            }
+    }
+
+    private fun addToRequesterChats(user: String){
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(user)
+        val chatsCollection = userDocument.collection("chats")
+        val userChatDocument = chatsCollection.document(loggedInUser)
+        val data = hashMapOf(
+            "group" to false
+        )
+        userChatDocument
+            .set(data)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener { e ->
+                Log.e("Error", "Error adding document to 'chats' collection", e)
+            }
+    }
+
 }

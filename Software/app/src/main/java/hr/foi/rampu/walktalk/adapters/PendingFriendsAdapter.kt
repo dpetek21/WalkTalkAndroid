@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.ChatsListDAO
 import hr.foi.rampu.walktalk.database.DatabaseFriend
 import hr.foi.rampu.walktalk.entities.Friend
 
@@ -49,6 +50,8 @@ class PendingFriendsAdapter(val friendsList : MutableList<Friend>) : RecyclerVie
             DatabaseFriend.removeFriend(friendsList[holder.adapterPosition])
             friendsList.removeAt(holder.adapterPosition)
             notifyItemRemoved(holder.adapterPosition)
+            val chatsListDAO = ChatsListDAO()
+            chatsListDAO.addNewFriendChat(holder.username.text.toString())
         }
 
         holder.btnDecline.setOnClickListener {
