@@ -1,6 +1,8 @@
 package hr.foi.rampu.walktalk.firebaseHandler
 //import android.util.Log
+import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class LoginRegisterHandler {
     val db = FirebaseFirestore.getInstance()
@@ -12,6 +14,26 @@ class LoginRegisterHandler {
             }
             .addOnFailureListener { e ->
             }
+    }
+    fun updateUser(userId: String, userData: Map<String, Any>) {
+        users.document(userId)
+            .update(userData)
+            .addOnSuccessListener { documentReference ->
+            }
+            .addOnFailureListener { e ->
+            }
+    }
+    fun uploadProfilePic(userId: String, imageUri: Uri, onUploadLink: (String) -> Unit) {
+        val storageReference = FirebaseStorage.getInstance().getReference("profile_pics/$userId.jpg")
+
+        storageReference.putFile(imageUri).addOnSuccessListener { taskSnapshot ->
+            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+                onUploadLink(imageUrl)
+            }
+        }
+        .addOnFailureListener { exception ->
+        }
     }
     fun getUser(userId: String, callback: (Map<String, Any>?) -> Unit) {
         users.document(userId)

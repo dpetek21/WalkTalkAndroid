@@ -1,8 +1,10 @@
 package hr.foi.rampu.walktalk.navigation
 
 import android.content.Intent
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import hr.foi.rampu.walktalk.AttentingEventsActivity
 import hr.foi.rampu.walktalk.ChatsListActivity
@@ -10,8 +12,10 @@ import hr.foi.rampu.walktalk.EventsActivity
 import hr.foi.rampu.walktalk.FriendsActivity
 import hr.foi.rampu.walktalk.NotificationsActivity
 import hr.foi.rampu.walktalk.PedometerActivity
+import hr.foi.rampu.walktalk.ProfileActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.RoutesActivity
+import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 
 object NavigationSetup {
     private lateinit var navDrawerLayout : DrawerLayout
@@ -21,6 +25,7 @@ object NavigationSetup {
         navDrawerLayout = activity.findViewById(R.id.nav_drawer_layout)
         navView = activity.findViewById(R.id.nav_view)
         val currentActivity = activity.localClassName
+
 
         navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
@@ -56,6 +61,17 @@ object NavigationSetup {
                 activity.startActivity(intent)
                 true
             }
+        }
+        var navProfilePic: ImageView = navView.getHeaderView(0).findViewById(R.id.nav_profile_picture)
+        if(UserDataContainer.profilePicUri!=null){
+            Glide.with(activity)
+                .load(UserDataContainer.profilePicUri)
+                .circleCrop()
+                .into(navProfilePic)
+        }
+        navProfilePic.setOnClickListener {
+            val intent = Intent(activity, ProfileActivity::class.java)
+            activity.startActivity(intent)
         }
 
     }
