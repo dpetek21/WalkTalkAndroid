@@ -3,6 +3,7 @@ package hr.foi.rampu.walktalk.database
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.firestore
 import hr.foi.rampu.walktalk.entities.Event
 import hr.foi.rampu.walktalk.entities.Route
@@ -227,5 +228,59 @@ object DatabaseEvent {
             false
         }
 
+    }
+
+    suspend fun getFriendEvents(): List<Event> = coroutineScope {
+        val eventList = mutableListOf<Event>()
+        val friends = DatabaseFriend.getFriendsOfUser().map { it.username }
+        val filter : Filter = if (friends.isEmpty()) {
+            Filter.equalTo("organizer",UserDataContainer.username)
+        } else {
+            Filter.or(
+                Filter.equalTo("organizer",UserDataContainer.username),
+                Filter.inArray("organizer",friends)
+            )
+        }
+            val database = Firebase.firestore
+            database
+                .collection("events")
+                .whereEqualTo("isPublic", false)
+                .where(filter)
+                .get()
+                .addOnSuccessListener { events ->
+                    events.forEach { event ->
+                        val organizer = event.getString("organizer") ?: ""
+                        val sdf = SimpleDateFormat("dd.mm.yyyy.", Locale.US)
+                        val name = event.getString("name") ?: ""
+                        val pace = event.getString("pace") ?: ""
+                        val dateFirestore = event.getDate("date")!!
+                        val parsedDate = sdf.format(dateFirestore)
+                        val pendingInvites = event.get("pendingInvites") as ArrayList<String>
+                        val acceptedInvites = event.get("acceptedInvites") as ArrayList<String>
+                        val routeId = event.getString("route.id") ?: ""
+                        val routeName = event.getString("route.name") ?: ""
+                        val startLatitude = event.getDouble("route.start.latitude") ?: 0.0
+                        val startLongitude = event.getDouble("route.start.longitude") ?: 0.0
+                        val endLatitude = event.getDouble("route.end.latitude") ?: 0.0
+                        val endLongitude = event.getDouble("route.end.longitude") ?: 0.0
+                        val rating = event.getLong("route.rating")?.toInt() ?: -1
+                        val owner = event.getString("route.owner") ?: ""
+                        val routeAssignedToEvent = Route(routeId, routeName, GeoPoint(startLatitude, startLongitude), GeoPoint(endLatitude, endLongitude), rating, owner)
+
+                        val newEvent = Event(
+                            name,
+                            0.0,
+                            pace,
+                            sdf.parse(parsedDate),
+                            organizer,
+                            routeAssignedToEvent,
+                            true,
+                            pendingInvites,
+                            acceptedInvites
+                        )
+                        eventList.add(newEvent) //event.toObject<Event>())
+                    }
+                }.await()
+        eventList.toList()
     }
 }
