@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.firestore.DocumentReference
 import hr.foi.rampu.walktalk.firebaseHandler.LoginRegisterHandler
 
 
@@ -49,7 +50,9 @@ class RegisterActivity : AppCompatActivity() {
             "name" to nameSurnameSplitted[0],
             "surname" to nameSurnameSplitted[1],
             "email" to email,
-            "password" to password
+            "password" to password,
+            "friends" to arrayListOf<DocumentReference>(),
+            "pending_friend_requests" to arrayListOf<DocumentReference>()
         )
         val handler = LoginRegisterHandler()
         handler.getUser(username){user ->
