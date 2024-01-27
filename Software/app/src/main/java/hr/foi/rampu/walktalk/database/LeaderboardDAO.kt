@@ -13,7 +13,7 @@ class LeaderboardDAO {
     private val database = FirebaseFirestore.getInstance()
     private val loggedInUser = UserDataContainer.username
 
-    suspend fun getDayStepsLogs(): List<LeaderboardItem>{
+    suspend fun getDayStepsLogs(filter: String): List<LeaderboardItem>{
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(loggedInUser)
         Log.i("User document", userDocument.id)
@@ -34,15 +34,67 @@ class LeaderboardDAO {
                 stepsLogDocuments.documents.forEach { stepsLogDocument ->
                     Log.i("StepsLogDocuments", stepsLogDocument.id)
                     val timestamp = stepsLogDocument.getTimestamp("timestamp")?.toDate()?.time ?: 0
-                    if (isSameDay(currentDate, timestamp)) {
-                        steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                    when (filter) {
+                        "day" -> {
+                            if (isSameDay(currentDate, timestamp)) {
+                                steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                            }
+                        }
+                        "week" -> {
+                            if (isSameWeek(currentDate, timestamp)) {
+                                steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                            }
+                        }
+                        "month" -> {
+                            if (isSameMonth(currentDate, timestamp)) {
+                                steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                            }
+                        }
                     }
                 }
             }
             val leaderboardItem = LeaderboardItem(friendReference.id, steps)
             leaderboardItems.add(leaderboardItem)
         }
+        leaderboardItems.add(getStepsLogsForUser(filter))
         return leaderboardItems
+    }
+
+    suspend fun getStepsLogsForUser(filter: String): LeaderboardItem {
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(loggedInUser)
+        Log.i("User document", userDocument.id)
+
+        val currentDate = Date().time
+
+        val stepsLogCollection = userDocument.collection("steps_logs")
+        val stepsLogDocuments = stepsLogCollection.get().await()
+        var steps = 0
+
+        if (!stepsLogDocuments.isEmpty) {
+            stepsLogDocuments.documents.forEach { stepsLogDocument ->
+                Log.i("StepsLogDocuments", stepsLogDocument.id)
+                val timestamp = stepsLogDocument.getTimestamp("timestamp")?.toDate()?.time ?: 0
+                when (filter) {
+                    "day" -> {
+                        if (isSameDay(currentDate, timestamp)) {
+                            steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                        }
+                    }
+                    "week" -> {
+                        if (isSameWeek(currentDate, timestamp)) {
+                            steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                        }
+                    }
+                    "month" -> {
+                        if (isSameMonth(currentDate, timestamp)) {
+                            steps += stepsLogDocument.getLong("steps")?.toInt() ?: 0
+                        }
+                    }
+                }
+            }
+        }
+        return LeaderboardItem(loggedInUser, steps)
     }
 
     private fun isSameDay(timestamp1: Long, timestamp2: Long): Boolean {
@@ -54,6 +106,28 @@ class LeaderboardDAO {
 
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun isSameWeek(timestamp1: Long, timestamp2: Long): Boolean {
+        val cal1 = Calendar.getInstance()
+        cal1.timeInMillis = timestamp1
+
+        val cal2 = Calendar.getInstance()
+        cal2.timeInMillis = timestamp2
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR)
+    }
+
+    private fun isSameMonth(timestamp1: Long, timestamp2: Long): Boolean {
+        val cal1 = Calendar.getInstance()
+        cal1.timeInMillis = timestamp1
+
+        val cal2 = Calendar.getInstance()
+        cal2.timeInMillis = timestamp2
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)
     }
 
 }

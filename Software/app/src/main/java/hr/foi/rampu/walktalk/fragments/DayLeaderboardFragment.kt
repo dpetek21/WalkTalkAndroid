@@ -35,7 +35,7 @@ class DayLeaderboardFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_day_leaderboard)
 
         lifecycleScope.launch {
-            val leaderboardItems = leadeboardDAO.getDayStepsLogs()
+            val leaderboardItems = leadeboardDAO.getDayStepsLogs("day")
             val leaderboardItemsSorted = leaderboardItems.sortedByDescending { it.steps }
             leaderboardAdapter = LeaderboardRecyclerViewAdapter(leaderboardItemsSorted)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
