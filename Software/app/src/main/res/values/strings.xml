@@ -50,4 +50,7 @@
     <string name="friends_only">Friends only</string>
     <string name="public_option">Public</string>
     <string name="visibility">Visibility</string>
+    <string name="day_leaderboard">Day</string>
+    <string name="week_leaderboard">Week</string>
+    <string name="month_leaderboard">Month</string>
 </resources>
