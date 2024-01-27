@@ -13,7 +13,7 @@ class LeaderboardDAO {
     private val database = FirebaseFirestore.getInstance()
     private val loggedInUser = UserDataContainer.username
 
-    suspend fun getDayStepsLogs(filter: String): List<LeaderboardItem>{
+    suspend fun getStepsLogs(filter: String): List<LeaderboardItem>{
         val usersCollection = database.collection("users")
         val userDocument = usersCollection.document(loggedInUser)
         Log.i("User document", userDocument.id)

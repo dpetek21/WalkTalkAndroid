@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MonthLeaderboardFragment"/>
+    tools:context=".fragments.MonthLeaderboardFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_month_leaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

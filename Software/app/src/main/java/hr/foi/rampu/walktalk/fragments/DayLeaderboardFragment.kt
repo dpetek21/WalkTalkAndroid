@@ -1,7 +1,6 @@
 package hr.foi.rampu.walktalk.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.adapters.LeaderboardRecyclerViewAdapter
 import hr.foi.rampu.walktalk.database.LeaderboardDAO
-import hr.foi.rampu.walktalk.entities.LeaderboardItem
 import kotlinx.coroutines.launch
 
 class DayLeaderboardFragment : Fragment() {
@@ -35,7 +33,7 @@ class DayLeaderboardFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_day_leaderboard)
 
         lifecycleScope.launch {
-            val leaderboardItems = leadeboardDAO.getDayStepsLogs("day")
+            val leaderboardItems = leadeboardDAO.getStepsLogs("day")
             val leaderboardItemsSorted = leaderboardItems.sortedByDescending { it.steps }
             leaderboardAdapter = LeaderboardRecyclerViewAdapter(leaderboardItemsSorted)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
