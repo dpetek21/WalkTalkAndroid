@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rampu.walktalk.R
+import hr.foi.rampu.walktalk.database.ChatsListDAO
+import hr.foi.rampu.walktalk.database.DatabaseEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -16,12 +18,14 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>,  val coroutineSc
         val username : TextView
         val btnAccept : Button
         val btnDecline : Button
+        val chatsListDAO : ChatsListDAO
 
-        init {
-            username = view.findViewById(R.id.txtv_username_pending_invite)
-            btnAccept = view.findViewById(R.id.btn_accept_invite)
-            btnDecline = view.findViewById(R.id.btn_decline_invite)
-        }
+            init {
+                chatsListDAO = ChatsListDAO()
+                username = view.findViewById(R.id.txtv_username_pending_invite)
+                btnAccept = view.findViewById(R.id.btn_accept_invite)
+                btnDecline = view.findViewById(R.id.btn_decline_invite)
+            }
 
         fun bind(user: String)
         {
@@ -48,6 +52,7 @@ class PendingInvitesAdapter(val invitesList: ArrayList<String>,  val coroutineSc
                     acceptCallback(invitesList[holder.adapterPosition])
                     notifyItemRemoved(holder.adapterPosition)
                 }
+                holder.chatsListDAO.addGroupChatToUsersChatCollection(holder.username.text.toString(), DatabaseEvent.event!!.name)
             }
 
             holder.btnDecline.setOnClickListener {
