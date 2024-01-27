@@ -17,10 +17,6 @@ import kotlinx.coroutines.launch
 class FriendEventsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     private suspend fun getFriendEvents() {
         val friendEventsList : List<Event> = DatabaseEvent.getFriendEvents()
         recyclerView = requireView().findViewById(R.id.rv_friend_events)
