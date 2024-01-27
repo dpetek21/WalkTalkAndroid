@@ -85,7 +85,7 @@ class UpdateExistingEventDialogHelper(private val view: View) {
         }
     }
 
-    fun HideVisibility() {
+    fun hideVisibility() {
         radioGroup.visibility = GONE
         txtVisibility.visibility  = GONE
     }

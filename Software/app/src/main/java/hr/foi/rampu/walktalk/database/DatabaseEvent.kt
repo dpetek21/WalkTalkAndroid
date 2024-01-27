@@ -161,7 +161,6 @@ object DatabaseEvent {
                 "pace" to eventToUpdate.pace,
                 "date" to eventToUpdate.date,
                 "route" to eventToUpdate.route,
-                "isPublic" to eventToUpdate.isPublic
             )
             val database = Firebase.firestore
             database.collection("events").document(id).update(updatedEvent).await()

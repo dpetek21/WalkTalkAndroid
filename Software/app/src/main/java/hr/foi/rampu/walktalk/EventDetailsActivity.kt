@@ -175,7 +175,7 @@ class EventDetailsActivity : AppCompatActivity() {
             .show()
 
         val dialogHelper = UpdateExistingEventDialogHelper(updateEventDialogView)
-        dialogHelper.HideVisibility()
+        dialogHelper.hideVisibility()
         val routeHandler = RouteHandler()
         routeHandler.getRoutesOfOwner(UserDataContainer.username, dialogHelper::populateSpinnerRoute)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())
