@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.GoingEventsFragment">
+    tools:context=".fragments.FriendEventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_going_events"
+        android:id="@+id/rv_friend_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

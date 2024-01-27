@@ -45,7 +45,7 @@ class EventsActivity : AppCompatActivity() {
                     tab.text = getString(R.string.explore)
                 }
                 1 -> {
-                    tab.text = getString(R.string.going)
+                    tab.text = getString(R.string.friend_events)
                 }
             }
         }.attach()

@@ -5,10 +5,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import hr.foi.rampu.walktalk.fragments.ExploreEventsFragment
-import hr.foi.rampu.walktalk.fragments.GoingEventsFragment
+import hr.foi.rampu.walktalk.fragments.FriendEventsFragment
 
 class EventsPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager,lifecycle) {
-    val fragments = listOf<Fragment>(ExploreEventsFragment(), GoingEventsFragment())
+    val fragments = listOf<Fragment>(ExploreEventsFragment(), FriendEventsFragment())
 
     override fun getItemCount(): Int {
         return fragments.size
