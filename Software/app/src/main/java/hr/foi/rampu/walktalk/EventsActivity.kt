@@ -12,8 +12,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.EventsPagerAdapter
+import hr.foi.rampu.walktalk.database.ChatsListDAO
 import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.database.DatabaseFriend
+import hr.foi.rampu.walktalk.database.GroupChatDAO
 import hr.foi.rampu.walktalk.entities.Event
 import hr.foi.rampu.walktalk.entities.Route
 import hr.foi.rampu.walktalk.firebaseHandler.RouteHandler
@@ -28,9 +30,12 @@ class EventsActivity : AppCompatActivity() {
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager: ViewPager2
     private lateinit var fab : FloatingActionButton
+    private lateinit var chatsListDAO: ChatsListDAO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
+
+        chatsListDAO = ChatsListDAO()
 
         NavigationSetup.SetupNavigationDrawer(this)
 
@@ -84,6 +89,7 @@ class EventsActivity : AppCompatActivity() {
                     dialog.dismiss()
 
                     DatabaseEvent.addNewEvent(event)
+                    chatsListDAO.createGroupChat(eventName.text.toString())
                 }
                 return@setPositiveButton
             }

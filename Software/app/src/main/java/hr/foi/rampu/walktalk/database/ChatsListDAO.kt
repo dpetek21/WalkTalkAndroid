@@ -2,6 +2,8 @@ package hr.foi.rampu.walktalk.database
 
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import kotlinx.coroutines.tasks.await
@@ -51,6 +53,61 @@ class ChatsListDAO {
         val chatReference = createPrivateChatMessages()
         addToLoggedInUserChats(user, chatReference)
         addToRequesterChats(user, chatReference)
+    }
+
+    fun createGroupChat(groupName: String){
+        val messagesCollection = database.collection("messages")
+        val groupDocument = messagesCollection.document(groupName)
+        val data = mapOf(
+            "owner" to loggedInUser
+        )
+        groupDocument.set(data)
+        addGroupChatToUsersChatCollection(loggedInUser, groupName)
+    }
+
+    fun addGroupChatToUsersChatCollection(user: String, groupName: String){
+        val messagesCollection = database.collection("messages")
+        val groupDocument = messagesCollection.document(groupName)
+
+        val usersCollection = database.collection("users")
+        val userDocument = usersCollection.document(user)
+        val chatsCollection = userDocument.collection("chats")
+        chatsCollection.document(groupName).set(
+            mapOf(
+                "group" to true,
+                "referenceToChat" to groupDocument
+            )
+        )
+    }
+
+    suspend fun deleteGroupChat(groupName: String){
+        Log.i("Group chat name", groupName)
+        val messagesCollection = database.collection("messages")
+        val groupDocument = messagesCollection.document(groupName)
+        if (groupDocument != null) {
+            groupDocument.delete().await()
+        } else {
+            Log.i("Document not found", groupName)
+        }
+
+        val usersCollection = database.collection("users")
+        val users = usersCollection.get().await()
+
+        for(userDocument in users.documents){
+            val userId = userDocument.id
+            val chatsCollection = usersCollection.document(userId).collection("chats")
+            val chats = chatsCollection.get().await()
+
+            for (chatDocument in chats.documents) {
+                val chatId = chatDocument.id
+                Log.i("Checking Chat ID", chatId)
+                if(chatDocument.id == groupName){
+                    Log.i("Checking Chat ID", chatId)
+                    chatsCollection.document(chatId).delete().await()
+                }
+            }
+        }
+
     }
 
     private fun addToLoggedInUserChats(user: String, referenceToChat : DocumentReference){

@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
+import hr.foi.rampu.walktalk.database.ChatsListDAO
 import hr.foi.rampu.walktalk.database.DatabaseEvent
 import hr.foi.rampu.walktalk.database.DatabaseEvent.event
 import hr.foi.rampu.walktalk.entities.Event
@@ -39,10 +40,13 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var actionButton: Button
     private lateinit var cancelEventButton : ImageButton
     private lateinit var seeInvitesButton : ImageButton
+    private lateinit var chatsListDAO: ChatsListDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
+
+        chatsListDAO = ChatsListDAO()
 
         val event = DatabaseEvent.event!!
 
