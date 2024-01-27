@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rampu.walktalk.adapters.FriendsPagerAdapter
 import hr.foi.rampu.walktalk.adapters.LeaderboardPagerAdapter
 import hr.foi.rampu.walktalk.database.DatabaseFriend
+import hr.foi.rampu.walktalk.navigation.NavigationSetup
 import kotlinx.coroutines.launch
 
 class LeaderboardActivity : AppCompatActivity() {
@@ -39,5 +40,8 @@ class LeaderboardActivity : AppCompatActivity() {
             }
         }.attach()
 
+        NavigationSetup.SetupNavigationDrawer(this)
+
     }
+
 }

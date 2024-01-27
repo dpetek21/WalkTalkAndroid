@@ -37,4 +37,10 @@
        android:icon="@drawable/ic_attending_event"
        android:checkable="true"/>
 
+   <item
+       android:id = "@+id/Leaderboard"
+       android:title="@string/leaderboard"
+       android:icon="@drawable/ic_baseline_leaderboard_24"
+       android:checkable="true"/>
+
 </menu>

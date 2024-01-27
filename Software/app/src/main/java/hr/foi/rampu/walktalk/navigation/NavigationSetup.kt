@@ -10,11 +10,13 @@ import hr.foi.rampu.walktalk.AttentingEventsActivity
 import hr.foi.rampu.walktalk.ChatsListActivity
 import hr.foi.rampu.walktalk.EventsActivity
 import hr.foi.rampu.walktalk.FriendsActivity
+import hr.foi.rampu.walktalk.LeaderboardActivity
 import hr.foi.rampu.walktalk.NotificationsActivity
 import hr.foi.rampu.walktalk.PedometerActivity
 import hr.foi.rampu.walktalk.ProfileActivity
 import hr.foi.rampu.walktalk.R
 import hr.foi.rampu.walktalk.RoutesActivity
+import hr.foi.rampu.walktalk.entities.LeaderboardItem
 import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 
 object NavigationSetup {
@@ -51,6 +53,9 @@ object NavigationSetup {
 
                 activity.getString(R.string.pedometer) -> activityToLoad =
                     PedometerActivity::class.java
+
+                activity.getString(R.string.leaderboard) -> activityToLoad =
+                    LeaderboardActivity::class.java
             }
             navDrawerLayout.close()
             if (currentActivity == activityToLoad?.simpleName) {

@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("Pfp", "Profile Pic URL: ${UserDataContainer.profilePicUri}")
                         }
                     }
-                    val intent = Intent(this, LeaderboardActivity::class.java)
+                    val intent = Intent(this, EventsActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
