@@ -156,7 +156,7 @@ class EventDetailsActivity : AppCompatActivity() {
                         sdfDate.parse(dateSelection.text.toString()),
                         UserDataContainer.username,
                         spinnerRoute.selectedItem as Route,
-                        true,
+                        DatabaseEvent.event!!.isPublic,
                         DatabaseEvent.event!!.pendingInvites,
                         DatabaseEvent.event!!.acceptedInvites
                     )
@@ -175,6 +175,7 @@ class EventDetailsActivity : AppCompatActivity() {
             .show()
 
         val dialogHelper = UpdateExistingEventDialogHelper(updateEventDialogView)
+        dialogHelper.HideVisibility()
         val routeHandler = RouteHandler()
         routeHandler.getRoutesOfOwner(UserDataContainer.username, dialogHelper::populateSpinnerRoute)
         dialogHelper.populateSpinnerPace(Pace.getAllPaces())

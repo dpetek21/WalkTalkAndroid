@@ -47,4 +47,7 @@
     <string name="pending_invites">Pending invites</string>
     <string name="no_invites_yet">No invites yet…</string>
     <string name="accepted">Accepted</string>
+    <string name="friends_only">Friends only</string>
+    <string name="public_option">Public</string>
+    <string name="visibility">Visibility</string>
 </resources>

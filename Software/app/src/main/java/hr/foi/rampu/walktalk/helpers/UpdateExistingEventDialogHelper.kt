@@ -2,9 +2,12 @@ package hr.foi.rampu.walktalk.helpers
 
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import hr.foi.rampu.walktalk.R
@@ -19,6 +22,8 @@ class UpdateExistingEventDialogHelper(private val view: View) {
     private val etEventName = view.findViewById<EditText>(R.id.et_new_event_name)
     private val spinnerRoute = view.findViewById<Spinner>(R.id.spn_route)
     private val dateSelection = view.findViewById<EditText>(R.id.et_event_date)
+    private val radioGroup  = view.findViewById<RadioGroup>(R.id.rgrpVisibility)
+    private val txtVisibility = view.findViewById<TextView>(R.id.txt_visibility)
 
     fun populateSpinnerPace(paces: List<String>) {
         val spinnerAdapter = ArrayAdapter(
@@ -78,5 +83,10 @@ class UpdateExistingEventDialogHelper(private val view: View) {
                 view.clearFocus()
             }
         }
+    }
+
+    fun HideVisibility() {
+        radioGroup.visibility = GONE
+        txtVisibility.visibility  = GONE
     }
 }

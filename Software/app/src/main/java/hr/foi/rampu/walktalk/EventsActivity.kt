@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
@@ -71,13 +72,14 @@ class EventsActivity : AppCompatActivity() {
                     val sdfDate = SimpleDateFormat("dd.MM.yyyy.", Locale.US)
                     val spinnerPace = newTaskDialogView.findViewById<Spinner>(R.id.spn_pace)
                     val spinnerRoute = newTaskDialogView.findViewById<Spinner>(R.id.spn_route)
+                    val radioPublic = newTaskDialogView.findViewById<RadioButton>(R.id.rbtnPublic)
                     val event = Event(eventName.text.toString(),
                         0.0,
                         spinnerPace.selectedItem as String,
                         sdfDate.parse(dateSelection.text.toString()),
                         DatabaseFriend.username,
                         spinnerRoute.selectedItem as Route,
-                        true,
+                        radioPublic.isChecked,
                         ArrayList(),
                         ArrayList()
                         )

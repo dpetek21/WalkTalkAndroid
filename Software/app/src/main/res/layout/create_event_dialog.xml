@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
         android:hint="@string/event_name_hint"
+        android:layout_marginBottom="10dp"
         android:inputType="text" />
 
     <TextView
@@ -28,6 +29,7 @@
     <Spinner
         android:id="@+id/spn_route"
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -40,6 +42,7 @@
     <Spinner
         android:id="@+id/spn_pace"
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -53,7 +56,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_marginBottom="10dp"
         android:hint="@string/date_hint"
         android:importantForAutofill="no"
         android:inputType="date" />
+
+    <TextView
+        android:id="@+id/txt_visibility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/visibility" />
+
+    <RadioGroup
+        android:id="@+id/rgrpVisibility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtnPublic"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/public_option" />
+
+        <RadioButton
+            android:id="@+id/rbtnFriendsOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/friends_only" />
+
+    </RadioGroup>
 </LinearLayout>
