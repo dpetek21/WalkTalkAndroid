@@ -25,6 +25,7 @@ import hr.foi.rampu.walktalk.firebaseHandler.UserDataContainer
 import hr.foi.rampu.walktalk.fragments.MapFragment
 import hr.foi.rampu.walktalk.helpers.Pace
 import hr.foi.rampu.walktalk.helpers.UpdateExistingEventDialogHelper
+import hr.foi.rampu.walktalk.services.EventService
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -41,12 +42,15 @@ class EventDetailsActivity : AppCompatActivity() {
     private lateinit var cancelEventButton : ImageButton
     private lateinit var seeInvitesButton : ImageButton
     private lateinit var chatsListDAO: ChatsListDAO
+    private lateinit var eventService: EventService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
 
         chatsListDAO = ChatsListDAO()
+
+        eventService = EventService(baseContext)
 
         val event = DatabaseEvent.event!!
 
@@ -55,7 +59,6 @@ class EventDetailsActivity : AppCompatActivity() {
             .replace(R.id.event_detail_map_container,MapFragment())
             .addToBackStack(null)
             .commit()
-
         cardViewEventDetails = findViewById(R.id.cv_event_detail)
         backButton = findViewById(R.id.img_event_details_back_arrow)
         eventName = findViewById(R.id.txt_event_details)
@@ -76,6 +79,13 @@ class EventDetailsActivity : AppCompatActivity() {
             actionButton.text = getString(R.string.start_event)
             cancelEventButton.visibility  = VISIBLE
             seeInvitesButton.visibility = VISIBLE
+            actionButton.setOnClickListener {
+                    actionButton.text = getString(R.string.event_started)
+                    actionButton.isClickable = false
+                    actionButton.setBackgroundColor(getColor(R.color.beige))
+                    actionButton.setTextColor(getColor(R.color.black))
+                    eventService.sendEventStartedNotification(baseContext,event.name)
+                }
 
             seeInvitesButton.setOnClickListener {
                 val intent = Intent(this,PendingInvitesActivity::class.java)

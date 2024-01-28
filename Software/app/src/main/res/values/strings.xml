@@ -54,4 +54,5 @@
     <string name="day_leaderboard">Day</string>
     <string name="week_leaderboard">Week</string>
     <string name="month_leaderboard">Month</string>
+    <string name="event_started">Event started</string>
 </resources>
