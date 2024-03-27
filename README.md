@@ -6,8 +6,8 @@
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime | Seminarska grupa
 ------------  | ------------------- | ----- | --------------------- | ----------------
 Domagoj Petek | dpetek21@student.foi.hr | 1191242810 | dpetek21 | G02
-Marin Puškadija | mpuskadij20@student.foi.hr | 0016149444 | mpuskadij | G02
-Gabriel Vesel | gvesel20@student.foi.hr | 0016147135 | gvesel20 | G02
+Marin Puškadija | --- | --- | --- | G02
+Gabriel Vesel | --- | --- | --- | G02
 
 ## Opis domene
 
